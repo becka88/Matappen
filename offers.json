@@ -1,8 +1,114 @@
 {
   "store_id": "1003571",
   "store": "Maxi ICA Stormarknad Växjö",
-  "updated_at": null,
-  "status": "waiting",
+  "updated_at": "2026-09-14T17:43:04.354750+00:00",
+  "status": "live",
   "source_url": "https://www.ica.se/erbjudanden/maxi-ica-stormarknad-vaxjo-1003571/",
-  "offers": []
+  "page_offer_count": 132,
+  "coverage": "partial",
+  "offers": [
+    {
+      "name": "Falukorv",
+      "price": "65:-",
+      "details": "Falukorv Scan. 800 g. Max 1 köp/hushåll. Jmfpris 40:62/kg. Ord.pris 36:90 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Färsk fylld pasta",
+      "price": "89:-",
+      "details": "Färsk fylld pasta Rana. 250 g. Jmfpris 1:19-118:67/kg. Ord.pris 45:85 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Färsk oskalad majs",
+      "price": "15:-",
+      "details": "Färsk oskalad majs st. Jmfpris 34:09/kg. Ord.pris 14:90 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Herrgård®, Präst®, Grevé®",
+      "price": "79:- /kg",
+      "details": "Herrgård®, Präst®, Grevé® Arla. Ca 700 g. Ord.pris 111:90-140:76 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Juice",
+      "price": "40:-",
+      "details": "Juice God Morgon. 1 liter. Jmfpris 20:00/liter. Ord.pris 23:18-35:86 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Kastanjechampinjoner i ask",
+      "price": "20:- /st",
+      "details": "Kastanjechampinjoner i ask 250 g. Jmfpris 80:00/kg. Ord.pris 24:51 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Lego Pokémon Eevee",
+      "price": "499:- /st",
+      "details": "Lego Pokémon Eevee LEGO Pokémon. Jmfpris 499:00/st. Ord.pris 599:00 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Lego Pokémon Munchlax",
+      "price": "649:- /st",
+      "details": "Lego Pokémon Munchlax LEGO Pokémon. Ord.pris 749:00 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "LEGO Pokémon Pikachu & Poké Boll",
+      "price": "1699:- /st",
+      "details": "LEGO Pokémon Pikachu & Poké Boll LEGO Pokémon. Ord.pris 1999:00 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Pajform",
+      "price": "50:- /st",
+      "details": "Pajform ICA. Jmfpris 50:00/st. Ord.pris 99:90 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Potatis, Rödbetor, Morötter",
+      "price": "10:- /st",
+      "details": "Potatis, Rödbetor, Morötter ICA. Sverige. 1-1,2 kg. Jmfpris 8:33-10:00/kg. Ord.pris 17:90-19:90 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Smaksatt Yoghurt",
+      "price": "35:-",
+      "details": "Smaksatt Yoghurt Valio. 1000 g. Max 1 köp/hushåll. Jmfpris 17:50/kg. Ord.pris 24:51-27:35 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Smörgåsmat",
+      "price": "35:-",
+      "details": "Smörgåsmat Pärsons. 90-160 g. Jmfpris 109:38-194:44/kg. Ord.pris 21:90-27:35 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Strumpor 5-pack",
+      "price": "50:- /st",
+      "details": "Strumpor 5-pack Kappa. Stl 35-43. Ord.pris 129:00 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Svenska äpplen",
+      "price": "20:- /kg",
+      "details": "Svenska äpplen ICA. Ord.pris 0:01-39:90 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Trådlösa hörlurar",
+      "price": "100:- /st",
+      "details": "Trådlösa hörlurar Streetz. Ord.pris 199:00 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Ugnsform",
+      "price": "50:- /st",
+      "details": "Ugnsform ICA. Jmfpris 50:00/st. Ord.pris 99:90 kr",
+      "source": "ICA erbjudanden"
+    }
+  ],
+  "note": "17 av 132 erbjudanden hämtades."
 }
