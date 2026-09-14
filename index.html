@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#243A2E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Matappen">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="stylesheet" href="./assets/app.css">
+<title>Matappen</title>
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">Familjens mat</div>
+      <div class="brand">Matappen</div>
+    </div>
+    <button class="avatar" id="profileBtn">🍽️</button>
+  </header>
+  <main id="view"><div class="loading">Laddar Matappen…</div></main>
+  <nav class="bottom-nav">
+    <button data-view="today" class="nav-btn active"><span>⌂</span><small>Idag</small></button>
+    <button data-view="week" class="nav-btn"><span>◫</span><small>Vecka</small></button>
+    <button data-view="shop" class="nav-btn"><span>✓</span><small>Handla</small></button>
+    <button data-view="recipes" class="nav-btn"><span>♡</span><small>Recept</small></button>
+  </nav>
+</div>
+<div class="sheet-backdrop hidden" id="sheetBackdrop"></div>
+<div class="sheet hidden" id="sheet"></div>
+<script src="./assets/app.js"></script>
+</body>
+</html>

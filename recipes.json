@@ -1,0 +1,1261 @@
+[
+  {
+    "id": "matappen-1",
+    "name": "Korv stroganoff",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 25,
+    "ingredients": [
+      "Falukorv: 800 g",
+      "Ris: 6 port",
+      "Gul lök: 1 st",
+      "Matlagningsgrädde: 3 dl",
+      "Tomatpuré: 3 msk",
+      "Morötter: 4 st"
+    ],
+    "tags": [
+      "barnvänlig",
+      "matlåda",
+      "snabb"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 4,
+    "steps": [
+      "Koka riset.",
+      "Stek skivad korv och hackad lök tills de får färg.",
+      "Rör ner tomatpuré och grädde och låt sjuda cirka 10 minuter.",
+      "Servera med ris och morotsstavar."
+    ]
+  },
+  {
+    "id": "matappen-2",
+    "name": "Spaghetti med långkokt köttfärssås",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 45,
+    "ingredients": [
+      "Nötfärs: 800 g",
+      "Spaghetti: 600 g",
+      "Krossade tomater: 800 g",
+      "Gul lök: 2 st",
+      "Morötter: 3 st",
+      "Vitlök: 2 klyftor"
+    ],
+    "tags": [
+      "barnvänlig",
+      "matlåda",
+      "frys"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 5,
+    "steps": [
+      "Bryn färsen ordentligt och tillsätt hackad lök och vitlök.",
+      "Riv morötterna och rör ner tillsammans med tomaterna.",
+      "Låt såsen puttra medan pastan kokar, gärna 25–30 minuter.",
+      "Smaka av och servera med spaghetti."
+    ]
+  },
+  {
+    "id": "matappen-3",
+    "name": "Krämig kycklingpasta med spenat",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 30,
+    "ingredients": [
+      "Kycklingfilé: 800 g",
+      "Pasta: 600 g",
+      "Matlagningsgrädde: 4 dl",
+      "Babyspenat: 150 g",
+      "Vitlök: 2 klyftor",
+      "Parmesan: 100 g"
+    ],
+    "tags": [
+      "barnvänlig",
+      "matlåda",
+      "snabb"
+    ],
+    "external": false,
+    "lunch": 4,
+    "freeze": 3,
+    "steps": [
+      "Koka pastan.",
+      "Strimla och stek kycklingen med salt och peppar.",
+      "Tillsätt vitlök, grädde och spenat och låt såsen sjuda några minuter.",
+      "Vänd ner pastan och toppa med parmesan."
+    ]
+  },
+  {
+    "id": "matappen-4",
+    "name": "Kycklingpasta med soltorkad tomat",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 30,
+    "ingredients": [
+      "Kycklingfilé: 800 g",
+      "Pasta: 600 g",
+      "Soltorkade tomater: 100 g",
+      "Matlagningsgrädde: 4 dl",
+      "Ärter: 250 g",
+      "Citron: 1 st"
+    ],
+    "tags": [
+      "barnvänlig",
+      "matlåda",
+      "snabb"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 3,
+    "steps": [
+      "Koka pastan något kortare än paketets tid.",
+      "Stek kycklingbitar gyllene.",
+      "Tillsätt strimlade soltorkade tomater och grädde och sjud kort.",
+      "Vänd ner pasta och ärter och avsluta med lite citron."
+    ]
+  },
+  {
+    "id": "matappen-5",
+    "name": "Kyckling Alfredo med broccoli",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 30,
+    "ingredients": [
+      "Kycklingfilé: 800 g",
+      "Pasta: 600 g",
+      "Broccoli: 1 stort huvud",
+      "Matlagningsgrädde: 4 dl",
+      "Parmesan: 120 g",
+      "Vitlök: 2 klyftor"
+    ],
+    "tags": [
+      "barnvänlig",
+      "snabb",
+      "matlåda"
+    ],
+    "external": false,
+    "lunch": 4,
+    "freeze": 3,
+    "steps": [
+      "Koka pasta och broccoli, men spara lite pastavatten.",
+      "Stek kycklingen i bitar.",
+      "Häll på grädde, vitlök och parmesan och späd med lite pastavatten.",
+      "Vänd ner pasta och broccoli och servera direkt."
+    ]
+  },
+  {
+    "id": "matappen-6",
+    "name": "Pastagratäng med köttfärs och mozzarella",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 45,
+    "ingredients": [
+      "Nötfärs: 700 g",
+      "Pasta: 500 g",
+      "Krossade tomater: 500 g",
+      "Gul lök: 1 st",
+      "Mozzarella: 250 g",
+      "Riven ost: 100 g"
+    ],
+    "tags": [
+      "barnvänlig",
+      "matlåda",
+      "frys"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 5,
+    "steps": [
+      "Koka pastan nästan färdig.",
+      "Bryn färs och lök och tillsätt tomaterna.",
+      "Blanda sås och pasta i en ugnsform.",
+      "Toppa med mozzarella och ost och gratinera tills ytan är gyllene."
+    ]
+  },
+  {
+    "id": "matappen-7",
+    "name": "Tacopasta",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 25,
+    "ingredients": [
+      "Nötfärs: 700 g",
+      "Pasta: 500 g",
+      "Tacokrydda: 1 påse",
+      "Crème fraiche: 3 dl",
+      "Majs: 1 burk",
+      "Riven ost: 150 g"
+    ],
+    "tags": [
+      "barnvänlig",
+      "fredag",
+      "matlåda"
+    ],
+    "external": false,
+    "lunch": 4,
+    "freeze": 3,
+    "steps": [
+      "Koka pastan.",
+      "Stek färsen och krydda med taco.",
+      "Rör ner crème fraiche och majs.",
+      "Blanda med pasta och toppa med ost."
+    ]
+  },
+  {
+    "id": "matappen-8",
+    "name": "Kycklingtacos",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 25,
+    "ingredients": [
+      "Kyckling: 900 g",
+      "Tortilla: 12 st",
+      "Ost: 200 g",
+      "Salsa: 1 burk",
+      "Sallad: 1 st",
+      "Majs: 1 burk"
+    ],
+    "tags": [
+      "barnvänlig",
+      "fredag",
+      "snabb"
+    ],
+    "external": false,
+    "lunch": 3,
+    "freeze": 2,
+    "steps": [
+      "Strimla och stek kycklingen med tacokrydda.",
+      "Hacka sallad och ställ fram tillbehören i skålar.",
+      "Låt alla bygga sina egna tacos."
+    ]
+  },
+  {
+    "id": "matappen-9",
+    "name": "Chili con carne",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 35,
+    "ingredients": [
+      "Nötfärs: 700 g",
+      "Kidneybönor: 2 burkar",
+      "Krossade tomater: 800 g",
+      "Gul lök: 1 st",
+      "Paprika: 2 st",
+      "Ris: 6 port"
+    ],
+    "tags": [
+      "matlåda",
+      "frys",
+      "barnvänlig"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 5,
+    "steps": [
+      "Koka riset.",
+      "Bryn färs och lök.",
+      "Tillsätt paprika, tomater och bönor och låt puttra cirka 20 minuter.",
+      "Krydda milt vid bordet om barnen vill ha mindre hetta."
+    ]
+  },
+  {
+    "id": "matappen-10",
+    "name": "Pannbiff med gräddsås och potatis",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 45,
+    "ingredients": [
+      "Blandfärs: 800 g",
+      "Potatis: 1.5 kg",
+      "Gul lök: 2 st",
+      "Matlagningsgrädde: 4 dl",
+      "Ägg: 1 st",
+      "Lingonsylt: 1 burk"
+    ],
+    "tags": [
+      "husman",
+      "barnvänlig",
+      "matlåda"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 4,
+    "steps": [
+      "Koka potatisen.",
+      "Blanda färs med ägg, kryddor och hälften av löken och forma biffar.",
+      "Stek biffarna och resten av löken.",
+      "Vispa ur pannan med grädde till en snabb sås och servera med potatis."
+    ]
+  },
+  {
+    "id": "matappen-11",
+    "name": "Köttbullar med potatismos",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 45,
+    "ingredients": [
+      "Blandfärs: 800 g",
+      "Potatis: 1.5 kg",
+      "Mjölk: 3 dl",
+      "Ägg: 1 st",
+      "Gul lök: 1 st",
+      "Grädde: 3 dl"
+    ],
+    "tags": [
+      "barnvänlig",
+      "matlåda",
+      "frys"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 5,
+    "steps": [
+      "Koka potatisen mjuk.",
+      "Blanda färs, ägg och finhackad lök och rulla köttbullar.",
+      "Stek köttbullarna i omgångar.",
+      "Mosa potatisen med mjölk och gör en enkel gräddsås i stekpannan."
+    ]
+  },
+  {
+    "id": "matappen-12",
+    "name": "Köttfärslimpa med gräddsås",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 60,
+    "ingredients": [
+      "Blandfärs: 900 g",
+      "Potatis: 1.5 kg",
+      "Ägg: 2 st",
+      "Gul lök: 1 st",
+      "Grädde: 4 dl",
+      "Morötter: 5 st"
+    ],
+    "tags": [
+      "husman",
+      "matlåda",
+      "frys"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 5,
+    "steps": [
+      "Blanda färsen med ägg, lök och kryddor och forma till en limpa.",
+      "Tillaga i ugn tills genomstekt.",
+      "Koka potatis och morötter under tiden.",
+      "Gör sås av stekskyn och grädde."
+    ]
+  },
+  {
+    "id": "matappen-13",
+    "name": "Lasagne",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 65,
+    "ingredients": [
+      "Nötfärs: 900 g",
+      "Lasagneplattor: 1 pkt",
+      "Krossade tomater: 800 g",
+      "Gul lök: 2 st",
+      "Mjölk: 7 dl",
+      "Riven ost: 250 g"
+    ],
+    "tags": [
+      "barnvänlig",
+      "matlåda",
+      "frys"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 5,
+    "steps": [
+      "Koka ihop en mustig köttfärssås med lök och tomat.",
+      "Gör en enkel vit sås på mjölk och redning.",
+      "Varva såser och lasagneplattor i en form.",
+      "Toppa med ost och baka tills plattorna är mjuka."
+    ]
+  },
+  {
+    "id": "matappen-14",
+    "name": "Lasagnesoppa",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 35,
+    "ingredients": [
+      "Nötfärs: 600 g",
+      "Lasagneplattor: 8 st",
+      "Krossade tomater: 800 g",
+      "Buljong: 1 l",
+      "Gul lök: 1 st",
+      "Crème fraiche: 2 dl"
+    ],
+    "tags": [
+      "snabb",
+      "matlåda",
+      "barnvänlig"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 4,
+    "steps": [
+      "Bryn färs och lök i en gryta.",
+      "Häll på tomater och buljong.",
+      "Bryt ner lasagneplattorna och sjud tills de är mjuka.",
+      "Servera med en klick crème fraiche."
+    ]
+  },
+  {
+    "id": "matappen-15",
+    "name": "Makaronipudding med korv",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 45,
+    "ingredients": [
+      "Falukorv: 600 g",
+      "Makaroner: 500 g",
+      "Ägg: 4 st",
+      "Mjölk: 6 dl",
+      "Gul lök: 1 st",
+      "Riven ost: 150 g"
+    ],
+    "tags": [
+      "barnvänlig",
+      "matlåda",
+      "frys"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 4,
+    "steps": [
+      "Koka makaronerna och stek korv och lök.",
+      "Lägg allt i en ugnsform.",
+      "Vispa ihop ägg och mjölk och häll över.",
+      "Toppa med ost och grädda tills puddingen stannat."
+    ]
+  },
+  {
+    "id": "matappen-16",
+    "name": "Korv med rotfruktsmos",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 35,
+    "ingredients": [
+      "Köttkorv: 800 g",
+      "Potatis: 1 kg",
+      "Morötter: 500 g",
+      "Palsternacka: 300 g",
+      "Mjölk: 2 dl",
+      "Senap: 1 tub"
+    ],
+    "tags": [
+      "barnvänlig",
+      "vardag"
+    ],
+    "external": false,
+    "lunch": 4,
+    "freeze": 3,
+    "steps": [
+      "Skala och koka rotfrukterna mjuka.",
+      "Värm eller stek korven.",
+      "Mosa rotfrukterna med mjölk och lite smör.",
+      "Servera med senap."
+    ]
+  },
+  {
+    "id": "matappen-17",
+    "name": "Ugnskorv med tomat, lök och ost",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 40,
+    "ingredients": [
+      "Falukorv: 800 g",
+      "Potatis: 1.4 kg",
+      "Tomater: 4 st",
+      "Gul lök: 2 st",
+      "Riven ost: 150 g",
+      "Senap: 3 msk"
+    ],
+    "tags": [
+      "barnvänlig",
+      "enkel"
+    ],
+    "external": false,
+    "lunch": 4,
+    "freeze": 3,
+    "steps": [
+      "Skär skåror i korven och lägg i en form.",
+      "Fyll med tomat, lök och lite senap och toppa med ost.",
+      "Baka i ugn och koka potatis under tiden."
+    ]
+  },
+  {
+    "id": "matappen-18",
+    "name": "Kycklinggryta med curry och äpple",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 30,
+    "ingredients": [
+      "Kycklingfilé: 800 g",
+      "Ris: 6 port",
+      "Matlagningsgrädde: 4 dl",
+      "Äpple: 2 st",
+      "Curry: 2 tsk",
+      "Gul lök: 1 st"
+    ],
+    "tags": [
+      "barnvänlig",
+      "matlåda",
+      "snabb"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 4,
+    "steps": [
+      "Koka riset.",
+      "Stek kyckling och lök.",
+      "Pudra över curry och tillsätt grädde och tärnat äpple.",
+      "Sjud tills kycklingen är klar och servera med ris."
+    ]
+  },
+  {
+    "id": "matappen-19",
+    "name": "Krämig kycklinggryta med paprika",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 35,
+    "ingredients": [
+      "Kycklinglårfilé: 900 g",
+      "Ris: 6 port",
+      "Paprika: 2 st",
+      "Crème fraiche: 3 dl",
+      "Kycklingfond: 2 msk",
+      "Gul lök: 1 st"
+    ],
+    "tags": [
+      "barnvänlig",
+      "matlåda"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 4,
+    "steps": [
+      "Koka riset.",
+      "Bryn kycklingen och tillsätt lök och paprika.",
+      "Rör ner crème fraiche, fond och en skvätt vatten.",
+      "Låt sjuda tills kycklingen är mör."
+    ]
+  },
+  {
+    "id": "matappen-20",
+    "name": "Kyckling i ugn med citron och vitlök",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 45,
+    "ingredients": [
+      "Kycklinglårfilé: 1 kg",
+      "Potatis: 1.5 kg",
+      "Citron: 2 st",
+      "Vitlök: 4 klyftor",
+      "Morötter: 5 st",
+      "Crème fraiche: 2 dl"
+    ],
+    "tags": [
+      "enkel",
+      "matlåda",
+      "barnvänlig"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 4,
+    "steps": [
+      "Lägg potatis och morötter i en stor form och rosta en stund.",
+      "Lägg på kycklingen och krydda med citron och vitlök.",
+      "Tillaga tills kycklingen är genomstekt och servera med crème fraiche."
+    ]
+  },
+  {
+    "id": "matappen-21",
+    "name": "Fläskytterfilé med potatisgratäng",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 60,
+    "ingredients": [
+      "Fläskytterfilé: 1 kg",
+      "Potatis: 1.5 kg",
+      "Grädde: 5 dl",
+      "Vitlök: 2 klyftor",
+      "Riven ost: 150 g",
+      "Sallad: 1 påse"
+    ],
+    "tags": [
+      "helg",
+      "vuxen",
+      "matlåda"
+    ],
+    "external": false,
+    "lunch": 4,
+    "freeze": 3,
+    "steps": [
+      "Skiva potatis och lägg med grädde, vitlök och ost i en form.",
+      "Baka tills gratängen är mjuk och gyllene.",
+      "Bryn köttet och tillaga färdigt i ugn eller panna.",
+      "Låt köttet vila före skivning."
+    ]
+  },
+  {
+    "id": "matappen-22",
+    "name": "Fläskfilégryta med champinjoner",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 40,
+    "ingredients": [
+      "Fläskfilé: 900 g",
+      "Champinjoner: 400 g",
+      "Matlagningsgrädde: 4 dl",
+      "Dijonsenap: 2 msk",
+      "Gul lök: 1 st",
+      "Ris: 6 port"
+    ],
+    "tags": [
+      "vuxen",
+      "matlåda",
+      "helg"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 4,
+    "steps": [
+      "Koka riset.",
+      "Bryn skivat kött i omgångar och lägg åt sidan.",
+      "Stek lök och champinjoner och tillsätt grädde och senap.",
+      "Lägg tillbaka köttet och sjud försiktigt tills allt är klart."
+    ]
+  },
+  {
+    "id": "matappen-23",
+    "name": "Fläskfilépasta med svamp och citron",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 30,
+    "ingredients": [
+      "Fläskfilé: 800 g",
+      "Pasta: 600 g",
+      "Champinjoner: 300 g",
+      "Matlagningsgrädde: 3 dl",
+      "Citron: 1 st",
+      "Parmesan: 80 g"
+    ],
+    "tags": [
+      "vuxen",
+      "snabb",
+      "matlåda"
+    ],
+    "external": false,
+    "lunch": 4,
+    "freeze": 3,
+    "steps": [
+      "Koka pastan.",
+      "Stek tunt skivad fläskfilé och svamp hastigt.",
+      "Häll på grädde och låt koka ihop.",
+      "Vänd ner pasta och smaka av med citron och parmesan."
+    ]
+  },
+  {
+    "id": "matappen-24",
+    "name": "Pasta carbonara",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 20,
+    "ingredients": [
+      "Spaghetti: 600 g",
+      "Bacon: 300 g",
+      "Ägg: 5 st",
+      "Parmesan: 120 g",
+      "Svartpeppar: 1 tsk"
+    ],
+    "tags": [
+      "snabb",
+      "barnvänlig",
+      "matlåda"
+    ],
+    "external": false,
+    "lunch": 4,
+    "freeze": 2,
+    "steps": [
+      "Koka spaghetti och spara lite pastavatten.",
+      "Stek bacon krispigt.",
+      "Vispa ihop ägg, parmesan och svartpeppar.",
+      "Vänd ihop allt från värmen och späd med pastavatten tills såsen blir krämig."
+    ]
+  },
+  {
+    "id": "matappen-25",
+    "name": "Baconpasta med ärter",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 20,
+    "ingredients": [
+      "Pasta: 600 g",
+      "Bacon: 300 g",
+      "Ärter: 300 g",
+      "Crème fraiche: 3 dl",
+      "Parmesan: 80 g"
+    ],
+    "tags": [
+      "snabb",
+      "barnvänlig",
+      "matlåda"
+    ],
+    "external": false,
+    "lunch": 4,
+    "freeze": 2,
+    "steps": [
+      "Koka pastan.",
+      "Stek bacon och tillsätt ärter.",
+      "Rör ner crème fraiche och lite pastavatten.",
+      "Blanda med pastan och toppa med parmesan."
+    ]
+  },
+  {
+    "id": "matappen-26",
+    "name": "Krämig chorizopasta",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 30,
+    "ingredients": [
+      "Chorizo: 500 g",
+      "Pasta: 600 g",
+      "Paprika: 2 st",
+      "Matlagningsgrädde: 4 dl",
+      "Gul lök: 1 st",
+      "Parmesan: 80 g"
+    ],
+    "tags": [
+      "vuxen",
+      "snabb",
+      "matlåda"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 3,
+    "steps": [
+      "Koka pastan.",
+      "Stek skivad chorizo med lök och paprika.",
+      "Tillsätt grädde och låt såsen koka ihop.",
+      "Blanda med pasta och parmesan."
+    ]
+  },
+  {
+    "id": "matappen-27",
+    "name": "Krämig kycklingpasta med chipotle",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 30,
+    "ingredients": [
+      "Kycklingfilé: 800 g",
+      "Pasta: 600 g",
+      "Matlagningsgrädde: 4 dl",
+      "Chipotlepasta: 2 msk",
+      "Lime: 1 st",
+      "Vitlök: 3 klyftor"
+    ],
+    "tags": [
+      "vuxen",
+      "snabb",
+      "matlåda",
+      "het"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 3,
+    "steps": [
+      "Koka pastan.",
+      "Stek kycklingbitar med vitlök.",
+      "Rör ner chipotle och grädde och låt såsen sjuda några minuter.",
+      "Vänd ner pasta och avsluta med lime."
+    ]
+  },
+  {
+    "id": "matappen-28",
+    "name": "Asiatisk köttfärsgryta med ris",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 30,
+    "ingredients": [
+      "Nötfärs: 700 g",
+      "Ris: 6 port",
+      "Paprika: 2 st",
+      "Soja: 4 msk",
+      "Ingefära: 1 bit",
+      "Vitlök: 3 klyftor"
+    ],
+    "tags": [
+      "vuxen",
+      "snabb",
+      "matlåda"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 4,
+    "steps": [
+      "Koka riset.",
+      "Stek färsen hårt så den får ordentlig yta.",
+      "Tillsätt paprika, vitlök och riven ingefära.",
+      "Smaka av med soja och lite chili om ni vill ha mer hetta."
+    ]
+  },
+  {
+    "id": "matappen-29",
+    "name": "Grekiska färsbiffar med citronpotatis",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 50,
+    "ingredients": [
+      "Nötfärs: 800 g",
+      "Potatis: 1.5 kg",
+      "Fetaost: 200 g",
+      "Citron: 2 st",
+      "Vitlök: 2 klyftor",
+      "Tzatziki: 3 dl"
+    ],
+    "tags": [
+      "vuxen",
+      "matlåda",
+      "helg"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 4,
+    "steps": [
+      "Rosta potatisklyftor med citron och kryddor.",
+      "Blanda färs med smulad fetaost och vitlök och forma biffar.",
+      "Stek biffarna tills genomstekta.",
+      "Servera med potatis och tzatziki."
+    ]
+  },
+  {
+    "id": "matappen-30",
+    "name": "Shepherd's pie",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 65,
+    "ingredients": [
+      "Nötfärs: 900 g",
+      "Potatis: 1.8 kg",
+      "Morötter: 4 st",
+      "Gul lök: 2 st",
+      "Tomatpuré: 3 msk",
+      "Mjölk: 3 dl"
+    ],
+    "tags": [
+      "matlåda",
+      "frys",
+      "vuxen"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 5,
+    "steps": [
+      "Koka potatis och gör ett ganska fast mos.",
+      "Bryn färs, lök och morötter och rör ner tomatpuré och lite vatten.",
+      "Lägg färsen i en form och bred moset ovanpå.",
+      "Gratinera tills toppen fått färg."
+    ]
+  },
+  {
+    "id": "matappen-31",
+    "name": "Het högrevsgryta",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 150,
+    "ingredients": [
+      "Högrev: 1.3 kg",
+      "Gul lök: 2 st",
+      "Morötter: 5 st",
+      "Chili: 2 st",
+      "Krossade tomater: 400 g",
+      "Ris: 8 port"
+    ],
+    "tags": [
+      "vuxen",
+      "matlåda",
+      "frys",
+      "långkok"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 5,
+    "steps": [
+      "Bryn högreven i omgångar.",
+      "Fräs lök, morötter och chili.",
+      "Lägg tillbaka köttet, tillsätt tomater och vatten så det nästan täcker.",
+      "Låt sjuda mycket försiktigt tills köttet faller isär."
+    ]
+  },
+  {
+    "id": "matappen-32",
+    "name": "Mustig gulasch med högrev",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 140,
+    "ingredients": [
+      "Högrev: 1.2 kg",
+      "Potatis: 1 kg",
+      "Paprika: 3 st",
+      "Gul lök: 2 st",
+      "Krossade tomater: 800 g",
+      "Paprikapulver: 2 msk"
+    ],
+    "tags": [
+      "vuxen",
+      "frys",
+      "matlåda",
+      "långkok"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 5,
+    "steps": [
+      "Bryn köttet ordentligt.",
+      "Fräs lök och paprika med paprikapulver.",
+      "Tillsätt tomat och vatten och låt sjuda tills köttet är mört.",
+      "Lägg i potatis mot slutet och koka tills den är mjuk."
+    ]
+  },
+  {
+    "id": "matappen-33",
+    "name": "Kycklingfärsbiffar med rostad potatis",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 45,
+    "ingredients": [
+      "Kycklingfärs: 800 g",
+      "Potatis: 1.5 kg",
+      "Ägg: 1 st",
+      "Vitlök: 1 klyfta",
+      "Crème fraiche: 3 dl",
+      "Gurka: 1 st"
+    ],
+    "tags": [
+      "barnvänlig",
+      "matlåda",
+      "frys"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 5,
+    "steps": [
+      "Rosta potatisklyftor i ugn.",
+      "Blanda kycklingfärs med ägg och kryddor och forma biffar.",
+      "Stek biffarna tills de är helt genomstekta.",
+      "Servera med gurka och crème fraiche."
+    ]
+  },
+  {
+    "id": "matappen-34",
+    "name": "Kycklingbullar i mild currysås",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 35,
+    "ingredients": [
+      "Kycklingfärs: 800 g",
+      "Ris: 6 port",
+      "Ägg: 1 st",
+      "Matlagningsgrädde: 4 dl",
+      "Curry: 2 tsk",
+      "Morötter: 4 st"
+    ],
+    "tags": [
+      "barnvänlig",
+      "matlåda",
+      "frys"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 5,
+    "steps": [
+      "Koka riset.",
+      "Forma små bollar av kycklingfärs, ägg och kryddor och stek dem runt om.",
+      "Häll på grädde och curry och låt bollarna sjuda färdigt.",
+      "Servera med ris och rivna morötter."
+    ]
+  },
+  {
+    "id": "matappen-35",
+    "name": "Burritos med köttfärs",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 35,
+    "ingredients": [
+      "Nötfärs: 700 g",
+      "Tortilla: 8 st",
+      "Ris: 4 port",
+      "Svarta bönor: 1 burk",
+      "Salsa: 1 burk",
+      "Riven ost: 200 g"
+    ],
+    "tags": [
+      "barnvänlig",
+      "fredag",
+      "matlåda"
+    ],
+    "external": false,
+    "lunch": 4,
+    "freeze": 4,
+    "steps": [
+      "Koka riset och stek färsen med tacokrydda.",
+      "Blanda färs, ris och bönor.",
+      "Fördela fyllningen i tortillas, toppa med salsa och ost och rulla ihop.",
+      "Gratinera kort i ugn."
+    ]
+  },
+  {
+    "id": "matappen-36",
+    "name": "Tacogratäng",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 40,
+    "ingredients": [
+      "Nötfärs: 700 g",
+      "Tacokrydda: 1 påse",
+      "Crème fraiche: 4 dl",
+      "Majs: 1 burk",
+      "Riven ost: 200 g",
+      "Nachochips: 1 påse"
+    ],
+    "tags": [
+      "barnvänlig",
+      "fredag",
+      "matlåda"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 4,
+    "steps": [
+      "Stek färsen och krydda.",
+      "Lägg färsen i en form och fördela majs och crème fraiche ovanpå.",
+      "Toppa med ost och gratinera.",
+      "Servera med nachochips och sallad."
+    ]
+  },
+  {
+    "id": "matappen-37",
+    "name": "Pizzabullar",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 50,
+    "ingredients": [
+      "Vetemjöl: 8 dl",
+      "Jäst: 25 g",
+      "Mjölk: 3 dl",
+      "Skinka: 250 g",
+      "Ost: 250 g",
+      "Tomatsås: 2 dl"
+    ],
+    "tags": [
+      "frys",
+      "batch",
+      "barnvänlig"
+    ],
+    "external": false,
+    "lunch": 3,
+    "freeze": 5,
+    "steps": [
+      "Gör en mjuk deg och låt jäsa.",
+      "Kavla ut, bred på tomatsås, skinka och ost.",
+      "Rulla ihop, skär i bitar och grädda.",
+      "Låt svalna helt och frys styckvis."
+    ]
+  },
+  {
+    "id": "matappen-38",
+    "name": "Köttfärspiroger",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 70,
+    "ingredients": [
+      "Nötfärs: 600 g",
+      "Gul lök: 1 st",
+      "Pirogdeg: 2 pkt",
+      "Ost: 150 g",
+      "Ägg: 1 st"
+    ],
+    "tags": [
+      "frys",
+      "batch",
+      "protein"
+    ],
+    "external": false,
+    "lunch": 5,
+    "freeze": 5,
+    "steps": [
+      "Stek färs och lök och låt fyllningen svalna.",
+      "Fyll degbitar med färs och ost och vik ihop.",
+      "Pensla med ägg och grädda.",
+      "Frys när pirogerna svalnat."
+    ]
+  },
+  {
+    "id": "matappen-39",
+    "name": "Bananpannkakor",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 20,
+    "ingredients": [
+      "Banan: 4 st",
+      "Ägg: 6 st",
+      "Havregryn: 4 dl",
+      "Kanel: 1 tsk"
+    ],
+    "tags": [
+      "frys",
+      "snabb",
+      "barnvänlig"
+    ],
+    "external": false,
+    "lunch": 2,
+    "freeze": 4,
+    "steps": [
+      "Mixa allt till en smet.",
+      "Stek små pannkakor på medelvärme.",
+      "Låt svalna och frys med bakplåtspapper mellan lagren."
+    ]
+  },
+  {
+    "id": "matappen-40",
+    "name": "Ost- och skinkhorn",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 45,
+    "ingredients": [
+      "Deg: 2 pkt",
+      "Skinka: 250 g",
+      "Ost: 250 g",
+      "Ägg: 1 st"
+    ],
+    "tags": [
+      "frys",
+      "batch",
+      "barnvänlig"
+    ],
+    "external": false,
+    "lunch": 3,
+    "freeze": 5,
+    "steps": [
+      "Dela degen i trianglar.",
+      "Lägg på skinka och ost och rulla ihop.",
+      "Pensla med ägg och grädda tills gyllene.",
+      "Frys efter avsvalning."
+    ]
+  },
+  {
+    "id": "matappen-41",
+    "name": "Miniquesadillas med kyckling",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 25,
+    "ingredients": [
+      "Tortilla: 6 st",
+      "Tillagad kyckling: 300 g",
+      "Riven ost: 250 g",
+      "Majs: 1 liten burk"
+    ],
+    "tags": [
+      "frys",
+      "protein",
+      "barnvänlig"
+    ],
+    "external": false,
+    "lunch": 4,
+    "freeze": 4,
+    "steps": [
+      "Fördela kyckling, ost och majs på halva tortillabröden.",
+      "Vik ihop och stek lätt på båda sidor.",
+      "Skär varje quesadilla i två delar och låt svalna.",
+      "Frys styckvis."
+    ]
+  },
+  {
+    "id": "matappen-42",
+    "name": "Havre- och bananmuffins",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 35,
+    "ingredients": [
+      "Banan: 3 st",
+      "Ägg: 3 st",
+      "Havregryn: 5 dl",
+      "Mjölk: 2 dl",
+      "Bakpulver: 2 tsk",
+      "Kanel: 1 tsk"
+    ],
+    "tags": [
+      "frys",
+      "batch",
+      "barnvänlig"
+    ],
+    "external": false,
+    "lunch": 2,
+    "freeze": 5,
+    "steps": [
+      "Mixa banan, ägg och mjölk.",
+      "Rör ner havregryn, bakpulver och kanel.",
+      "Fördela i muffinsformar och grädda tills de stannat.",
+      "Kyl och frys."
+    ]
+  },
+  {
+    "id": "matappen-43",
+    "name": "Pannkaksrullar med skinka och ost",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 40,
+    "ingredients": [
+      "Pannkakor: 12 st",
+      "Skinka: 300 g",
+      "Riven ost: 250 g",
+      "Crème fraiche: 2 dl"
+    ],
+    "tags": [
+      "frys",
+      "batch",
+      "protein"
+    ],
+    "external": false,
+    "lunch": 4,
+    "freeze": 4,
+    "steps": [
+      "Lägg skinka, ost och en liten klick crème fraiche på varje pannkaka.",
+      "Rulla ihop och lägg tätt i en form.",
+      "Värm kort i ugn tills osten smält.",
+      "Låt svalna och frys styckvis."
+    ]
+  },
+  {
+    "id": "matappen-44",
+    "name": "Frukostwraps med ägg och skinka",
+    "source": "Matappen",
+    "url": "",
+    "minutes": 30,
+    "ingredients": [
+      "Tortilla: 10 st",
+      "Ägg: 8 st",
+      "Skinka: 300 g",
+      "Riven ost: 200 g"
+    ],
+    "tags": [
+      "frys",
+      "protein",
+      "mättande"
+    ],
+    "external": false,
+    "lunch": 4,
+    "freeze": 4,
+    "steps": [
+      "Gör mjuk äggröra.",
+      "Fördela ägg, skinka och ost på tortillas.",
+      "Rulla tätt och låt svalna.",
+      "Frys styckvis och värm vid behov."
+    ]
+  }
+]
