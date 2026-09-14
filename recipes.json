@@ -1,1 +1,3027 @@
-[]
+[
+  {
+    "id": "6ef2644aa621eec8b7d6",
+    "name": "Amerikanska pannkakor",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/amerikanska-pannkakor/",
+    "minutes": 20,
+    "portions": 10,
+    "ingredients": [
+      "3 dl vetemjöl",
+      "2 tsk bakpulver",
+      "1 msk strösocker",
+      "½ tsk salt",
+      "3½ dl Arla Ko® Mild yoghurt naturell, filmjölk eller mjölk",
+      "1 ägg",
+      "½ dl Arla Köket® Smör- & rapsolja + extra till stekning",
+      "lönnsirap",
+      "blandade färska bär"
+    ],
+    "image": "https://images.arla.com/recordid/D2232F22-C134-4DBD-AB668970D473A24C/amerikanska-pannkakor.jpg?width=1300&height=525&mode=crop&crop=(0,7,0,-347)&format=webp",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "69f4e2579ed3fe6b09be",
+    "name": "Blomkålssoppa",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/blomkalssoppa/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "700 g blomkål",
+      "7 dl vatten",
+      "1 tärning grönsaksbuljong",
+      "2 dl Arla Köket® Vispgrädde",
+      "1 krm svartpeppar",
+      "ev ½ tsk salt",
+      "½ dl hackad färsk persilja"
+    ],
+    "image": "https://images.arla.com/recordid/A36612E0-C18A-42BE-82E8586CF8F17BA0/blomkalssoppa.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "89e5ab17236a4a772406",
+    "name": "Chicken korma",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/chicken-korma/",
+    "minutes": 50,
+    "portions": 4,
+    "ingredients": [
+      "500 g kycklinglårfilé",
+      "1 dl Arla Köket® Turkisk yoghurt 10%",
+      "2 tsk malen kardemumma",
+      "1 tsk malen kryddnejlika",
+      "1 tsk malen koriander",
+      "1 tsk malen gurkmeja",
+      "1 tsk malen spiskummin",
+      "1 tsk paprikapulver",
+      "1 tsk garam masala",
+      "1 tsk salt",
+      "1 tsk grovmalen svartpeppar",
+      "2 msk Arla Köket® Smör- & rapsolja",
+      "1½ dl naturella cashewnötter",
+      "250 ml kokosmjölk",
+      "1 gul lök",
+      "3 vitlöksklyftor",
+      "2 tomater",
+      "1 msk Arla Köket® Smör- & rapsolja",
+      "2 msk färsk ingefära, finhackad",
+      "2 dl vatten",
+      "1 msk kycklingfond",
+      "3½ dl basmatiris",
+      "2 dl Arla Köket® Turkisk yoghurt 10%",
+      "1 kruka färsk koriander"
+    ],
+    "image": "https://images.arla.com/recordid/44CA44BF-2489-4F8B-B45550F4849E95EF/picture.jpg?width=1300&height=525&mode=crop&crop=(0,134,0,-201)&format=webp",
+    "tags": [
+      "kyckling",
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "6cdccce1819eef302689",
+    "name": "Chili con carne",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/chili-con-carne/",
+    "minutes": 40,
+    "portions": 4,
+    "ingredients": [
+      "500 g nötfärs",
+      "2 gula lökar",
+      "3 vitlöksklyftor",
+      "1 röd paprika",
+      "1 msk Arla Köket® Smör- & rapsolja",
+      "3 msk tomatpuré",
+      "1 tsk sambal oelek",
+      "2 tsk malen spiskummin",
+      "2 tsk malen koriander",
+      "2 tsk torkad oregano",
+      "1 tsk kakao",
+      "1 tsk salt",
+      "2 krm nymalen svartpeppar",
+      "400 g krossade tomater",
+      "2½ dl vatten",
+      "1 tärning grönsaksbuljong",
+      "1 burk kidneybönor (ca. à 400 g)",
+      "3½ dl ris",
+      "1 kruka färsk persilja eller koriander",
+      "3 dl Arla Ko® Gräddfil"
+    ],
+    "image": "https://images.arla.com/recordid/F64E02CD-D5C7-422E-B57B1DF15E2C1576/picture.jpg?width=1300&height=525&mode=crop&crop=(0,287,0,-67)&format=webp",
+    "tags": [
+      "köttfärs",
+      "vegetariskt"
+    ],
+    "external": true
+  },
+  {
+    "id": "0c1eab9158ec96275607",
+    "name": "Chorizopasta",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/chorizopasta/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "400 g rå chorizo eller chorizofärs",
+      "1 schalottenlök",
+      "2 vitlöksklyftor",
+      "1 röd paprika",
+      "2 tomater",
+      "2 msk Arla Köket® Smör- & rapsolja",
+      "1 msk tomatpuré",
+      "2 dl Arla Köket® Crème fraiche",
+      "salt och svartpeppar",
+      "ev. 1 tsk chili flakes",
+      "360 g pasta, gärna fullkorn",
+      "1 kruka färsk basilika",
+      "100 g Arla Ko® Dackeost"
+    ],
+    "image": "https://images.arla.com/recordid/706AB0BA-6DA7-4B3D-97C2F9A8090A36AC/chorizopasta.jpg?width=1300&height=525&mode=crop&crop=(0,0,0,-354)&format=webp",
+    "tags": [
+      "köttfärs",
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "ea354131a12ea2aba60d",
+    "name": "Cowboysoppa",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/cowboysoppa/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "1 bananschalottenlök",
+      "2 vitlöksklyftor",
+      "2 msk Arla Köket® Smör- & rapsolja",
+      "2 msk tomatpuré",
+      "1 msk malen spiskummin",
+      "1 tsk curry",
+      "300 g baljväxtfärs eller nötfärs",
+      "6 dl vatten",
+      "2 tärningar grönsaksbuljong eller köttbuljong",
+      "1 bakpotatis",
+      "250 g cocktailtomater",
+      "1 röd paprika",
+      "2 dl majskorn",
+      "2 dl Arla Köket® Lätt crème fraiche paprika & chili",
+      "salt och svartpeppar",
+      "färsk oregano",
+      "1 surdegsbaguette"
+    ],
+    "image": "https://images.arla.com/recordid/2D09597D-9EA3-48BE-B62DDFB5CB431105/cowboysoppa.jpg?width=1300&height=525&mode=crop&crop=(0,77,0,-277)&format=webp",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "28b66a3c325b58e6c2a5",
+    "name": "Currysås",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/currysas/",
+    "minutes": 10,
+    "portions": 4,
+    "ingredients": [
+      "2 msk curry",
+      "2 msk vetemjöl",
+      "2 msk Svenskt Smör från Arla®",
+      "2 msk mango chutney",
+      "1 dl kycklingbuljong",
+      "3 dl Arla Ko® Syrad grädde",
+      "1 tsk salt"
+    ],
+    "image": "https://images.arla.com/recordid/DFE86C24-2335-4073-AB861AEBBDD0C3EC/currysas.jpg?width=1300&height=525&mode=crop&crop=(0,0,0,-354)&format=webp",
+    "tags": [
+      "kyckling"
+    ],
+    "external": true
+  },
+  {
+    "id": "7d634985a6ac17540957",
+    "name": "Dragonkyckling",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/dragonkyckling/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "600 g kycklingbröstfilé",
+      "1 tsk salt",
+      "2 krm nymalen svartpeppar",
+      "1 msk Arla Köket® Smör- & rapsolja",
+      "2 dl Arla Köket® Lätt crème fraiche dragon, citron & vitlök",
+      "2 dl Arla Ko® Standardmjölk",
+      "½ tärning hönsbuljong",
+      "1 kruka hackad färsk persilja",
+      "900 g potatis",
+      "500 g morot",
+      "250 g palsternacka",
+      "2 msk Arla Köket® Smör- & rapsolja",
+      "1½ tsk salt",
+      "1 tsk torkad rosmarin"
+    ],
+    "image": "https://images.arla.com/recordid/6133207A-6ACD-461F-9F9C88EFFB5C1C99/dragonkyckling.jpg?width=1300&height=525&mode=crop&crop=(0,114,0,-306)&format=webp",
+    "tags": [
+      "kyckling",
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "1c549d7c3890d43bcd0f",
+    "name": "Fattiga riddare",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/fattiga-riddare/",
+    "minutes": 15,
+    "portions": 4,
+    "ingredients": [
+      "1½ dl Arla Ko® Standardmjölk",
+      "½ dl vetemjöl",
+      "1 ägg",
+      "1 krm salt",
+      "1 tsk strösocker",
+      "4 skivor ljust bröd",
+      "2 msk Svenskt Smör från Arla®",
+      "malen kanel",
+      "strösocker",
+      "KESO® Cottage cheese",
+      "björnbär"
+    ],
+    "image": "https://images.arla.com/recordid/92FDF5DA-9493-46F4-B218D9F9CD42CEA2/fattiga-riddare.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [],
+    "external": true
+  },
+  {
+    "id": "78a27f55208897d700ab",
+    "name": "Fetaostbiffar",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/fetaostbiffar/",
+    "minutes": 25,
+    "portions": 4,
+    "ingredients": [
+      "500 g blandfärs",
+      "1 vitlöksklyfta",
+      "2 msk finhackad färsk timjan",
+      "1 tsk chili flakes",
+      "1 ägg",
+      "1 citron, finrivet skal",
+      "1 tsk salt",
+      "2 krm nymalen svartpeppar",
+      "150 g fetaost eller Apetina® Vitost 10%",
+      "1 msk Arla Köket® Smör- & rapsolja",
+      "900 g delikatesspotatis",
+      "1 msk Arla Köket® Smör- & rapsolja",
+      "1 tsk salt",
+      "1 gurka",
+      "2 dl Arla Köket® Turkisk yoghurt 200 g",
+      "1 vitlöksklyfta",
+      "ca 2 krm salt",
+      "150 g Apetina® Vitost 10%",
+      "bladpersilja",
+      "blandad grönsallad"
+    ],
+    "image": "https://images.arla.com/recordid/0FDC4BF5-EC74-44C5-AA151DFA124A4463/fetaostbiffar.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "caac8eba11a07a1e3634",
+    "name": "Grekiska färsbiffar",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/grekiska-farsbiffar/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "500 g nötfärs",
+      "½ tsk salt",
+      "1 krm svartpeppar",
+      "1 pressad vitlöksklyfta",
+      "½ dl hackad färsk persilja",
+      "3 msk vatten",
+      "150 g Apetina® Vitost 20% eller fetaost",
+      "1 msk Svenskt Smör från Arla®",
+      "600 g klyftpotatis",
+      "½ gurka",
+      "½ tsk salt",
+      "2 dl Arla Köket® Turkisk yoghurt 10%",
+      "1 pressad vitlöksklyfta",
+      "1 krm svartpeppar",
+      "1 romansallad",
+      "1 rödlök",
+      "1 gul paprika",
+      "4 tomater"
+    ],
+    "image": "https://images.arla.com/recordid/DACA8C5D-29B2-42AF-B08C04DBE1A00C39/grekiska-farsbiffar.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "e9b7f74d5e166734b81f",
+    "name": "Gräddsås till köttbullar",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/graddsas-till-kottbullar/",
+    "minutes": 20,
+    "portions": 3,
+    "ingredients": [
+      "50 g Svenskt Smör från Arla®",
+      "1 msk vetemjöl",
+      "3 dl Arla Ko® Vispgrädde",
+      "1 tsk örtkryddor, t ex torkad timjan",
+      "½ tärning köttbuljong",
+      "1 msk japansk soja",
+      "1 msk ev. madeira",
+      "2 tsk worcestershiresås",
+      "salt och peppar"
+    ],
+    "image": "https://images.arla.com/recordid/92AFDB80-E015-4E9B-845286A7CD0E37A8/graddsas-till-kottbullar.jpg?width=1300&height=525&mode=crop&crop=(0,37,0,-317)&format=webp",
+    "tags": [],
+    "external": true
+  },
+  {
+    "id": "7e095bcbb773c7fb82c9",
+    "name": "Kantarellpasta",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/kantarellpasta/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "1 schalottenlök",
+      "2 vitlöksklyftor",
+      "½ färsk röd chili",
+      "ca 300 g färska kantareller",
+      "360 g pasta, gärna fullkorn",
+      "25 g Svenskt Smör från Arla®",
+      "1½ dl torrt vitt vin",
+      "3 dl Arla Ko® Vispgrädde",
+      "1 tärning svampbuljong",
+      "salt och svartpeppar",
+      "1 kruka färsk persilja, hackad",
+      "2 dl parmesanost, nyriven"
+    ],
+    "image": "https://images.arla.com/recordid/C0E8BA98-B165-4AAC-B93D806E7A9420C7/kantarellpasta.jpg?width=1300&height=525&mode=crop&crop=(0,147,0,-207)&format=webp",
+    "tags": [
+      "köttfärs",
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "f26852da9c64ccd525a3",
+    "name": "Kyckling med parmaskinka och balsamsås",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/kyckling-med-parmaskinka-och-balsamsas/",
+    "minutes": 40,
+    "portions": 4,
+    "ingredients": [
+      "500 g kycklinglårfilé",
+      "1 tsk salt",
+      "1 krm svartpeppar",
+      "2 msk Svenskt Smör från Arla®",
+      "2 tsk torkad oregano",
+      "4 skivor parmaskinka",
+      "3 dl Arla Ko® Vispgrädde",
+      "2 msk balsamvinäger",
+      "1 msk kycklingfond",
+      "2 vitlöksklyftor",
+      "150 g sockerärter",
+      "200 g cocktailtomater",
+      "färsk oregano eller timjan",
+      "500 g potatisgnocchi"
+    ],
+    "image": "https://images.arla.com/recordid/10B9F073-C4D2-447F-94EF801E11376D59/kyckling-med-parmaskinka-och-balsamsas.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "kyckling",
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "612a382fe52d2723b599",
+    "name": "Kycklingben i ugn",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/kycklingben-i-ugn/",
+    "minutes": 60,
+    "portions": 4,
+    "ingredients": [
+      "1 dl japansk soja",
+      "½ dl chilisås",
+      "2 msk Arla Köket® Smör- & rapsolja",
+      "1 vitlöksklyfta",
+      "1 tsk torkad timjan",
+      "1 tsk curry",
+      "½ kruka färsk oregano",
+      "900 g kycklingben",
+      "900 g potatis",
+      "500 g morot",
+      "1 tsk salt",
+      "½ tsk nymalen svartpeppar",
+      "100 g babyspenat",
+      "2 dl Arla Köket® Lätt crème fraiche paprika & chili"
+    ],
+    "image": "https://images.arla.com/recordid/69033D6D-3737-4C5F-A291627A74D31BD9/kycklingben-i-ugn.jpg?width=1300&height=525&mode=crop&crop=(0,27,0,-327)&format=webp",
+    "tags": [
+      "kyckling",
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "7ff68a912582b2e124db",
+    "name": "Kycklingfilé i ugn",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/kycklingfile-i-ugn/",
+    "minutes": 40,
+    "portions": 4,
+    "ingredients": [
+      "4 kycklingbröstfiléer",
+      "1 tsk salt",
+      "1 krm svartpeppar",
+      "1 msk Svenskt Smör från Arla®",
+      "400 g potatisgnocchi",
+      "65 g babyspenat",
+      "5 dl Arla Köket® Matlagningsgrädde",
+      "¾ dl pesto",
+      "1 msk balsamvinäger",
+      "1 msk kycklingfond",
+      "100 g Arla® Familjefavoriter Mozzarella",
+      "1 kruka färsk basilika",
+      "1 röd paprika",
+      "1 zucchini",
+      "1 liten rödlök",
+      "125 g cocktailtomater",
+      "70 g rucola",
+      "1 msk citronsaft",
+      "1 krm salt"
+    ],
+    "image": "https://images.arla.com/recordid/2ACDF031-CF05-42A5-8B30A8590CEA7ED6/kycklingfile-i-ugn.jpg?width=1300&height=525&mode=crop&crop=(0,37,0,-317)&format=webp",
+    "tags": [
+      "kyckling",
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "3e2042e55e50d9729458",
+    "name": "Kycklingfärsbiffar",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/kycklingfarsbiffar/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "1 kg potatis",
+      "1 msk Arla Köket® Smör- & rapsolja",
+      "1 tsk salt",
+      "2 krm svartpeppar",
+      "½ gurka",
+      "½ tsk salt",
+      "2 dl Arla Köket® Grekisk yoghurt 10%",
+      "1 vitlöksklyfta",
+      "500 g kycklingfärs",
+      "150 g Apetina® Vitost 20%",
+      "1 ägg",
+      "1 vitlöksklyfta",
+      "2 msk färsk oregano, hackad",
+      "2 tsk paprikapulver",
+      "1 citron, finrivet skal",
+      "1 tsk salt",
+      "2 msk Arla Köket® Smör- & rapsolja",
+      "½ gurka",
+      "250 g cocktailtomater",
+      "1 rödlök",
+      "1 avokado"
+    ],
+    "image": "https://images.arla.com/recordid/E5B6431B-C243-46E5-8D36C83CC761FD5A/kycklingfarsbiffar.jpg?width=1300&height=525&mode=crop&crop=(0,0,0,-354)&format=webp",
+    "tags": [
+      "kyckling",
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "6013eea68aac73565e50",
+    "name": "Kycklinggryta",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/kycklinggryta/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "900 g potatis",
+      "450 g kycklinglårfilé",
+      "1 msk Arla Köket® Smör- & rapsolja",
+      "½ tsk salt",
+      "1 krm svartpeppar",
+      "250 g broccoli",
+      "2 dl Arla Köket® Lätt crème fraiche feta & soltorkad tomat"
+    ],
+    "image": "https://images.arla.com/recordid/A0B0174D-3086-4739-9BDE8AD84D1C3018/kycklinggryta.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "kyckling"
+    ],
+    "external": true
+  },
+  {
+    "id": "f8ea40bdbd35900f9680",
+    "name": "Kycklinggryta med kokosmjölk",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/kycklinggryta-med-kokosmjolk/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "450 g kycklinglårfilé",
+      "1 gul lök",
+      "2 vitlöksklyftor",
+      "1 röd paprika",
+      "2 msk Arla Köket® Smör- & rapsolja",
+      "2 tsk curry",
+      "2 tsk paprikapulver",
+      "½ tsk salt",
+      "400 ml kokosmjölk",
+      "2½ dl Arla Köket® Matlagningsgrädde",
+      "1 tärning kycklingbuljong",
+      "3½ dl ris",
+      "1 kruka färsk persilja",
+      "1 dl mango chutney"
+    ],
+    "image": "https://images.arla.com/recordid/5DFE9FB7-C285-414B-95486F38C8BDB894/kycklinggryta-med-kokosmjolk.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "kyckling",
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "1d50303d2fcc19350f71",
+    "name": "Kycklinglår i ugn",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/kycklinglar-i-ugn/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "900 g kycklinglår med skinn och ben",
+      "½ tsk salt",
+      "1 krm svartpeppar",
+      "1 msk Svenskt Smör från Arla®",
+      "1 dl strimlade soltorkade tomater",
+      "2 vitlöksklyftor, finhackade",
+      "1 tsk chili flakes",
+      "2 dl vitt vin",
+      "3 dl Arla Ko® Vispgrädde",
+      "1 tärning hönsbuljong",
+      "50 g parmesanost, finriven",
+      "4 port ris, couscous eller bulgur",
+      "blandad grönsallad"
+    ],
+    "image": "https://images.arla.com/recordid/92D07A83-CDE6-4CEB-86393B9D7BA9D161/kycklinglar-i-ugn.jpg?width=1300&height=525&mode=crop&crop=(0,47,0,-307)&format=webp",
+    "tags": [
+      "kyckling"
+    ],
+    "external": true
+  },
+  {
+    "id": "63ac8ea6a9293f126c5d",
+    "name": "Kycklingpasta med spenat och parmesan",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/kycklingpasta-med-spenat-och-grillade-gronsaker/",
+    "minutes": 0,
+    "portions": 4,
+    "ingredients": [
+      "450 g kycklinglårfilé",
+      "2 msk Arla Köket® Smör- & rapsolja",
+      "1 tsk salt",
+      "1 krm svartpeppar",
+      "2 dl Arla Köket® Lätt crème fraiche parmesan & vitlök",
+      "65 g babyspenat",
+      "360 g pasta, gärna fullkorn"
+    ],
+    "image": "https://images.arla.com/recordid/3D226846-D4B2-445A-971F73C177C281EA/kycklingpasta-med-spenat-och-grillade-gronsaker.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "kyckling",
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "94f260c3b5ade1858d64",
+    "name": "Kålmaja",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/kalmaja/",
+    "minutes": 40,
+    "portions": 4,
+    "ingredients": [
+      "450 g vitkål",
+      "1 gul lök",
+      "25 g Svenskt Smör från Arla®",
+      "2 msk ljus sirap",
+      "400 g nötfärs",
+      "3 dl Arla Ko® Syrad grädde",
+      "1 dl vatten",
+      "1 tärning köttbuljong",
+      "1 msk kinesisk soja",
+      "salt och svartpeppar",
+      "900 g potatis",
+      "4 saltgurkor",
+      "1 msk finhackad bladpersilja"
+    ],
+    "image": "https://images.arla.com/recordid/F21DD33A-FB35-4049-AFB29CCD85A909A0/picture.jpg?width=1300&height=525&mode=crop&crop=(0,220,0,-134)&format=webp",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "a5d0c504b38055573836",
+    "name": "Kålpudding",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/kalpudding/",
+    "minutes": 65,
+    "portions": 4,
+    "ingredients": [
+      "½ dl ris (ca 1,5 dl kokt)",
+      "800 g vitkål",
+      "25 g Svenskt Smör från Arla®",
+      "2 msk sirap",
+      "½ tsk salt",
+      "1 dl vatten",
+      "1 gul lök",
+      "1 msk Svenskt Smör från Arla®",
+      "300 g blandfärs",
+      "1 tsk salt",
+      "1 krm peppar",
+      "1 ägg",
+      "1 dl Arla Ko® Standardmjölk",
+      "900 g potatis"
+    ],
+    "image": "https://images.arla.com/recordid/574E00A2-7732-4E8E-A014630DB321B6EA/kalpudding.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "7c5277101cc2dd88db6d",
+    "name": "Köttbullar",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/kottbullar/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "500 g blandfärs",
+      "½ dl ströbröd",
+      "1 dl Arla Ko® Standardmjölk",
+      "1 gul lök",
+      "1 ägg",
+      "1 krm malen kryddnejlika",
+      "1 krm malen kryddpeppar",
+      "1 tsk salt",
+      "1 krm svartpeppar",
+      "25 g Svenskt Smör från Arla®",
+      "1 kg mjölig potatis",
+      "2 dl Arla Ko® Standardmjölk",
+      "½ dl Arla Ko® Vispgrädde",
+      "1 tsk salt",
+      "225 g tinade frysta lingon",
+      "1 dl strösocker",
+      "1 gurka",
+      "½ tsk salt",
+      "2 msk ättiksprit 12%",
+      "4 msk strösocker",
+      "1 dl vatten",
+      "färsk persilja eller dill, hackad"
+    ],
+    "image": "https://images.arla.com/recordid/DABB690B-2F08-4D2B-8E47C383C5E1AC30/kottbullar.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "25740fa50f7a75570230",
+    "name": "Köttfärsgratäng",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/kottfarsgratang/",
+    "minutes": 70,
+    "portions": 4,
+    "ingredients": [
+      "400 g nötfärs",
+      "1 gul lök",
+      "2 vitlöksklyftor",
+      "1 msk Arla Köket® Smör- & rapsolja",
+      "3 msk tomatpuré",
+      "1 msk torkad oregano",
+      "100 g Arla® Färskost Naturell",
+      "1 tsk salt",
+      "2 krm malen svartpeppar",
+      "900 g potatis, gärna fast",
+      "75 g Arla Köket® Riven ost gratäng",
+      "2 dl Kelda® Mellangrädde",
+      "400 g kokta kikärter",
+      "2 röda paprikor",
+      "2 tomater",
+      "1 rödlök",
+      "70 g rucola",
+      "1 msk citronsaft"
+    ],
+    "image": "https://images.arla.com/recordid/41BF4B14-3C1E-427C-9798068751A5CAB1/kottfarsgratang.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "ba91315b893a89516037",
+    "name": "Köttfärslimpa",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/kottfarslimpa/",
+    "minutes": 60,
+    "portions": 4,
+    "ingredients": [
+      "500 g köttfärs nöt- eller blandfärs",
+      "4 msk ströbröd",
+      "1½ dl Arla Ko® Standardmjölk",
+      "1 gul lök",
+      "1 vitlöksklyfta",
+      "1 msk Arla Köket® Smör- & rapsolja",
+      "1 ägg",
+      "3 msk tomatpuré",
+      "2 tsk torkad timjan",
+      "1 tsk salt",
+      "1 krm peppar",
+      "900 g potatis",
+      "250 g frysta haricots verts",
+      "4 saltgurkor",
+      "4 msk svartvinbärsgelé"
+    ],
+    "image": "https://images.arla.com/recordid/44BC3469-E6D4-4F3E-96C9956A0C05D64E/kottfarslimpa.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "a8cd14b9321481a63f8d",
+    "name": "Köttfärssoppa",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/kottfarssoppa/",
+    "minutes": 0,
+    "portions": 4,
+    "ingredients": [
+      "1 gul lök",
+      "3 vitlöksklyftor",
+      "2 röda paprikor",
+      "1 bakpotatis",
+      "1 msk Arla Köket® Smör- & rapsolja",
+      "400 g köttfärs",
+      "3 msk tomatpuré",
+      "1 msk paprikapulver",
+      "1 msk torkad rosmarin",
+      "1 burk krossade tomater",
+      "1 liter vatten",
+      "2 dl Arla Köket® Vispgrädde",
+      "3 tärningar hönsbuljong",
+      "1 tsk salt",
+      "2 krm svartpeppar",
+      "färsk persilja, hackad",
+      "4 skivor danskt rågbröd",
+      "1 gurka"
+    ],
+    "image": "https://images.arla.com/recordid/9105A0F8-2DFF-4E74-B834FCE4C98A1B48/kottfarssoppa.jpg?width=1300&height=525&mode=crop&crop=(0,0,0,-354)&format=webp",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "581dfb7db593867d79f0",
+    "name": "Köttfärssås",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/kottfarssas/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "1 gul lök",
+      "1 morot",
+      "2 stjälkselleri",
+      "1 msk Arla Köket® Smör- & rapsolja",
+      "500 g nötfärs",
+      "1 dl rött matlagningsvin",
+      "1 burk krossade tomater (ca. 400 g)",
+      "1½ dl vatten",
+      "1 msk kalvfond",
+      "2 dl Arla Köket® Matlagningsgrädde",
+      "1 tsk salt",
+      "1 krm grovmalen svartpeppar",
+      "1 tsk torkad oregano",
+      "2 tsk sambal oelek",
+      "360 g pasta penne, gärna fullkorn",
+      "3 msk färsk timjan"
+    ],
+    "image": "https://images.arla.com/recordid/19151E5C-45B2-4241-82E230A3CE11B1DD/picture.jpg?width=1300&height=525&mode=crop&crop=(0,262,0,-92)&format=webp",
+    "tags": [
+      "köttfärs",
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "2cbcc03acfc4d77c2905",
+    "name": "Köttfärssås 50/50",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/kottfarssas-5050/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "1 gul lök",
+      "2 vitlöksklyftor",
+      "1 morot",
+      "1 stjälk blekselleri",
+      "2 msk Arla Köket® Smör- & rapsolja",
+      "2 msk tomatpuré",
+      "200 g nötfärs",
+      "2 dl vatten",
+      "1 burk krossade tomater à 400 g",
+      "2 dl belugalinser",
+      "1 tsk salt",
+      "2 dl Arla Köket® Lätt crème fraiche paprika & chili",
+      "1 tsk torkad oregano",
+      "nymalen svartpeppar",
+      "360 g pasta, gärna fullkorn",
+      "1 kruka färsk basilika"
+    ],
+    "image": "https://images.arla.com/recordid/FC1366DB-365E-4907-B879AB0D6E6FC541/picture.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "köttfärs",
+      "pasta",
+      "vegetariskt"
+    ],
+    "external": true
+  },
+  {
+    "id": "9fbc4ff981adb8e9015f",
+    "name": "Lasagne",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/lasagne/",
+    "minutes": 60,
+    "portions": 4,
+    "ingredients": [
+      "500 g köttfärs",
+      "2 gula lökar",
+      "2 vitlöksklyftor",
+      "1 msk Arla Köket® Smör- & rapsolja",
+      "400 g krossade tomater",
+      "2 msk tomatpuré",
+      "2 tsk torkad oregano",
+      "1 krm svartpeppar",
+      "1 tärning grönsaksbuljong",
+      "9 lasagneplattor",
+      "3 msk vetemjöl",
+      "7 dl Arla Ko® Standardmjölk",
+      "3 dl Arla Köket® Riven ost gratäng",
+      "½ tsk salt"
+    ],
+    "image": "https://images.arla.com/recordid/AC5AFA8E-0E63-495E-9B7081C00C24072D/lasagne.jpg?width=1300&height=525&mode=crop&crop=(0,0,0,-354)&format=webp",
+    "tags": [
+      "köttfärs",
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "0b3c99786413df375f30",
+    "name": "Lasagnesoppa",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/lasagnesoppa/",
+    "minutes": 40,
+    "portions": 4,
+    "ingredients": [
+      "1 gul lök",
+      "3 vitlöksklyftor",
+      "2 msk Arla Köket® Smör- & rapsolja",
+      "500 g köttfärs",
+      "3 msk tomatpuré",
+      "1 msk paprikapulver",
+      "1 msk hackad färsk rosmarin eller 1 tsk torkad",
+      "400 g krossade tomater",
+      "1 msk sambal oelek",
+      "1 liter vatten",
+      "3 tärningar hönsbuljong",
+      "1 röd paprika",
+      "4 torra lasagneplattor",
+      "salt och svartpeppar",
+      "100 g parmesanost",
+      "2 dl Arla Köket® Crème fraiche",
+      "färsk basilika"
+    ],
+    "image": "https://images.arla.com/recordid/38214581-DA60-4F9D-9176293690D608D0/lasagnesoppa.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "köttfärs",
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "8af9e8df26389cf99cd5",
+    "name": "Laxpastasås",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/laxpastasas/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "360 g pasta, gärna fullkorn",
+      "1 purjolök",
+      "1 msk Arla Köket® Smör- & rapsolja",
+      "2 dl vitt matlagningsvin",
+      "2 dl Arla Köket® Crème fraiche",
+      "1 fiskbuljong",
+      "70 g babyspenat",
+      "300 g varmrökt lax",
+      "2 msk färsk dill",
+      "1 citron",
+      "150 g sockerärter",
+      "1 gurka",
+      "8 rädisor",
+      "70 g machésallad"
+    ],
+    "image": "https://images.arla.com/recordid/DFFD33E3-674F-4FC6-9885DBB8F6A82516/picture.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "köttfärs",
+      "fisk",
+      "lax",
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "db8f64a9688b607b903c",
+    "name": "Lövbiffspasta",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/lovbiffspasta/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "ca 400 g lövbiff",
+      "salt och svartpeppar",
+      "250 g champinjoner",
+      "1 purjolök",
+      "Svenskt Smör från Arla®, till stekning",
+      "2 vitlöksklyftor, finrivna",
+      "2 dl Arla Köket® Crème fraiche",
+      "2½ dl Kelda® Matlagningsgrädde",
+      "1 msk dijonsenap",
+      "1 msk sambal oelek",
+      "1 tärning hönsbuljong",
+      "360 g pasta penne, gärna fullkorn",
+      "140 g Kvibille® Ädel Grädd",
+      "färsk timjan eller smörgåskrasse"
+    ],
+    "image": "https://images.arla.com/recordid/AFA499AA-36B5-4A2E-B55AF86D865E4B85/lovbiffspasta.jpg?width=1300&height=525&mode=crop&crop=(0,67,0,-287)&format=webp",
+    "tags": [
+      "köttfärs",
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "9d87153261fdee2c78ea",
+    "name": "Morotssoppa",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/morotssoppa-med-ingefara/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "500 g morot",
+      "2 gula lökar",
+      "Svenskt Smör från Arla®",
+      "8 dl vatten",
+      "2 tärningar grönsaksbuljong",
+      "2½ dl Kelda® Matlagningsgrädde",
+      "250 g KESO® Cottage cheese",
+      "½ msk riven färsk ingefära",
+      "1 krm salt"
+    ],
+    "image": "https://images.arla.com/recordid/A03A1C52-52D0-4F6A-A12F837BBA4679A5/morotssoppa-med-ingefara.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "27e45559db76ef5d4882",
+    "name": "Omelett",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/omelett/",
+    "minutes": 10,
+    "portions": 2,
+    "ingredients": [
+      "6 ägg",
+      "4 msk Arla Ko® Standardmjölk",
+      "2 krm salt",
+      "1 krm nymalen svartpeppar",
+      "2 msk Svenskt Smör från Arla®"
+    ],
+    "image": "https://images.arla.com/recordid/6EE21802-A5D3-4E76-9255F28AB79D46A1/picture.jpg?width=1300&height=525&mode=crop&crop=(0,139,0,-215)&format=webp",
+    "tags": [],
+    "external": true
+  },
+  {
+    "id": "c24e71c208d92a18a528",
+    "name": "Overnight oats",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/overnight-oats/",
+    "minutes": 480,
+    "portions": 4,
+    "ingredients": [
+      "4 dl havregryn",
+      "6 dl Arla Ko® Standardmjölk",
+      "2 msk chiafrön",
+      "blandade färska bär",
+      "kokoschips",
+      "äpplen",
+      "flytande honung",
+      "blandade nötter"
+    ],
+    "image": "https://images.arla.com/recordid/A7293C5F-AD4A-407C-B955CAB92253567A/overnight-oats.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "129f7d7cefd088deb6b7",
+    "name": "Pad thai",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/pad-thai/",
+    "minutes": 25,
+    "portions": 4,
+    "ingredients": [
+      "1 msk strösocker",
+      "2 msk kokande vatten",
+      "1 msk srirachasås",
+      "1 msk risvinäger",
+      "2 msk fisksås",
+      "2 msk tamarisoja",
+      "pressad saft av 1 lime",
+      "250 g breda risnudlar",
+      "180 g böngroddar",
+      "1 knippe salladslök",
+      "1 röd chili",
+      "2 vitlöksklyftor",
+      "200 g kycklinglårfilé",
+      "25 g Svenskt Smör från Arla®",
+      "salt och svartpeppar",
+      "200 g stora räkor utan skal",
+      "2 ägg",
+      "1 dl jordnötter, hackade",
+      "1 kruka färsk koriander",
+      "1 dl rostad lök",
+      "chili flakes"
+    ],
+    "image": "https://images.arla.com/recordid/A06C044C-68AA-454A-850B0AC6AABE06A6/pad-thai.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "kyckling",
+      "köttfärs",
+      "fisk"
+    ],
+    "external": true
+  },
+  {
+    "id": "7a9bd4951342a61ce6c2",
+    "name": "Pannbiff",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/pannbiff/",
+    "minutes": 40,
+    "portions": 4,
+    "ingredients": [
+      "500 g nötfärs",
+      "½ dl ströbröd",
+      "1 dl Kelda® Matlagningsgrädde",
+      "2 msk gul lök, finhackad",
+      "1 ägg",
+      "1 tsk salt",
+      "1 krm svartpeppar",
+      "2 msk Arla Köket® Smör- & rapsolja",
+      "2 gula lökar",
+      "2 msk Arla Köket® Smör- & rapsolja",
+      "salt och svartpeppar",
+      "900 g potatis",
+      "250 g broccoli"
+    ],
+    "image": "https://images.arla.com/recordid/2B443A39-1320-475C-8E213FBB4B882B6B/pannbiff.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "a2323b4b97888802aa4f",
+    "name": "Pannkakor",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/pannkaka/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "3 dl vetemjöl",
+      "6 dl Arla Ko® Standardmjölk",
+      "3 ägg",
+      "½ tsk salt",
+      "3 msk Arla Köket® Smör- & rapsolja, till stekning"
+    ],
+    "image": "https://images.arla.com/recordid/CAF6A3FD-D0CB-4979-B54A4866FC4EBDD3/pannkaka.jpg?width=1300&height=525&mode=crop&crop=(0,37,0,-317)&format=webp",
+    "tags": [],
+    "external": true
+  },
+  {
+    "id": "885e1b8045f7e08dc314",
+    "name": "Pasta Alfredo med kyckling",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/pasta-alfredo-med-kyckling/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "360 g fettuccine, gärna fullkorn",
+      "400 g kycklinglårfilé",
+      "salt och svartpeppar",
+      "2 schalottenlökar",
+      "3 vitlöksklyftor",
+      "½ kruka färsk timjan",
+      "2 msk Arla Köket® Smör- & rapsolja",
+      "3 dl Arla Ko® Syrad grädde",
+      "1½ dl vatten, från pastakoket",
+      "2 dl frysta gröna ärter",
+      "1 tärning kycklingbuljong",
+      "100 g Arla Ko® Präst® ost, finriven"
+    ],
+    "image": "https://images.arla.com/recordid/1354D78A-0513-47DF-B0A6B9B88068F2F7/pasta-alfredo-med-kyckling.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "kyckling",
+      "köttfärs",
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "4db937aa46992dad66b3",
+    "name": "Pasta carbonara",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/pasta-carbonara/",
+    "minutes": 15,
+    "portions": 4,
+    "ingredients": [
+      "300 g spaghetti, gärna fullkorn",
+      "150 g rökt fläsk",
+      "1 msk Svenskt Smör från Arla®",
+      "½ dl Arla Köket® Vispgrädde",
+      "½ tsk salt",
+      "1 finhackad vitlöksklyfta",
+      "3 dl Arla Köket® Riven ost gratäng",
+      "2 krm nymald svartpeppar",
+      "4 äggulor"
+    ],
+    "image": "https://images.arla.com/recordid/F4F44EA1-5BE8-447A-9551F47B1C0C95D2/pasta-carbonara.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "9f4247e497ee7cc7a02f",
+    "name": "Pasta med baconsås",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/pasta-med-baconsas/",
+    "minutes": 25,
+    "portions": 4,
+    "ingredients": [
+      "360 g spaghetti, gärna fullkorn",
+      "1 gul lök",
+      "1 vitlöksklyfta",
+      "140 g bacon",
+      "1 msk Arla Köket® Smör- & rapsolja",
+      "2 msk tomatpuré",
+      "½ msk chili flakes",
+      "390 g konserverade körsbärstomater eller färska tomater",
+      "2½ dl Kelda® Matlagningsgrädde",
+      "salt och svartpeppar",
+      "1 kruka färsk persilja, hackad"
+    ],
+    "image": "https://images.arla.com/recordid/01C1ADD2-9C0D-4A45-9DB3660344FCE203/pasta-med-baconsas.jpg?width=1300&height=525&mode=crop&crop=(0,17,0,-337)&format=webp",
+    "tags": [
+      "köttfärs",
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "7b6ca9353d6cebee133b",
+    "name": "Pasta med kassler",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/pasta-med-kassler/",
+    "minutes": 20,
+    "portions": 4,
+    "ingredients": [
+      "360 g pasta penne, gärna Mezze Maniche",
+      "300 g kassler",
+      "1 purjolök",
+      "2 vitlöksklyftor",
+      "2 msk Arla Köket® Smör- & rapsolja",
+      "1 dl soltorkade tomater i olja, strimlade",
+      "2 dl Arla Köket® Crème fraiche",
+      "2 dl vatten från pastakoket",
+      "½ tsk salt",
+      "1 kruka färsk basilika",
+      "100 g parmesanost, färskriven"
+    ],
+    "image": "https://images.arla.com/recordid/E6C163F0-98F3-49FE-A7BB8D6EE19D46C7/picture.jpg?width=1300&height=525&mode=crop&crop=(0,156,0,-198)&format=webp",
+    "tags": [
+      "köttfärs",
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "df0d603748f72c0bed0f",
+    "name": "Potatis- och broccolisoppa",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/potatis-och-broccolisoppa/",
+    "minutes": 35,
+    "portions": 4,
+    "ingredients": [
+      "500 g potatis",
+      "1 purjolök",
+      "1 msk Svenskt Smör från Arla®",
+      "10 dl grönsaksbuljong",
+      "500 g broccoli",
+      "2 dl Arla Köket® Matlagningsgrädde",
+      "150 g Kvibille® Riven ost cheddar",
+      "salt och svartpeppar",
+      "färska örter",
+      "1 surdegsbaguette"
+    ],
+    "image": "https://images.arla.com/recordid/D22E4DD7-E216-4389-8B0277555A8BCDBB/potatis-och-broccolisoppa.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "955966d1d3145125cbc5",
+    "name": "Potatis- och purjolökssoppa",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/potatis--och-purjolokssoppa/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "500 g mjölig potatis",
+      "1 purjolök",
+      "1 msk Arla Köket® Smör- & rapsolja",
+      "6 dl grönsaksbuljong",
+      "3 dl Arla Ko® Syrad grädde",
+      "salt och peppar",
+      "1 dl hackad färsk persilja",
+      "4 ciabatta, gärna surdeg"
+    ],
+    "image": "https://images.arla.com/recordid/15F76B94-08A7-4E33-9863DC2ED59F7373/potatis--och-purjolokssoppa.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "2863a2c4df12451de54f",
+    "name": "Potatismos",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/potatismos/",
+    "minutes": 0,
+    "portions": 4,
+    "ingredients": [
+      "1 kg mjölig potatis",
+      "2 - 3 dl Arla Ko® Standardmjölk",
+      "25 g Svenskt Smör från Arla®",
+      "1 tsk salt",
+      "1 krm svartpeppar"
+    ],
+    "image": "https://images.arla.com/recordid/B6055A7B-706F-4918-8E5A3CFBB6D425C5/potatismos.jpg?width=1300&height=525&mode=crop&crop=(0,57,0,-297)&format=webp",
+    "tags": [],
+    "external": true
+  },
+  {
+    "id": "4f250c45fc90e648a293",
+    "name": "Ramen med kyckling",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/ramen-med-kyckling/",
+    "minutes": 60,
+    "portions": 4,
+    "ingredients": [
+      "1½ liter vatten",
+      "4 msk kycklingfond eller 3 st buljongtärningar",
+      "4 salladslökar",
+      "4 vitlöksklyftor",
+      "50 g färsk ingefära",
+      "1 tsk chili flakes",
+      "3 msk misopasta",
+      "2 msk tahini",
+      "1 msk sesamolja",
+      "1 äggula",
+      "300 g kycklingbröstfilé",
+      "4 ägg",
+      "ca 100 g champinjoner",
+      "25 g Svenskt Smör från Arla®, till stekning",
+      "1 noriark",
+      "200 g ramennudlar",
+      "4 msk rostad lök",
+      "1 kruka färsk koriander"
+    ],
+    "image": "https://images.arla.com/recordid/B5BE39D8-D5BA-4F62-A8EE503ECFDBA694/ramen-med-kyckling.jpg?width=1300&height=525&mode=crop&crop=(0,0,0,-354)&format=webp",
+    "tags": [
+      "kyckling",
+      "köttfärs",
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "7e74d5b0003a4a6c3ebb",
+    "name": "Salsicciapasta",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/salsicciapasta/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "1 schalottenlök",
+      "1 morot",
+      "1 fänkål",
+      "2 vitlöksklyftor",
+      "10 cocktailtomater",
+      "25 g Svenskt Smör från Arla® Ekologiskt",
+      "300 g färsk salsiccia",
+      "360 g pasta rigatoni, gärna fullkorn",
+      "2 msk tomatpuré",
+      "0.5- 1 tsk chili flakes",
+      "½ dl vitt vin",
+      "3 dl Arla Ko® Syrad grädde",
+      "½ tsk strösocker",
+      "1 tsk salt",
+      "80 g parmesanost",
+      "bladpersilja"
+    ],
+    "image": "https://images.arla.com/recordid/9746B3F6-8CF5-4C6C-88466587D5629505/salsicciapasta.jpg?width=1300&height=525&mode=crop&crop=(0,17,0,-337)&format=webp",
+    "tags": [
+      "köttfärs",
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "4fe0aa7bc36e3316e1ec",
+    "name": "Spenatsoppa",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/spenatsoppa/",
+    "minutes": 20,
+    "portions": 4,
+    "ingredients": [
+      "1 bananschalottenlök",
+      "1 vitlöksklyfta",
+      "1 msk Arla Köket® Smör- & rapsolja",
+      "450 g fryst bladspenat",
+      "5 dl vatten",
+      "3 dl Arla Ko® Vispgrädde",
+      "2 tärningar grönsaksbuljong",
+      "2 krm riven muskotnöt",
+      "2 krm svartpeppar",
+      "4 normalstora ägg",
+      "4 skivor grovt bröd eller varma mackor"
+    ],
+    "image": "https://images.arla.com/recordid/275A9C50-1ED2-4082-AAF2D4B1FE8FCF6D/spenatsoppa.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [],
+    "external": true
+  },
+  {
+    "id": "bdabec456063ebe1645a",
+    "name": "Spetskål i ugn",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/spetskal-i-ugn/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "1 spetskål, ca 600 g",
+      "50 g Svenskt Smör från Arla®",
+      "1 tsk flingsalt",
+      "100 g Castello® Aged havarti 36% hårdost",
+      "färsk persilja eller körvel"
+    ],
+    "image": "https://images.arla.com/recordid/5FE44D3A-6117-4450-95A8E632BC15E4FA/spetskal-i-ugn.jpg?width=1300&height=525&mode=crop&crop=(0,37,0,-317)&format=webp",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "0954ed5d122bf5c4a200",
+    "name": "Stekt kycklingfilé med klyftpotatis och örtsås",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/stekt-kycklingfile-med-klyftpotatis-och-ortsas/",
+    "minutes": 40,
+    "portions": 4,
+    "ingredients": [
+      "900 g potatis",
+      "250 g morot",
+      "250 g palsternacka",
+      "2 msk rapsolja",
+      "1 tsk flingsalt",
+      "600 g kycklingbröstfilé",
+      "1 tsk flingsalt",
+      "1 krm svartpeppar",
+      "2 msk rapsolja",
+      "3 vitlöksklyftor",
+      "2 msk Svenskt Smör från Arla®",
+      "3 rosmarinkvistar",
+      "2 msk finhackade färska örter, t ex timjan, basilika eller persilja",
+      "2 dl Arla Köket® Lätt crème fraiche",
+      "1 tsk flytande honung",
+      "1 krm flingsalt",
+      "1 krm svartpeppar",
+      "1 citron, finrivet skal",
+      "1 tsk pressad citronsaft"
+    ],
+    "image": "https://images.arla.com/recordid/9D4DA803-9BEA-4355-A8DAC06A247275CB/picture.jpg?width=1300&height=525&mode=crop&crop=(0,232,0,-122)&format=webp",
+    "tags": [
+      "kyckling",
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "e027a80304425e655550",
+    "name": "Stuvade makaroner",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/stuvade-makaroner/",
+    "minutes": 15,
+    "portions": 4,
+    "ingredients": [
+      "2 msk Svenskt Smör från Arla®",
+      "2 msk vetemjöl",
+      "5 dl Arla® Lantmjölk, ekologisk",
+      "1 tärning grönsaksbuljong",
+      "5 dl makaroner",
+      "2 dl Kvibille® Riven ost cheddar",
+      "salt och peppar"
+    ],
+    "image": "https://images.arla.com/recordid/E4A83674-F033-456A-8CE7B39A092DCA48/stuvade-makaroner.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "e6cbe74d0b42b362292c",
+    "name": "Tacopaj",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/tacopaj/",
+    "minutes": 65,
+    "portions": 6,
+    "ingredients": [
+      "125 g Svenskt Smör från Arla®",
+      "3 dl vetemjöl",
+      "1 tsk paprikapulver",
+      "2 msk vatten",
+      "500 g nötfärs",
+      "1 msk Svenskt Smör från Arla®",
+      "1 påse taco kryddmix à ca 28 g",
+      "1 dl vatten",
+      "2 dl Arla Köket® Lätt crème fraiche",
+      "2 dl Arla Köket® Lätt crème fraiche paprika & chili",
+      "150 g körsbärstomater",
+      "1 dl skivad inlagd jalapeño",
+      "1½ dl Arla Köket® Riven ost texmex",
+      "1 tsk paprikapulver",
+      "1 röd paprika",
+      "1 gurka",
+      "250 g isbergssallad",
+      "3 dl Arla Ko® Gräddfil",
+      "340 g 285 g avrunnen vikt majs",
+      "majschips eller tacochips"
+    ],
+    "image": "https://images.arla.com/recordid/85BAF18B-D040-4A15-A0BEFE6EC578F107/tacopaj.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "ede3d5472d5a9834372f",
+    "name": "Ugnspannkaka",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/ugnspannkaka/",
+    "minutes": 0,
+    "portions": 4,
+    "ingredients": [
+      "3 dl vetemjöl",
+      "1 tsk salt",
+      "1 tsk strösocker",
+      "6 dl Arla Ko® Standardmjölk",
+      "4 ägg",
+      "Svenskt Smör från Arla® till formen",
+      "Arla Ko® Vispgrädde",
+      "hallonsylt eller jordgubbssylt"
+    ],
+    "image": "https://images.arla.com/recordid/AA3D7821-A4E7-4705-933B082D86E7C53D/ugnspannkaka.jpg?width=1300&height=525&mode=crop&crop=(0,0,0,-354)&format=webp",
+    "tags": [],
+    "external": true
+  },
+  {
+    "id": "b3ebbf5860d583063c9f",
+    "name": "Vegetarisk lasagne",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/vegetarisk-lasagne/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "3 purjolökar",
+      "Svenskt Smör från Arla®",
+      "400 g krossade tomater",
+      "½ dl tomatpuré",
+      "1 tärning grönsaksbuljong",
+      "2½ dl Arla Köket® Matlagningsgrädde",
+      "1 tsk salt",
+      "1 krm malen vitpeppar",
+      "1 dl hackad färsk basilika",
+      "9 lasagneplattor",
+      "500 g KESO® Cottage cheese",
+      "2 dl Arla Köket® Riven ost gratäng"
+    ],
+    "image": "https://images.arla.com/recordid/6542A886-DA0C-47D5-B8D103C8F923191A/vegetarisk-lasagne.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [
+      "köttfärs",
+      "pasta",
+      "vegetariskt"
+    ],
+    "external": true
+  },
+  {
+    "id": "c41a8e2336ca3835529b",
+    "name": "Våfflor",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/vafflor/",
+    "minutes": 45,
+    "portions": 8,
+    "ingredients": [
+      "100 g Svenskt Smör från Arla®",
+      "3½ dl vetemjöl",
+      "2 tsk bakpulver",
+      "2 ägg",
+      "4 dl Arla Ko® Standardmjölk",
+      "2 dl Arla Ko® Vispgrädde"
+    ],
+    "image": "https://images.arla.com/recordid/19432B60-DD5A-4BB5-8104C0A123F33BE2/vafflor.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [],
+    "external": true
+  },
+  {
+    "id": "16cd2b7d070422b24035",
+    "name": "Äppelpaj",
+    "source": "Arla",
+    "url": "https://www.arla.se/recept/appelpaj/",
+    "minutes": 120,
+    "portions": 10,
+    "ingredients": [
+      "175 g Svenskt Smör från Arla®",
+      "6 dl vetemjöl",
+      "2 krm salt",
+      "¾ dl kallt vatten",
+      "700 g saftiga äpplen",
+      "1 dl strösocker",
+      "2 tsk malen kanel",
+      "1 uppvispat ägg",
+      "5 dl Dreamy Dessert® Klassisk vaniljsås"
+    ],
+    "image": "https://images.arla.com/recordid/5C6C4039-F2BC-4454-BF89CAD4A26D8701/appelpaj.jpg?width=1300&height=525&mode=crop&format=webp",
+    "tags": [],
+    "external": true
+  },
+  {
+    "id": "c508eddf8d1b61d38614",
+    "name": "Chili con carne",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/chili-con-carne-424/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "2 gula lökar",
+      "350 g nötfärs gärna ICAs nötfärs 12% eller hushållsfärs (ärt- och nötfärs)",
+      "1 msk olja",
+      "2 vitlöksklyftor",
+      "1 tsk chilipulver (färsk eller torkad efter smak)",
+      "1 tsk paprikapulver",
+      "1 krm svartpeppar",
+      "3/4 tsk salt",
+      "1 msk japansk soja",
+      "1 förp hela tomater (à 400 g)",
+      "1 köttbuljongtärning",
+      "2 förp vita bönor i tomatsås (à 440 g)",
+      "salladskål",
+      "hackad persilja",
+      "vinägrett",
+      "jalapeñopeppar",
+      "chips eller brytbröd"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_223436/cf_259/chili_con_carne.jpg",
+    "tags": [
+      "köttfärs",
+      "vegetariskt"
+    ],
+    "external": true
+  },
+  {
+    "id": "e6ef6f7a1fa8da394175",
+    "name": "Enkel lax i ugn - tid och temperatur",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/enkel-lax-i-ugn-tid-och-temperatur-725188/",
+    "minutes": 30,
+    "portions": 8,
+    "ingredients": [
+      "1200 g laxfilé",
+      "2 tsk salt",
+      "1/2 tsk nymalen svartpeppar"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_249261/cf_259/enkel_lax_i_ugn.jpg",
+    "tags": [
+      "lax"
+    ],
+    "external": true
+  },
+  {
+    "id": "cb34941c796203140a6e",
+    "name": "Falukorvsgratäng med pasta",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/falukorvsgratang-med-pasta-740482/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "550 g falukorv",
+      "1 mozzarella (à 125 g)",
+      "2 dl lätt crème fraiche",
+      "1 dl ajvar relish",
+      "1/2 dl hackad inlagd gurka",
+      "2 msk chilisås",
+      "1 vitlöksklyfta",
+      "1 dl riven ost",
+      "4 portioner pasta",
+      "sallad"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/nhs4nw9sl2id53anejp5.jpg",
+    "tags": [
+      "korv",
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "46aa474b3353b6313124",
+    "name": "Familjens bästa kycklingfilé i ugn",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/familjens-basta-kycklingfile-i-ugn-723574/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "4 kycklingfiléer",
+      "1 tsk olja",
+      "salt",
+      "peppar",
+      "2 1/2 dl matlagningsgrädde",
+      "2 msk chilisås",
+      "1 tsk senap dijon",
+      "1/2 kruka basilika (eller ca 2 msk fryst basilika, för 4 port)",
+      "4 port ris eller kokt potatis",
+      "1/2 cosmopolitansallad",
+      "2 tomater"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_232987/cf_259/gratinerad_kyckling_med_ris.jpg",
+    "tags": [
+      "kyckling"
+    ],
+    "external": true
+  },
+  {
+    "id": "f7bae9468d884328a41f",
+    "name": "Finsk korvsoppa",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/finsk-korvsoppa-688071/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "4 potatisar (4 potatisar motsvarar ca 350 g)",
+      "200 g kålrot",
+      "3 morötter (à ca 100 g)",
+      "1 liten purjolök (à ca 200 g)",
+      "400 g falukorv eller kycklingstekkorv",
+      "15 dl vatten",
+      "3 grönsaksbuljongtärningar",
+      "2 lagerblad",
+      "15 kryddpepparkorn",
+      "salt",
+      "2 msk fryst hackad persilja"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_250001/cf_259/finsk_korvsoppa.jpg",
+    "tags": [
+      "kyckling",
+      "korv"
+    ],
+    "external": true
+  },
+  {
+    "id": "daec7a36c6eec64a2bd2",
+    "name": "Fiskarhustruns fisksoppa",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/fiskarhustruns-fisksoppa-3760/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "ca 10 små gula lökar (gärna pärllök)",
+      "2 msk smör eller margarin",
+      "1 burk hela skalade tomater (à 400 g)",
+      "5 dl fiskbuljong (tärning + vatten)",
+      "ev 1/2 dl vitt vin",
+      "1 tsk söndersmulad timjan",
+      "300 g blandad fiskfilé (t ex lax, spätta, torsk, sej, kolja)",
+      "250 g räkor med skal eller skalade (250 g med skal motsvarar 100 g skalade)",
+      "1 dl vispgrädde",
+      "finhackad dill",
+      "salt och peppar",
+      "bröd"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_223443/cf_259/fiskarhustruns_fisksoppa.jpg",
+    "tags": [
+      "fisk",
+      "lax"
+    ],
+    "external": true
+  },
+  {
+    "id": "e78c8d53d902cca1f851",
+    "name": "Fläskfilégryta med champinjoner",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/flaskfilegryta-med-champinjoner-724256/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "500 g fläskfilé eller fläskytterfilé",
+      "2 msk smör",
+      "salt",
+      "peppar",
+      "1 gul lök",
+      "250 g champinjoner",
+      "2 tsk tomatpuré",
+      "1 hönsbuljongtärning",
+      "3 dl vispgrädde",
+      "2 dl mjölk",
+      "2 msk japansk soja",
+      "2 tsk dijonsenap",
+      "1 tsk majsstärkelse",
+      "kokt ris eller potatis",
+      "sallad"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_186632/cf_259/flaskfilégryta_med_champinjoner.jpg",
+    "tags": [],
+    "external": true
+  },
+  {
+    "id": "a49a9cc2fcee8b18ba25",
+    "name": "Fläskpannkaka",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/flaskpannkaka-712880/",
+    "minutes": 50,
+    "portions": 4,
+    "ingredients": [
+      "8 dl mjölk",
+      "4 dl vetemjöl",
+      "1 tsk salt",
+      "4 ägg",
+      "300 g rimmat stekfläsk eller bacon",
+      "lingonsylt"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/c89y9xdwlwbncszejzy4.jpg",
+    "tags": [],
+    "external": true
+  },
+  {
+    "id": "eda0a1ae738146f24999",
+    "name": "Godaste köttbullarna",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/godaste-kottbullarna-712807/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "1/2 dl mjölk",
+      "1/2 dl vispgrädde",
+      "1/2 dl ströbröd",
+      "500 g nöt- eller blandfärs",
+      "1 tsk salt",
+      "1 ägg",
+      "1/2 gul lök (skalad och riven)",
+      "1 krm peppar",
+      "1/2 tsk socker",
+      "3 msk smör",
+      "1 msk olja",
+      "kokt potatis eller potatismos",
+      "lingonsylt",
+      "pressgurka"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_223439/cf_259/klassiska_kottbullar.jpg",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "9b8961c7be89f9d5ed11",
+    "name": "Gravad lax på färsk lax",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/gravad-lax-pa-farsk-lax-725365/",
+    "minutes": 90,
+    "portions": 6,
+    "ingredients": [
+      "1 kg odlad laxfilé i bit med skinn (mittbiten)",
+      "4 msk finkornigt salt",
+      "6 msk strösocker",
+      "2 tsk grovstött vitpeppar",
+      "1 kruka dill (1 dl hackad, för 6-8 port)",
+      "färsk dill",
+      "citron"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_196342/cf_259/gravad_lax_pa_farsk_lax.jpg",
+    "tags": [
+      "köttfärs",
+      "lax"
+    ],
+    "external": true
+  },
+  {
+    "id": "39dc23fc1b76a7e47219",
+    "name": "Grillspett med kyckling",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/grillspett-med-kyckling-720550/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "4 trägrillspett",
+      "ca 600 g kycklinglårfilé",
+      "salt",
+      "peppar",
+      "1 dl grillolja eller bbq-sås med smak av persilja och vitlök",
+      "2 citroner",
+      "1 kruka persilja",
+      "gärna srirachamajonnäs"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/jgsifidwaqlgfuh6tur2.jpg",
+    "tags": [
+      "kyckling"
+    ],
+    "external": true
+  },
+  {
+    "id": "9801a754cbc709341d68",
+    "name": "Havregrynsgröt",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/havregrynsgrot-730321/",
+    "minutes": 15,
+    "portions": 1,
+    "ingredients": [
+      "1 dl havregryn",
+      "2 1/2 dl vatten",
+      "1/2 krm salt",
+      "mjölk",
+      "lingonsylt eller äppelmos",
+      "rårivna eller hackade äpplen",
+      "honung"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/pjkwddfzzigl7xgfahgn.jpg",
+    "tags": [],
+    "external": true
+  },
+  {
+    "id": "e229dbb96cc16061f2fd",
+    "name": "Helstekt kyckling i ugn",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/helstekt-kyckling-i-ugn-729067/",
+    "minutes": 90,
+    "portions": 4,
+    "ingredients": [
+      "1 hel kyckling (à ca 1,1 kg)",
+      "2 msk olja",
+      "1 msk dijonsenap",
+      "1 msk japansk soja",
+      "1 msk honung",
+      "2 msk hackade färska örter (t ex rosmarin, timjan eller basilika)",
+      "1 1/2 tsk salt",
+      "1/2 tsk svartpeppar",
+      "1 dl vatten (till formen)"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_239077/cf_259/helstekt_kyckling_i_ugn.jpg",
+    "tags": [
+      "kyckling",
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "659f800bcb3811ff6655",
+    "name": "Klassisk laxpudding",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/klassisk-laxpudding-634042/",
+    "minutes": 90,
+    "portions": 4,
+    "ingredients": [
+      "ca 250 g rimmad lax i tunna skivor",
+      "900 g oskalad potatis",
+      "1 gul lök",
+      "1 kruka dill",
+      "4 ägg",
+      "3 dl mjölk",
+      "1 dl vispgrädde",
+      "50 g smör + lite skirat smör (se länk i text)",
+      "1 tsk salt",
+      "1 krm grovmalen vitpeppar"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_218659/cf_259/klassisk_laxpudding.jpg",
+    "tags": [
+      "lax"
+    ],
+    "external": true
+  },
+  {
+    "id": "cb60f9e18e64d4f65d94",
+    "name": "Klassisk skagenröra",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/klassisk-skagenrora-729651/",
+    "minutes": 30,
+    "portions": 6,
+    "ingredients": [
+      "1 förp räkor i lake (à ca 570 g)",
+      "1 kruka dill",
+      "1 1/2 dl majonnäs",
+      "1 citron",
+      "salt",
+      "peppar",
+      "80 g löjrom eller röd stenbitsrom"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_137069/cf_259/klassisk_skagenrora.jpg",
+    "tags": [],
+    "external": true
+  },
+  {
+    "id": "45a7927554b733bcadf8",
+    "name": "Koka pasta",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/koka-pasta-750687/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "4 liter vatten",
+      "1 1/2 msk salt",
+      "400 g pasta",
+      "olivolja"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/hoyatvxxz0vyww7debof.jpg",
+    "tags": [
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "72ebe15d858677b2f78c",
+    "name": "Korvgryta",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/korvgryta-714958/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "4 port ris eller pasta",
+      "1 förp kokta kidneybönor (à 380 g)",
+      "1 röd paprika",
+      "300 g chorizo",
+      "1 msk olivolja",
+      "1 tsk spiskummin",
+      "2 msk tomatpuré",
+      "140 g tärnat bacon",
+      "1 förp krossade tomater (à 500 g)",
+      "1 dl vatten",
+      "1/2 tsk sambal oelek",
+      "salt",
+      "peppar",
+      "1 förp majskorn (à 150 g)",
+      "1 romansallad",
+      "1 1/2 dl gräddfil"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_238264/cf_259/korvgryta.jpg",
+    "tags": [
+      "korv",
+      "pasta",
+      "vegetariskt"
+    ],
+    "external": true
+  },
+  {
+    "id": "9d6dbf4ebf008f044d4e",
+    "name": "Korvstroganoff med ris",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/korvstroganoff-med-ris-533512/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "4 port ris eller annat gryn",
+      "550 g falukorv eller kycklingstekkorv",
+      "1 gul lök",
+      "1 msk olja",
+      "3 msk tomatpuré",
+      "2 1/2 dl matlagningsgrädde",
+      "1 dl mjölk",
+      "1 msk japansk soja",
+      "1 tsk dijonsenap",
+      "peppar",
+      "salt",
+      "grovskuren vitkål med persilja"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_223427/cf_259/korvstroganoff_med_ris.jpg",
+    "tags": [
+      "kyckling",
+      "korv"
+    ],
+    "external": true
+  },
+  {
+    "id": "92945a0e10d964f4008a",
+    "name": "Krämig carbonara",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/kramig-carbonara-722780/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "4 port spaghetti",
+      "2 förp bacon (à 140 g)",
+      "4 ägg",
+      "1 dl vispgrädde",
+      "2 dl riven parmesan",
+      "1/2 tsk salt",
+      "2 krm nymalen svartpeppar",
+      "65 g rucola"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/s3xwefear9kaybmvulme.jpg",
+    "tags": [
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "5446cff71a02958e39ff",
+    "name": "Krämig kantarellpasta med parmesan",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/kramig-kantarellpasta-med-parmesan-750034/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "ca 1 liter kantareller (1 liter motsvarar ca 350 g)",
+      "4 portioner pasta (gärna linguine)",
+      "1 vitlöksklyfta",
+      "3 bananschalottenlökar (3 st motsvarar ca 100 g)",
+      "2 msk smör",
+      "salt",
+      "svartpeppar",
+      "1 dl vitt vin eller vitt matlagningsvin",
+      "4 dl vispgrädde",
+      "2 dl riven parmesan (2 dl motsvarar ca 100 g)",
+      "1/2 kruka persilja"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/f0onnrpqkvqr81wmn6gu.jpg",
+    "tags": [
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "a341e8cedc912cd85770",
+    "name": "Krämig kycklinggryta med soltorkade tomater",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/kramig-kycklinggryta-med-soltorkade-tomater-723346/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "4 port ris eller couscous",
+      "600 - ca 700 g kycklingfilé eller kycklinginnerfilé",
+      "1 msk olja",
+      "salt",
+      "peppar",
+      "1 vitlöksklyfta",
+      "2 dl crème fraiche (fetaost och soltorkad tomat)",
+      "2 1/2 dl kycklingbuljong (vatten och tärning eller fond)",
+      "1 förp soltorkade tomater (à 200 g)",
+      "250 g gröna ärtor eller 150 g sockerärtor (för 4 port)"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_232337/cf_259/kramig_kycklinggryta_med_soltorkade_tomater.jpg",
+    "tags": [
+      "kyckling"
+    ],
+    "external": true
+  },
+  {
+    "id": "a4449d5fece328201b00",
+    "name": "Krämig laxpasta",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/kramig-laxpasta-750466/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "4 port pasta (gärna tagliatelle eller spaghetti)",
+      "1 bananschalottenlök",
+      "2 förp spenat (à 65 g)",
+      "1/2 msk olja",
+      "1 vitlöksklyfta",
+      "2 1/2 dl vispgrädde",
+      "2 dl crème fraiche",
+      "1 fiskbuljongtärning",
+      "500 g laxfilé",
+      "salt",
+      "peppar",
+      "20 g färsk eller fryst dill"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/xmmily5avm7ihpruhgy2.jpg",
+    "tags": [
+      "köttfärs",
+      "fisk",
+      "lax",
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "cfbf8386d63c4b57ce36",
+    "name": "Krämig tacopaj",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/kramig-tacopaj-713200/",
+    "minutes": 90,
+    "portions": 4,
+    "ingredients": [
+      "50 g smör eller margarin",
+      "3 dl vetemjöl",
+      "1 dl kvarg (10 %)",
+      "3 msk kallt vatten",
+      "500 g bland-, vego- eller nötfärs",
+      "1 msk smör eller margarin",
+      "2 tsk taco kryddmix",
+      "1 dl vatten",
+      "2 dl crème fraiche med paprika & chili",
+      "250 g körsbärstomater",
+      "2 - 2 1/2 dl riven ost",
+      "sallad"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_105941/cf_259/kramig_tacopaj.jpg",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "eb972199f0da65d9862b",
+    "name": "Kyckling cashew",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/kyckling-cashew-728972/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "4 port ris (gärna basmati)",
+      "1/2 gul lök",
+      "2 paprikor (gärna olika färger)",
+      "1 morot",
+      "2 msk olja",
+      "salt",
+      "peppar",
+      "600 g snabbfiléer av kyckling",
+      "150 ml ostronsås",
+      "1/2 dl vatten",
+      "100 g saltade cashewnötter"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_240381/cf_259/kyckling_med_cashewnotter_och_ris.jpg",
+    "tags": [
+      "kyckling"
+    ],
+    "external": true
+  },
+  {
+    "id": "0b7a47d19b4644d96759",
+    "name": "Kycklingpasta med tomat och spenat",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/kycklingpasta-med-tomat-och-spenat-716957/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "4 port pasta, gärna gnocchi",
+      "2 vitlöksklyftor",
+      "250 g småtomater",
+      "1 citron",
+      "3 msk olivolja",
+      "ca 600 g kycklinglårfilé (eller färdigstrimlad)",
+      "salt",
+      "peppar",
+      "1 kycklingbuljongtärning",
+      "2 1/2 dl vispgrädde",
+      "65 g babyspenat",
+      "1 dl grovt riven ost (eller ostflarn)"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_84232/cf_259/kycklingpasta_med_tomat_och_spenat.jpg",
+    "tags": [
+      "kyckling",
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "4299f71e1f3f9cbc8235",
+    "name": "Köttfärsgratäng",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/kottfarsgratang-729939/",
+    "minutes": 60,
+    "portions": 4,
+    "ingredients": [
+      "900 g potatis",
+      "1 gul lök",
+      "1 morot",
+      "2 tsk olja",
+      "500 g blandfärs eller hushållsfärs (ärt- och nötfärs)",
+      "2 vitlöksklyftor",
+      "1/2 msk torkad oregano",
+      "2 tsk paprikapulver",
+      "2 msk tomatpuré",
+      "salt",
+      "peppar",
+      "1 msk japansk soja",
+      "1 förp finkrossade tomater (à 390 g)",
+      "1 köttbuljongtärning",
+      "1 dl vatten",
+      "150 g riven ost",
+      "2 msk mjölk",
+      "2 dl crème fraiche",
+      "2 tomater",
+      "sallad"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_250228/cf_259/kottfarsgratang.jpg",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "3b307f1b1f941a5479d8",
+    "name": "Köttfärslimpa med gräddsås",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/kottfarslimpa-med-graddsas-723129/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "900 g potatis",
+      "1/2 dl ströbröd",
+      "1 dl mjölk",
+      "1 ägg",
+      "1 msk dijonsenap",
+      "1/2 tsk salt",
+      "1 krm peppar",
+      "ca 500 g blandfärs eller hushållsfärs (ärt- och nötfärs)",
+      "1/2 rödlök",
+      "1 tsk olja",
+      "2 1/2 dl matlagningsgrädde",
+      "1 dl mjölk",
+      "1/2 tsk rosmarin",
+      "1 köttbuljongtärning eller motsvarande mängd fond",
+      "1 tsk majsstärkelse",
+      "1/2 förp färsk gräslök (à 20 g)",
+      "3 tomater"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_232171/cf_259/kottfarslimpa_med_graddsas.jpg",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "29b916ff53b68af9482e",
+    "name": "Laxfilé i ugn med citron",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/laxfile-i-ugn-med-citron-724126/",
+    "minutes": 30,
+    "portions": 8,
+    "ingredients": [
+      "ca 1 1/4 kg färsk laxfilé utan skinn",
+      "2 msk olja",
+      "1 1/2 tsk salt",
+      "1 tsk svartpeppar",
+      "1 msk finrivet citronskal"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_241361/cf_259/laxfilé_i_ugn_med_citron.jpg",
+    "tags": [
+      "köttfärs",
+      "lax"
+    ],
+    "external": true
+  },
+  {
+    "id": "190f124297eb9dbd02c8",
+    "name": "Lysande gul fiskgryta",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/lysande-gul-fiskgryta-1677/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "400 g torskfilé, sej kolja eller hoki",
+      "300 g laxfilé",
+      "1/2 purjolök (1/2 purjolök motsvarar ca 150 g)",
+      "1/2 gul lök",
+      "1 msk smör eller olivolja",
+      "1 vitlöksklyfta",
+      "1 1/2 tsk tomatpuré",
+      "1 tsk torkad timjan",
+      "1 tsk torkad basilika",
+      "2 1/2 dl torrt vitt vin",
+      "1 1/2 fiskbuljongtärning",
+      "2 dl vispgrädde",
+      "1 dl crème fraiche",
+      "2 dl vatten",
+      "1 pkt saffran (à 0,5 g)",
+      "1 tsk salt",
+      "300 g räkor med skal",
+      "1 burk musslor (à 150 g)",
+      "ev. bröd och vitlöksmajonnäs"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_243155/cf_259/lysande_gul_fiskgryta.jpg",
+    "tags": [
+      "fisk",
+      "lax"
+    ],
+    "external": true
+  },
+  {
+    "id": "2f6e30e5f22b451382fc",
+    "name": "Makaronilåda med tomatsallad",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/makaronilada-med-tomatsallad-727335/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "4 port pasta (gärna maccaronetti)",
+      "500 g blandfärs",
+      "1/2 msk olja",
+      "salt",
+      "peppar",
+      "390 g pastasås basilika",
+      "4 ägg",
+      "2 dl mjölk",
+      "2 dl riven ost",
+      "1/2 förp plommontomater (à 500 g)",
+      "1/2 msk rödvinsvinäger",
+      "1/2 msk olja"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_224172/cf_259/makaronilada_med_tomatsallad.jpg",
+    "tags": [
+      "köttfärs",
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "72f67836d9402dd91bd3",
+    "name": "Marry me chicken",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/marry-me-chicken-730140/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "4 port ris",
+      "4 kycklingfiléer (4 filéer motsvarar ca 600 g)",
+      "salt",
+      "peppar",
+      "1/2 dl vetemjöl",
+      "1 förp strimlade soltorkade tomater (à 200 g)",
+      "2 msk olivolja",
+      "2 vitlöksklyftor",
+      "1 krm chiliflakes",
+      "1/2 tsk torkad oregano",
+      "1/2 tsk torkad timjan",
+      "2 1/2 dl vatten",
+      "1/2 kycklingbuljongtärning",
+      "2 1/2 dl vispgrädde",
+      "1 1/2 dl riven parmesan (+ ev extra till servering)",
+      "1 kruka basilika",
+      "sallad",
+      "parmesan"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_251711/cf_259/marry_me_chicken.jpg",
+    "tags": [
+      "kyckling"
+    ],
+    "external": true
+  },
+  {
+    "id": "abc3036ce4db5d2b92c0",
+    "name": "Palak paneer med tomat och halloumi",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/palak-paneer-med-tomat-och-halloumi-722056/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "4 port ris eller havreris",
+      "1 gul lök eller schalottenlök",
+      "2 vitlöksklyftor",
+      "2 tomater",
+      "2 msk riven ingefära",
+      "3 msk olivolja",
+      "2 msk tomatpuré",
+      "1 msk garam masala",
+      "390 g krossade tomater",
+      "1 dl vatten",
+      "2 dl vispgrädde",
+      "1 grönsaksbuljongtärning",
+      "200 g färsk spenat",
+      "400 g halloumi eller grillost",
+      "2 krm salt"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_159450/cf_259/palak_paneer_med_tomat_och_halloumi.jpg",
+    "tags": [
+      "köttfärs",
+      "vegetariskt"
+    ],
+    "external": true
+  },
+  {
+    "id": "2282b40299895baa2ceb",
+    "name": "Panerad torsk",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/panerad-torsk-722794/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "900 g potatis",
+      "250 g broccoli",
+      "2 ägg",
+      "1 dl rostad lök",
+      "1 dl ströbröd",
+      "1 dl vetemjöl",
+      "1/2 tsk salt",
+      "1 krm peppar",
+      "ca 600 g torskfilé sejfilé, eller koljafilé",
+      "1 msk smör eller margarin",
+      "2 msk chilisås",
+      "2 dl crème fraiche",
+      "2 krm salt",
+      "1 krm peppar",
+      "2 tomater",
+      "1 citron"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/oivtppruk8xmpnfawwds.jpg",
+    "tags": [
+      "fisk"
+    ],
+    "external": true
+  },
+  {
+    "id": "84ae64e3049005da3edc",
+    "name": "Pastagratäng med köttfärs",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/pastagratang-med-kottfars-722841/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "4 port pasta (gärna route)",
+      "1 gul lök",
+      "ca 500 g blandfärs",
+      "1/2 msk olja",
+      "1 vitlöksklyfta",
+      "1 tsk torkad rosmarin eller timjan",
+      "500 g krossade tomater",
+      "2 1/2 dl vatten",
+      "1 grönsaksbuljongtärning eller motsvarande mängd fond",
+      "1 dl chilisås (eller ketchup)",
+      "salt",
+      "peppar",
+      "150 g riven ost",
+      "1/2 isbergssallad"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_169422/cf_259/pastagratang_med_kottfars.jpg",
+    "tags": [
+      "köttfärs",
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "a89d6adfdd8401ad18b8",
+    "name": "Pytt i panna",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/pytt-i-panna-722178/",
+    "minutes": 60,
+    "portions": 4,
+    "ingredients": [
+      "1 kg fast potatis",
+      "3 stora gula lökar",
+      "600 g korv och eller kött (se tips)",
+      "3 msk olja",
+      "3 msk smör",
+      "salt",
+      "svartpeppar",
+      "4 ägg",
+      "1 kruka persilja",
+      "inlagda rödbetor",
+      "saltgurka"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_250995/cf_259/pytt_i_panna.jpg",
+    "tags": [
+      "korv"
+    ],
+    "external": true
+  },
+  {
+    "id": "de8a7af783ab1800fb95",
+    "name": "Snabb chili con carne",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/snabb-chili-con-carne-723472/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "4 port ris",
+      "500 g blandfärs eller hushållsfärs (ärt- och nötfärs)",
+      "1 msk olja",
+      "2 msk tomatpuré",
+      "salt",
+      "peppar",
+      "1 - 2 krm chilipulver",
+      "2 förp vita bönor i tomatsås (à 380 g)",
+      "1 förp majskorn (à 340 g)",
+      "1/2 dl vatten"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_235748/cf_259/snabb_chili_con_carne.jpg",
+    "tags": [
+      "köttfärs",
+      "vegetariskt"
+    ],
+    "external": true
+  },
+  {
+    "id": "670cf472ce74f022cb95",
+    "name": "Spaghetti och köttfärssås",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/spaghetti-och-kottfarssas-712805/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "1 gul lök",
+      "2 vitlöksklyftor",
+      "2 morötter",
+      "500 g nötfärs eller hushållsfärs (ärt- och nötfärs)",
+      "2 msk matolja",
+      "1/2 dl tomatpuré",
+      "500 g krossade tomater",
+      "2 1/2 dl vatten",
+      "1 kycklingbuljongtärning",
+      "1 tsk kinesisk soja",
+      "salt",
+      "svartpeppar",
+      "4 portioner spaghetti",
+      "parmesan",
+      "sallad",
+      "ev färsk timjan"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/hchsnpxo3gkm8zyzxp5j.jpg",
+    "tags": [
+      "kyckling",
+      "köttfärs",
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "db926a68a7e04553a4d6",
+    "name": "Sötpotatis och korv på plåt med koriandermajonnäs",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/sotpotatis-och-korv-pa-plat-med-koriandermajonnas-729717/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "1 kg sötpotatis",
+      "600 g chorizo eller annan korv",
+      "1 röd paprika",
+      "2 rödlökar",
+      "2 - 3 vitlöksklyftor",
+      "2 msk olivolja",
+      "1/2 tsk salt",
+      "65 g färsk bladspenat",
+      "1 msk finrivet limeskal",
+      "2 msk färskpressad limejuice",
+      "1 kruka koriander",
+      "1 ägg",
+      "1 tsk vitvinsvinäger",
+      "1 tsk dijonsenap",
+      "1/2 tsk salt",
+      "2 dl neutral rapsolja"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_246644/cf_259/sotpotatis_och_korv_pa_plat_med_koriandermajonnas.jpg",
+    "tags": [
+      "köttfärs",
+      "korv"
+    ],
+    "external": true
+  },
+  {
+    "id": "88f2c3422016346c7595",
+    "name": "Torsk i ugn med dill- och citronsås",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/torsk-i-ugn-med-dill-och-citronsas-719374/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "900 g fast potatis",
+      "600 g torskfilé sej, kolja eller kapkummel",
+      "salt",
+      "peppar",
+      "2 dl crème fraiche eller smetana",
+      "1 fiskbuljongtärning",
+      "1 dl vatten",
+      "1 förp färsk dill (à 20 g)",
+      "1 citron",
+      "250 g broccoli"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_232308/cf_259/torsk_i_ugn_med_dill-_och_citronsas.jpg",
+    "tags": [
+      "köttfärs",
+      "fisk"
+    ],
+    "external": true
+  },
+  {
+    "id": "479836a759ad53b47c49",
+    "name": "Ugnsbakad falukorv med bostongurka och tomat",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/ugnsbakad-falukorv-med-bostongurka-och-tomat-720168/",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "900 g mjölig potatis",
+      "2 dl mjölk",
+      "salt",
+      "peppar",
+      "550 g falukorv",
+      "2 msk senap",
+      "2 msk ketchup",
+      "1 dl bostongurka eller inlagd hackad gurka",
+      "1 dl riven ost",
+      "1 msk ströbröd",
+      "2 tomater",
+      "1 rödlök",
+      "2 tsk olja",
+      "2 tsk vinäger"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/p28zdwsotyviydhtnzpg.jpg",
+    "tags": [
+      "korv"
+    ],
+    "external": true
+  },
+  {
+    "id": "2c4085923c353cc089d8",
+    "name": "Ugnsstekt kycklingklubba (grundrecept)",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/ugnsstekt-kycklingklubba-grundrecept-695661/",
+    "minutes": 60,
+    "portions": 4,
+    "ingredients": [
+      "1 kg frysta eller färska kycklingklubbor",
+      "2 1/2 msk japansk soja",
+      "1 msk ketchup",
+      "1 tsk rosmarin",
+      "1 tsk oregano",
+      "1 msk rapsolja",
+      "1/2 tsk nymalen svartpeppar",
+      "1 vitlöksklyfta",
+      "3 msk smör",
+      "1 dl vatten",
+      "rostade rotfrukter",
+      "het yoghurtsås"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_245319/cf_259/ugnsstekt_kycklingklubba_(grundrecept).jpg",
+    "tags": [
+      "kyckling",
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "7a5486c1eb64e9016ed9",
+    "name": "Vodkapasta",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/vodkapasta-729011/",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "3 vitlöksklyftor",
+      "2 msk olivolja",
+      "1 dl tomatpuré",
+      "1/2 tsk chiliflakes",
+      "1/2 dl vodka",
+      "2 1/2 dl vispgrädde",
+      "salt",
+      "svartpeppar",
+      "4 port pasta (t ex penne)",
+      "hyvlad parmesan",
+      "färsk basilika",
+      "sallad"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_238327/cf_259/vodkapasta.jpg",
+    "tags": [
+      "köttfärs",
+      "pasta"
+    ],
+    "external": true
+  },
+  {
+    "id": "3b960cfdce723b9f563e",
+    "name": "Wallenbergare",
+    "source": "ICA",
+    "url": "https://www.ica.se/recept/wallenbergare-725375/",
+    "minutes": 90,
+    "portions": 4,
+    "ingredients": [
+      "500 g finmalen kalvfärs",
+      "1 tsk salt",
+      "2 krm svartpeppar",
+      "3 äggulor",
+      "2 dl vispgrädde",
+      "2 dl ströbröd",
+      "50 g smör",
+      "800 g potatis",
+      "1 dl vispgrädde",
+      "1/2 dl mjölk (3%)",
+      "50 g smör",
+      "1 tsk finrivet citronskal",
+      "1 krm riven muskot",
+      "ca 1/2 tsk salt",
+      "1 dl vatten",
+      "2 msk smör",
+      "1/2 finhackad gul lök",
+      "2 krm salt",
+      "200 g frysta gröna ärtor",
+      "50 - ca 100 g brynt smör",
+      "rårörda lingon"
+    ],
+    "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_197053/cf_259/wallenbergare.jpg",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "0c31c4039c3f9ec6d956",
+    "name": "Chili con carne",
+    "source": "Köket",
+    "url": "https://www.koket.se/chili-con-carne-4",
+    "minutes": 30,
+    "portions": 8,
+    "ingredients": [
+      "450 g vita bönor (i tomatsås)",
+      "400 g kidneybönor",
+      "2 gula lökar, hackade",
+      "1 grön paprika, hackad",
+      "500 g köttfärs",
+      "2 klyftor vitlök, pressade",
+      "1 tsk chilipulver",
+      "800 g krossade tomater",
+      "salt",
+      "peppar",
+      "olja",
+      "chilipulver",
+      "paprikapulver"
+    ],
+    "image": "https://img.koket.se/standard-mega/chili-con-carne-8.jpg",
+    "tags": [
+      "köttfärs",
+      "vegetariskt"
+    ],
+    "external": true
+  },
+  {
+    "id": "916d1f5cc82a73181fef",
+    "name": "Club sandwich 2.0",
+    "source": "Köket",
+    "url": "https://www.koket.se/club-sandwich-2-0",
+    "minutes": 40,
+    "portions": 4,
+    "ingredients": [
+      "Club sandwich",
+      "400 g kycklingbröstfilé (med skinn)",
+      "280 g bacon",
+      "4 ägg",
+      "8 skivor formfranska",
+      "lättsaltade chips, till servering",
+      "olja, till stekning",
+      "smör, till stekning",
+      "salt",
+      "svartpeppar",
+      "Senapsmajonnäs",
+      "2 dl majonnäs",
+      "3 msk dijonsenap",
+      "1 msk sötstark senap",
+      "salt, efter smak",
+      "Grönsaker",
+      "1 rödlök",
+      "4 plommontomater",
+      "1 romansallad"
+    ],
+    "image": "https://img.koket.se/standard-mega/club-sandwich-2-0.png.jpg",
+    "tags": [
+      "kyckling"
+    ],
+    "external": true
+  },
+  {
+    "id": "21b91895df7f1d64a248",
+    "name": "Fluffiga amerikanska pannkakor",
+    "source": "Köket",
+    "url": "https://www.koket.se/fluffiga-amerikanska-pannkakor",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "4-5 dl vetemjöl",
+      "3 tsk bakpulver",
+      "0,5 tsk salt",
+      "2 msk strösocker",
+      "3 msk smör, smält",
+      "4 dl mjölk (valfri typ)",
+      "2 ägg (små)",
+      "2 tsk vaniljsocker (eller paste, valfritt)",
+      "Servering",
+      "smör",
+      "lönnsirap",
+      "färska bär (eller knaperstekt bacon)"
+    ],
+    "image": "https://img.koket.se/standard-mega/fluffiga-amerikanska-pannkakor.png.jpg",
+    "tags": [
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "300bf342d0d7de61d40b",
+    "name": "Grillad kycklingfilé med fetaostsås och krispig potatis",
+    "source": "Köket",
+    "url": "https://www.koket.se/grillad-kycklingfile-med-fetaostsas-och-krispig-potatis",
+    "minutes": 45,
+    "portions": 4,
+    "ingredients": [
+      "Kyckling",
+      "4 kycklingbröstfiléer",
+      "3 msk olivolja",
+      "2 tsk paprikapulver",
+      "2 tsk vitlökspulver",
+      "salt",
+      "svartpeppar",
+      "0,5 dl ljus sirap (eller honung)",
+      "Krispig potatis",
+      "800 g delikatesspotatis",
+      "1 dl parmesanost, riven",
+      "Panko- och parmesanmix",
+      "2 dl pankoströbröd",
+      "1 msk paprikapulver",
+      "1 msk vitlökspulver",
+      "1 tsk salt",
+      "2 dl parmesanost, riven",
+      "1 dl olivolja",
+      "Fetaostsås",
+      "150 g fetaost",
+      "2 dl crème fraîche",
+      "1 klyfta vitlök, fint riven",
+      "1 citron, finrivet skal",
+      "1 msk citronsaft",
+      "0,5 kruka färsk dill, hackad (eller persilja)",
+      "svartpeppar",
+      "Till servering",
+      "grönsallad",
+      "ev citron, halverad och grillad"
+    ],
+    "image": "https://img.koket.se/standard-mega/grillad-kycklingfile-med-fetaostsas-och-krispig-potatis.png.jpg",
+    "tags": [
+      "kyckling",
+      "köttfärs"
+    ],
+    "external": true
+  },
+  {
+    "id": "bcc23f331b49ecb27f91",
+    "name": "Kladdkaka på klassiskt vis",
+    "source": "Köket",
+    "url": "https://www.koket.se/godaste-och-harligaste-kladdkakan-pa-klassiskt-vis",
+    "minutes": null,
+    "portions": 10,
+    "ingredients": [
+      "225 g smör",
+      "3,5 dl strösocker",
+      "2,25 dl brunt farinsocker",
+      "1 msk vaniljsocker",
+      "4 ägg (stora)",
+      "3,5 dl vetemjöl",
+      "1 dl kakao",
+      "1 krm salt"
+    ],
+    "image": "https://img.koket.se/standard-mega/godaste-och-harligaste-kladdkakan-pa-klassiskt-vis.png.jpg",
+    "tags": [],
+    "external": true
+  },
+  {
+    "id": "b2e0bc2512f3487ba12d",
+    "name": "Knäckig äppelpaj",
+    "source": "Köket",
+    "url": "https://www.koket.se/knackig-appelpaj-2",
+    "minutes": 60,
+    "portions": 6,
+    "ingredients": [
+      "Fyllning",
+      "8 äpplen (små eller 4 stora)",
+      "0,75 dl strösocker",
+      "2 msk farinsocker",
+      "3 tsk malen kanel",
+      "2 tsk malen kardemumma",
+      "4 msk potatismjöl (eller majsstärkelse)",
+      "Smuldeg",
+      "2 dl strösocker",
+      "2 krm salt",
+      "3 dl havregryn",
+      "1,5 dl vetemjöl",
+      "1 tsk bakpulver",
+      "2 tsk vaniljsocker",
+      "175 g smör",
+      "0,5 dl ljus sirap"
+    ],
+    "image": "https://img.koket.se/standard-mega/knackig-appelpaj-2.jpg",
+    "tags": [],
+    "external": true
+  },
+  {
+    "id": "bbb92b127b4b5200faed",
+    "name": "Mackans citronkyckling",
+    "source": "Köket",
+    "url": "https://www.koket.se/mackans-citronkyckling",
+    "minutes": 30,
+    "portions": 4,
+    "ingredients": [
+      "600 g kycklingfilé",
+      "1 gul lök",
+      "2 klyftor vitlök",
+      "1 kruka timjan",
+      "smör (till stekning)",
+      "salt",
+      "peppar",
+      "1-2 dl oliver, urkärnade (stora)",
+      "3 dl grädde",
+      "1 dl crème fraîche",
+      "2 msk kycklingfond",
+      "0,5 citron (saft + zest)",
+      "malen gurkmeja (för färgen)",
+      "Servering",
+      "3 dl ris"
+    ],
+    "image": "https://img.koket.se/standard-mega/citronykyckling.png.jpg",
+    "tags": [
+      "kyckling"
+    ],
+    "external": true
+  },
+  {
+    "id": "fa2e48c549b4039b17cc",
+    "name": "Segmjuk äppelkaka med kardemummakrisp",
+    "source": "Köket",
+    "url": "https://www.koket.se/segmjuk-appelkaka-med-kardemummakrisp",
+    "minutes": 75,
+    "portions": 8,
+    "ingredients": [
+      "150 g smör, rumsvarmt",
+      "3 dl strösocker",
+      "2 ägg",
+      "3 dl vetemjöl",
+      "2 tsk vaniljsocker",
+      "1 tsk bakpulver",
+      "2-3 svenska äpplen",
+      "2 msk strösocker",
+      "1 tsk malen kanel",
+      "Topping",
+      "1 dl havregryn",
+      "25 g smör",
+      "2 msk strösocker",
+      "1 tsk kardemummakärnor, mortlade"
+    ],
+    "image": "https://img.koket.se/standard-mega/segmjuk-appelkaka-med-kardemummakrisp.png.jpg",
+    "tags": [],
+    "external": true
+  }
+]
