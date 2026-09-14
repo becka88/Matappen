@@ -17,12 +17,12 @@ HEADERS = {
     "Referer": f"https://handlaprivatkund.ica.se/stores/{STORE}",
 }
 
-REQUEST_TIMEOUT = 15
-MAX_TERMS = 55
-MAX_WORKERS = 3
+REQUEST_TIMEOUT = 20
+MAX_TERMS = 45
+MAX_WORKERS = 5
 MAX_PRODUCTS_PER_TERM = 30
-MAX_202_RETRIES = 7
-MAX_RUNTIME_SECONDS = 165
+MAX_202_RETRIES = 30
+MAX_RUNTIME_SECONDS = 225
 
 def clean(x):
     return re.sub(r"\s+", " ", str(x or "")).strip()
@@ -90,7 +90,7 @@ STAPLES = [
     "vetemjöl","socker","rapsolja","olivolja","köttfärs","nötfärs","kyckling","kycklingfilé",
     "lax","torsk","falukorv","korv","krossade tomater","kokosmjölk","yoghurt","bröd","ost",
     "morot","bönor","paprika","gurka","tomat","champinjoner","bacon","skinka","tortilla",
-    "havregryn","buljong","soja","senap","ketchup","majonnäs","citron","banan"
+    "havregryn","buljong","soja","senap","ketchup","majonnäs","citron","banan","salt","svartpeppar","peppar","paprikapulver","curry","oregano","timjan","kanel"
 ]
 
 def product_groups(payload):
@@ -174,9 +174,9 @@ def fetch_term(q):
             if r.status_code == 202:
                 retry_after = r.headers.get("Retry-After")
                 try:
-                    wait = float(retry_after) if retry_after else min(1.0 + attempt * 0.7, 4.0)
+                    wait = float(retry_after) if retry_after else min(1.0 + attempt * 1.0, 10.0)
                 except Exception:
-                    wait = min(1.0 + attempt * 0.7, 4.0)
+                    wait = min(1.0 + attempt * 1.0, 10.0)
                 time.sleep(wait)
                 continue
 
@@ -215,8 +215,8 @@ def fetch_term(q):
 
     return q, [], "202-timeout", statuses, last_keys
 
-# Sök vanliga varor + ingredienser från riktiga recept.
-terms = list(STAPLES)
+# Sök först efter ingredienser som faktiskt finns i receptbanken.
+recipe_terms = []
 try:
     raw = json.loads(REC.read_text(encoding="utf-8"))
     recipes = raw if isinstance(raw, list) else raw.get("recipes", [])
@@ -224,10 +224,16 @@ try:
         for x in r.get("ingredients", []) or []:
             q = ingredient_term(x)
             if 2 <= len(q) <= 40 and "vatten" not in q and q not in {"salt","peppar","salt och peppar"}:
-                terms.append(q)
+                recipe_terms.append(q)
 except Exception:
     pass
 
+# Blanda in basvaror så vanliga manuellt tillagda varor också får pris.
+recipe_terms = list(dict.fromkeys(recipe_terms))
+terms = []
+for i in range(max(len(recipe_terms), len(STAPLES))):
+    if i < len(recipe_terms): terms.append(recipe_terms[i])
+    if i < len(STAPLES): terms.append(STAPLES[i])
 terms = list(dict.fromkeys(terms))[:MAX_TERMS]
 
 # Läs gamla riktiga priser så en tillfällig ICA-störning inte tömmer databasen.

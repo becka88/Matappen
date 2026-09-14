@@ -1,0 +1,1 @@
+v43: balanserad receptbank, alias-sökning, källtroget inköp, befintliga UX/UI-, pris-, kategoriserings- och variationsfixar kvar.

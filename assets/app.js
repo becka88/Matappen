@@ -88,14 +88,43 @@ function baseScore(r,i,counts){
 function buildWeek(){
  ensureAnchor();
  let used=new Set(),counts={},week=[],start=matWeekStart();
+
  for(let i=0;i<7;i++){
-   let pool=state.recipes.filter(r=>!used.has(recipeKey(r))&&!state.disliked.has(recipeKey(r)));
-   pool.sort((a,b)=>baseScore(b,i,counts)-baseScore(a,i,counts));
-   let r=pool[0]; if(!r)continue;
+   let all=state.recipes.filter(r=>!used.has(recipeKey(r))&&!state.disliked.has(recipeKey(r)));
+
+   // Max två middagar med samma tydliga huvudråvara.
+   // Om receptbanken är liten väljer vi hellre en annan huvudgrupp än fem kycklingrätter.
+   let allowed=all.filter(r=>{
+     let g=mainGroup(r);
+     return g==="annat" || (counts[g]||0)<2;
+   });
+
+   // Sprid även "annat"-rätter genom titel/huvudord så samma typ inte tar över veckan.
+   let pool=allowed;
+
+   pool.sort((a,b)=>{
+     let ga=mainGroup(a),gb=mainGroup(b);
+     let sa=baseScore(a,i,counts),sb=baseScore(b,i,counts);
+     if((counts[ga]||0)!==(counts[gb]||0)) {
+       // Vid ungefär likvärdiga recept gynnas den huvudgrupp som använts minst.
+       let diff=(counts[gb]||0)-(counts[ga]||0);
+       if(Math.abs(sa-sb)<25)return diff;
+     }
+     return sb-sa;
+   });
+
+   let r=pool[0];
+   if(!r)continue;
+
    used.add(recipeKey(r));
-   let g=mainGroup(r);counts[g]=(counts[g]||0)+1;
+   let g=mainGroup(r);
+   counts[g]=(counts[g]||0)+1;
+
    let date=addDays(start,i);
-   week.push({day:days[i],date:localDateKey(date),dateLabel:shortDate(date),recipe:r,kids:isKidsDay(i),portions:targetPortions(i)});
+   week.push({
+     day:days[i],date:localDateKey(date),dateLabel:shortDate(date),
+     recipe:r,kids:isKidsDay(i),portions:targetPortions(i)
+   });
  }
  state.week=week;
  resetHiddenForWeek();
@@ -142,24 +171,38 @@ function unitKey(u){
  return x
 }
 function shopName(s){
- let x=canon(s).replace(/\([^)]*\)/g,"").trim();
- x=x.split(",")[0].trim();
- x=x.replace(/^(?:smält|rumstempererat|rumstempererad|kall|kallt|varm|varmt|mjuk|mjukt|hackad|hackat|finhackad|finhackat|riven|rivet|skivad|skivat|pressad|pressat|skalad|skalat)\s+/,"");
- x=x.replace(/\s+(?:smält|rumstempererat|rumstempererad|hackad|hackat|finhackad|finhackat|riven|rivet|skivad|skivat)$/,"");
- const exact=[
-  [/^(?:äggula|äggulor|ägg)$/,"ägg"],
+ let x=canon(s).replace(/\([^)]*\)/g," ").replace(/[;,].*$/,"").replace(/\s+/g," ").trim();
+ x=x.replace(/^(?:ca|cirka)\s+/,"")
+    .replace(/^(?:smält|rumstempererat|rumstempererad|kall|kallt|varm|varmt|mjuk|mjukt|hackad|hackat|finhackad|finhackat|grovhackad|grovhackat|riven|rivet|skivad|skivat|pressad|pressat|skalad|skalat|kokt|kokta|stekt|stekta|färsk|färska|fryst|frysta)\s+/,"")
+    .replace(/\s+(?:efter smak|till servering|till garnering|för stekning|att steka i|valfritt|valfri|gärna).*$/,"").trim();
+ const rules=[
+  [/^(?:salt\s*(?:och|&)\s*(?:svart)?peppar|salt\/(?:svart)?peppar)$/,"salt & peppar"],
+  [/^(?:svartpeppar|vitpeppar|peppar|nymalen svartpeppar|malen svartpeppar)$/,"peppar"],
+  [/^(?:flingsalt|havssalt|fint salt|salt)$/,"salt"],
+  [/^(?:äggula|äggulor|äggvita|äggvitor|ägg)$/,"ägg"],
   [/^(?:gul lök|gula lökar|lökar|lök)$/,"gul lök"],
+  [/^(?:röd lök|rödlök|röda lökar)$/,"röd lök"],
   [/^(?:vitlöksklyfta|vitlöksklyftor|vitlök)$/,"vitlök"],
+  [/^(?:smör|matfett|smält smör|mjukt smör)$/,"smör"],
+  [/^(?:vispgrädde|matlagningsgrädde|mellangrädde|grädde)$/,"grädde"],
+  [/^(?:creme fraiche|crème fraiche)$/,"crème fraiche"],
+  [/^(?:riven ost|gratängost|pizzaost|ost)$/,"ost"],
   [/^(?:krossad tomat|krossade tomater)$/,"krossade tomater"],
-  [/^(?:majs|majskorn)$/,"majs"],
-  [/^(?:smör|matfett)$/,"smör"],
-  [/^(?:vispgrädde|grädde)$/,"grädde"],
-  [/^(?:creme fraiche|crème fraiche)$/,"crème fraiche"]
+  [/^(?:passerad tomat|passerade tomater)$/,"passerade tomater"],
+  [/^(?:majskorn|majs)$/,"majs"],
+  [/^(?:strösocker|socker)$/,"socker"],
+  [/^(?:olivolja|extra virgin olivolja)$/,"olivolja"],
+  [/^(?:matolja|neutral olja|rapsolja)$/,"rapsolja"],
+  [/^(?:vetemjöl|mjöl)$/,"vetemjöl"],
+  [/^(?:kycklingfilé|kycklingfile|kycklingfiléer|kycklingfileer)$/,"kycklingfilé"],
+  [/^(?:spagetti|spaghetti)$/,"spaghetti"],
+  [/^(?:makaron|makaroner)$/,"makaroner"]
  ];
- for(const [re,to] of exact)if(re.test(x))return to;
- return x
+ for(const [re,to] of rules)if(re.test(x))return to;
+ const plurals={"morötter":"morot","tomater":"tomat","paprikor":"paprika","champinjoner":"champinjon","citroner":"citron","bananer":"banan","äpplen":"äpple","potatisar":"potatis"};
+ return plurals[x]||x
 }
-function expandIngredient(line){let raw=String(line||"").trim(),c=canon(raw);if(!raw||/^(?:till servering|servering|garnering|sås|dressing|marinad)\s*:?\s*$/i.test(raw))return[];if(/\bkebabsås\b/.test(c)&&/\b(?:hemmagjord|hemgjord|se (?:länk|recept))\b/.test(c))return["2 dl turkisk yoghurt","1 dl majonnäs","1 vitlöksklyfta","1 tsk paprikapulver"];if(/\b(?:se länk|se recept|enligt recept|recept finns)\b/.test(c))return[];return[raw]}
+function expandIngredient(line){let raw=String(line||"").trim(),c=canon(raw);if(!raw||/^(?:till servering|servering|garnering|sås|dressing|marinad)\s*:?\s*$/i.test(raw))return[];if(/\b(?:se länk|se recept|enligt recept|recept finns)\b/.test(c))return[];return[raw]}
 
 function toBaseAmount(qty,unit,name){
  let q=Number(qty); if(!Number.isFinite(q))return null;
@@ -188,6 +231,7 @@ function roundPacks(amount,size){return Math.max(1,Math.ceil((amount||0)/size))}
 function purchasePlan(item){
  let alreadyBase=item.parts&&item.parts.length&&["g","ml","st"].includes(item.unit);
  let b=alreadyBase?{kind:item.unit,amount:item.qty}:toBaseAmount(item.qty,item.unit,item.name),amount=b?.amount??null,kind=b?.kind||"",n=canon(item.name);
+ if(/^(?:salt|peppar)$/.test(n))return {label:"1 förpackning",need:1,kind:"st"};
  if(item.mixedParts?.length)return {label:"1 förpackning",need:1,kind:"st"};
  if(n==="ägg")return {label:`minst ${Math.max(1,Math.ceil(amount||1))} ägg`,need:Math.max(1,Math.ceil(amount||1)),kind:"st"};
  if(/pulver|krydda|paprika|curry|oregano|timjan|kanel|chili|spiskummin|rosmarin|basilika|gurkmeja/.test(n))return {label:"1 burk/påse",need:amount||1,kind:"g"};
@@ -274,11 +318,45 @@ function bestOfferPriceForItem(item){
  if(p.type==="st")return {cost:(plan.packs||1)*p.cost,label:match.price,source:"ICA-erbjudande"};
  return null
 }
+
+function nonPurchaseIngredient(name){
+ let n=canon(name).replace(/\([^)]*\)/g," ").replace(/\s+/g," ").trim();
+ if(!n)return true;
+ const exact=new Set([
+  "vatten","kranvatten","kokvatten","pastavatten","pastakokvatten",
+  "vatten från pastakoket","vatten från koket","kokvatten från pastan",
+  "isbitar","is","krossad is"
+ ]);
+ if(exact.has(n))return true;
+ if(/^(?:kallt |varmt |ljummet |kokande |iskallt )?(?:kran)?vatten\b/.test(n))return true;
+ if(/\b(?:pasta)?kokvatten\b/.test(n))return true;
+ if(/\bvatten\s+från\s+(?:pasta)?koket\b/.test(n))return true;
+ if(/\bkokvatten\s+från\s+pastan\b/.test(n))return true;
+ if(/^(?:till servering|servering|garnering|tillbehör|sås|dressing|marinad)\s*:?\s*$/.test(n))return true;
+ if(/^(?:efter smak|smaka av|för servering)\s*$/.test(n))return true;
+ return false;
+}
+
+function cleanIngredientNameForShopping(name){
+ let n=shopName(name);
+ n=n
+  .replace(/\s+(?:till|för)\s+(?:stekning|stekning och servering|servering|garnering|formen|bakning)\s*$/,"")
+  .replace(/\s+(?:efter smak|vid behov|om så önskas|valfritt|valfri)\s*$/,"")
+  .replace(/\s+/g," ")
+  .trim();
+ return n;
+}
 function shopping(){
- let map=new Map(),never=new Set(["vatten","kranvatten"]);
+ let map=new Map(),never=new Set(["vatten","kranvatten","kokvatten","pastavatten","pastakokvatten","vatten från pastakoket","vatten från koket"]);
  const add=(x,factor=1,extra={})=>{
-   let key=shopName(x.name),u=unitKey(x.unit),n=num(x.qty);
-   if(!key||never.has(key))return;
+   if(nonPurchaseIngredient(x.name))return;
+   let key=cleanIngredientNameForShopping(x.name),u=unitKey(x.unit),n=num(x.qty);
+   if(!key||never.has(key)||nonPurchaseIngredient(key))return;
+   if(key==="salt & peppar"&&!extra.offerItem){
+     add({...x,name:"salt"},factor,extra);
+     add({...x,name:"peppar"},factor,extra);
+     return;
+   }
 
    // Vanliga receptvaror slås alltid ihop till en rad.
    // Explicit tillagda erbjudanden behåller egen rad.
@@ -492,7 +570,7 @@ function offersView(){
 function recipeView(){
  let sourced=state.recipes.filter(r=>approvedSourceRecipe(r)).length;
  return `<section class="page-head"><span class="kicker">Receptbank</span><h1>Hitta något gott</h1><p>${sourced} från ICA, Arla och Köket${state.customRecipes.length?` · ${state.customRecipes.length} egna`:""}</p></section>
- <div class="recipe-actions"><input class="search" id="search" placeholder="Sök på recept eller ingrediens, t.ex. kyckling…"><button class="add-recipe-btn" id="addRecipe">＋ Eget</button></div>
+ <div class="recipe-actions"><input class="search" id="search" placeholder="Sök recept eller ingrediens, t.ex. köttfärs…"><button class="add-recipe-btn" id="addRecipe">＋ Eget</button></div><div id="recipeResultCount" class="recipe-result-count">${state.recipes.length} recept</div>
  <div class="filter-row">${["Alla","👍 Gillade","🔥 ICA-match","≤30 min","ICA","Arla","Köket"].map((x,i)=>`<button class="filter ${i===0?'active':''}" data-filter="${x}">${x}</button>`).join("")}</div>
  <div id="recipeList" class="recipe-list">${recipeCards(state.recipes.slice(0,220))}</div>`;
 }
@@ -518,10 +596,13 @@ function wire(){
  if($("#addTakeaway"))$("#addTakeaway").onclick=()=>addExpense("Hämtmat");
  document.querySelectorAll("[data-filter]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-filter]").forEach(x=>x.classList.remove("active"));b.classList.add("active");state.filter=b.dataset.filter;filterRecipes()});
 }
-function swapMeal(i){let cur=state.week[i].recipe,counts={};state.week.forEach((p,j)=>{if(j!==i)counts[mainGroup(p.recipe)]=(counts[mainGroup(p.recipe)]||0)+1});let pool=state.recipes.filter(r=>recipeKey(r)!==recipeKey(cur)&&!state.disliked.has(recipeKey(r))&&!state.week.some((p,j)=>j!==i&&recipeKey(p.recipe)===recipeKey(r)));pool.sort((a,b)=>baseScore(b,i,counts)-baseScore(a,i,counts));if(pool[0])state.week[i]={...state.week[i],recipe:pool[0]};render()}
+function swapMeal(i){let cur=state.week[i].recipe,counts={};state.week.forEach((p,j)=>{if(j!==i)counts[mainGroup(p.recipe)]=(counts[mainGroup(p.recipe)]||0)+1});let all=state.recipes.filter(r=>recipeKey(r)!==recipeKey(cur)&&!state.disliked.has(recipeKey(r))&&!state.week.some((p,j)=>j!==i&&recipeKey(p.recipe)===recipeKey(r)));let allowed=all.filter(r=>{let g=mainGroup(r);return g==="annat"||(counts[g]||0)<2});let pool=allowed;pool.sort((a,b)=>baseScore(b,i,counts)-baseScore(a,i,counts));if(pool[0])state.week[i]={...state.week[i],recipe:pool[0]};render()}
 function showRecipe(id){let r=state.recipes.find(x=>recipeKey(x)===id);if(!r)return;let key=recipeKey(r),body=`${image(r,"sheet-image")}<div class="source-badge">${esc(r.source||"Matappen")}</div><h3>${esc(r.name)}</h3><div class="row">${meta(r)}</div>${offerBadge(r)}<div class="taste-actions"><button class="${state.liked.has(key)?'taste-on':''}" id="likeRecipe">👍 Den här gillar vi</button><button class="${state.disliked.has(key)?'taste-bad':''}" id="dislikeRecipe">👎 Inte för oss</button></div>`;if((r.ingredients||[]).length)body+=`<h4>Ingredienser</h4>${r.ingredients.map(x=>`<div class="ingredient">${esc(x)}</div>`).join("")}`;if(r.external&&r.url)body+=`<a href="${esc(r.url)}" target="_blank" rel="noopener" class="wide-btn link-btn">Öppna hos ${esc(r.source)} ↗</a>`;else if(r.steps)body+=`<h4>Gör så här</h4>${r.steps.map((s,i)=>`<div class="step"><b>${i+1}.</b> ${esc(s)}</div>`).join("")}`;showSheet(body);setTimeout(()=>{$("#likeRecipe").onclick=()=>{state.liked.add(key);state.disliked.delete(key);saveTaste();buildWeek();closeSheet();render()};$("#dislikeRecipe").onclick=()=>{state.disliked.add(key);state.liked.delete(key);saveTaste();buildWeek();closeSheet();render()}},10)}
 function saveTaste(){localStorage.setItem("likedV24",JSON.stringify([...state.liked]));localStorage.setItem("dislikedV24",JSON.stringify([...state.disliked]))}
-function filterRecipes(){let q=$("#search").value.toLowerCase().trim(),f=state.filter,arr=state.recipes.filter(r=>(r.name+" "+(r.ingredients||[]).join(" ")+" "+(r.tags||[]).join(" ")).toLowerCase().includes(q));if(f==="≤30 min")arr=arr.filter(r=>mins(r)&&mins(r)<=30);if(["ICA","Arla","Köket"].includes(f))arr=arr.filter(r=>r.source===f);if(f==="👍 Gillade")arr=arr.filter(r=>state.liked.has(recipeKey(r)));if(f==="🔥 ICA-match")arr=arr.filter(r=>offerMatches(r).length);$("#recipeList").innerHTML=recipeCards(arr.slice(0,220));document.querySelectorAll(".recipe-card").forEach(c=>c.onclick=()=>showRecipe(c.dataset.id))}
+function searchGroups(q){const alias={"köttfärs":["köttfärs","nötfärs","blandfärs","färs"],"färs":["färs","köttfärs","nötfärs","blandfärs"],"kyckling":["kyckling","kycklingfilé"],"fisk":["fisk","torsk","sej","lax"],"pasta":["pasta","spaghetti","spagetti","lasagne","makaron","penne"],"grädde":["grädde","vispgrädde","matlagningsgrädde"],"vegetariskt":["vegetar","linser","bönor","tofu","halloumi"]};return canon(q).split(" ").filter(Boolean).map(t=>alias[t]||[t])}
+function recipeSearchText(r){return canon([r.name,r.source,...(r.ingredients||[]),...(r.tags||[])].join(" "))}
+function filterRecipes(){let q=$("#search").value.trim(),f=state.filter,groups=searchGroups(q),arr=state.recipes.filter(r=>{if(!groups.length)return true;let hay=recipeSearchText(r);return groups.every(g=>g.some(t=>hay.includes(canon(t))))});if(f==="≤30 min")arr=arr.filter(r=>mins(r)&&mins(r)<=30);if(["ICA","Arla","Köket"].includes(f))arr=arr.filter(r=>r.source===f);if(f==="👍 Gillade")arr=arr.filter(r=>state.liked.has(recipeKey(r)));if(f==="🔥 ICA-match")arr=arr.filter(r=>offerMatches(r).length);if(q){let cq=canon(q);arr.sort((a,b)=>{let an=canon(a.name),bn=canon(b.name),as=an===cq?4:an.includes(cq)?3:recipeSearchText(a).includes(cq)?2:1,bs=bn===cq?4:bn.includes(cq)?3:recipeSearchText(b).includes(cq)?2:1;return bs-as||a.name.localeCompare(b.name,"sv")})}$("#recipeList").innerHTML=arr.length?recipeCards(arr.slice(0,220)):`<div class="card empty-state"><b>Inga träffar</b><span>Prova ett bredare ord, till exempel färs, pasta eller fisk.</span></div>`;let c=$("#recipeResultCount");if(c)c.textContent=`${arr.length} recept`;document.querySelectorAll(".recipe-card").forEach(c=>c.onclick=()=>showRecipe(c.dataset.id))}
+
 function addOwnRecipe(){showSheet(`<h3>＋ Eget recept</h3><label class="form-label">Namn</label><input class="search" id="ownName"><div class="form-grid"><div><label class="form-label">Portioner</label><input class="search" id="ownPortions" value="4"></div><div><label class="form-label">Tid, min</label><input class="search" id="ownMinutes"></div></div><label class="form-label">Ingredienser – en per rad</label><textarea class="recipe-textarea" id="ownIngredients"></textarea><label class="form-label">Gör så här</label><textarea class="recipe-textarea" id="ownSteps"></textarea><button class="wide-btn" id="saveOwnRecipe">Spara recept</button>`);setTimeout(()=>{$("#saveOwnRecipe").onclick=()=>{let name=$("#ownName").value.trim(),ingredients=$("#ownIngredients").value.split(/\n/).map(x=>x.trim()).filter(Boolean);if(!name||!ingredients.length)return;let r={id:"own-"+Date.now(),name,source:"Eget recept",external:false,ingredients,steps:$("#ownSteps").value.split(/\n/).filter(Boolean),minutes:Number($("#ownMinutes").value)||null,portions:Number($("#ownPortions").value)||4,tags:["eget"]};state.customRecipes.unshift(r);localStorage.setItem("customRecipes",JSON.stringify(state.customRecipes));state.recipes.unshift(r);buildWeek();closeSheet();render()}},10)}
 function addExpense(type){showSheet(`<h3>${type==='Hämtmat'?'🍕 Hämtmat':'🛒 Matbutik'}</h3><input class="search" id="expenseAmount" inputmode="decimal" placeholder="Belopp i kr"><button class="wide-btn" id="saveExpense">Spara</button>`);setTimeout(()=>{$("#saveExpense").onclick=()=>{let amount=Number($("#expenseAmount").value.replace(",","."));if(!amount)return;state.expenses.push({date:new Date().toISOString().slice(0,10),type,amount});save();closeSheet();render()}},10)}
 function customAdd(){
@@ -530,7 +611,7 @@ function customAdd(){
 }
 function showInfo(){
  ensureAnchor();
- showSheet(`<div class="sheet-kicker">Inställningar</div><h3>Matappen v40</h3><p class="sheet-intro">Matveckan går torsdag–onsdag och budgeten den 25:e–24:e.</p>
+ showSheet(`<div class="sheet-kicker">Inställningar</div><h3>Matappen v45</h3><p class="sheet-intro">Matveckan går torsdag–onsdag och budgeten den 25:e–24:e.</p>
  <label class="form-label">Ankare för barnveckan</label><input class="search" type="date" id="anchorThursday" value="${esc(state.settings.anchorThursday)}">
  <label class="form-label">Den torsdagen</label><select class="search" id="handover"><option value="arrival" ${state.settings.handover==="arrival"?"selected":""}>kommer barnen</option><option value="departure" ${state.settings.handover==="departure"?"selected":""}>lämnas barnen</option></select>
  <div class="settings-note">Välj en torsdag du vet stämmer. Därefter växlar Matappen automatiskt varannan torsdag.</div>
