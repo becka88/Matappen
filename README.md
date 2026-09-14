@@ -70,3 +70,18 @@ Obs: exakt vanlig onlinepris-matchning för hela ICA-korgen kräver en stabil ve
 
 ## v31 – riktiga Maxi ICA Växjö-priser
 Schablonpriser är borttagna. GitHub Action hämtar butiksspecifika produktpriser från ICA Handla Online för butik 1003571. Budgeten använder bara matchade riktiga priser eller explicit valda erbjudanden.
+
+## v32 – UI/UX, erbjudanden, priser och budget
+- UI/UX behandlas som standardkrav och tekniska förklaringar har tagits bort från huvudvyerna.
+- Erbjudandehämtaren räknar rätt total på ICA-sidan och har två oberoende korttolkningar.
+- Prisuppdateraren hämtar fler receptvaror, sparar flera sökord per produkt och hanterar ICA:s prisobjekt/promotioner robustare.
+- Produktmatchningen är tolerant mot vardagliga ingrediensnamn och multipack.
+- Veckobudgeten räknas direkt på hela aktuella inköpslistan, även avbockade varor. Månadsbudgeten visar prognos efter veckans lista.
+
+## v33 – endast riktiga källrecept
+- Alla gamla Matappen-/fallback-recept är borttagna ur `recipes.json`.
+- Den automatiska receptbanken accepterar endast Recipe-data från ICA, Arla och Köket.se.
+- Recept måste ha käll-URL och riktig ingredienslista från källans Recipe JSON-LD för att få visas.
+- Kryddor och övriga ingredienser sparas precis som de finns i källans ingredienslista; Matappen fyller inte i eller hittar på ingredienser.
+- Egna recept finns endast om familjen själv lägger in dem i appen.
+- Appen har tomläge och kraschar inte om en källuppdatering tillfälligt ger 0 recept.

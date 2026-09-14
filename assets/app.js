@@ -101,7 +101,11 @@ function buildWeek(){
  resetHiddenForWeek();
 }
 function resetHiddenForWeek(){const k="hiddenShopWeekV24";if(localStorage.getItem(k)!==weekKey()){state.hiddenShop.clear();localStorage.setItem(k,weekKey());localStorage.setItem("hiddenShopV24","[]")}}
-async function init(){try{const[rr,oo,pp]=await Promise.all([fetch("./recipes.json?"+Date.now()).then(r=>r.json()),fetch("./offers.json?"+Date.now()).then(r=>r.ok?r.json():({status:"unavailable",offers:[]})),fetch("./prices.json?"+Date.now()).then(r=>r.ok?r.json():({status:"unavailable",products:[]})).catch(()=>({status:"unavailable",products:[]}))]);state.recipes=[...state.customRecipes,...rr];state.offerStatus=oo.status||"unavailable";state.offers=oo.offers||[];state.offerPageCount=oo.page_offer_count||state.offers.length;state.offerCoverage=oo.coverage||"";state.priceStatus=pp.status||"unavailable";state.prices=pp.products||[];state.priceUpdated=pp.updated_at||null;buildWeek();render();bindNav()}catch(e){$("#view").innerHTML='<div class="card">Kunde inte läsa Matappens data just nu.</div>'}}
+function approvedSourceRecipe(r){
+ if(!r||r.external!==true||!["ICA","Arla","Köket"].includes(r.source)||!Array.isArray(r.ingredients)||r.ingredients.length<2||!r.url)return false;
+ try{let h=new URL(r.url).hostname.replace(/^www\./,"");return (r.source==="ICA"&&h==="ica.se")||(r.source==="Arla"&&h==="arla.se")||(r.source==="Köket"&&h==="koket.se")}catch{return false}
+}
+async function init(){try{const[rr,oo,pp]=await Promise.all([fetch("./recipes.json?"+Date.now()).then(r=>r.json()),fetch("./offers.json?"+Date.now()).then(r=>r.ok?r.json():({status:"unavailable",offers:[]})),fetch("./prices.json?"+Date.now()).then(r=>r.ok?r.json():({status:"unavailable",products:[]})).catch(()=>({status:"unavailable",products:[]}))]);let sourced=Array.isArray(rr)?rr.filter(approvedSourceRecipe):[];state.recipes=[...state.customRecipes,...sourced];state.offerStatus=oo.status||"unavailable";state.offers=oo.offers||[];state.offerPageCount=oo.page_offer_count||state.offers.length;state.offerCoverage=oo.coverage||"";state.priceStatus=pp.status||"unavailable";state.prices=pp.products||[];state.priceUpdated=pp.updated_at||null;buildWeek();render();bindNav()}catch(e){$("#view").innerHTML='<div class="card">Kunde inte läsa Matappens data just nu.</div>'}}
 function bindNav(){document.querySelectorAll(".nav-btn").forEach(b=>b.onclick=()=>{state.view=b.dataset.view;document.querySelectorAll(".nav-btn").forEach(x=>x.classList.toggle("active",x===b));render();scrollTo(0,0)});$("#profileBtn").onclick=showInfo}
 function image(r,cls="recipe-image"){return r.image?`<img class="${cls}" src="${esc(r.image)}" alt="" loading="lazy" referrerpolicy="no-referrer">`:""}
 function meta(r){let a=[];if(mins(r))a.push(`⏱ ${mins(r)} min`);if(r.external)a.push(`↗ ${r.source}`);return a.map(x=>`<span class="soft-chip">${esc(x)}</span>`).join("")}
@@ -109,7 +113,8 @@ function offerBadge(r){let m=offerMatches(r);if(!m.length)return"";return `<div 
 function familyChip(p){return `<span class="family-chip ${p.kids?'kids':'adult'}">${p.kids?'👨‍👩‍👧‍👦 Barnen hemma':'🌶️ Vuxenkväll'} · ${p.portions} port</span>`}
 function render(){if(state.view==="today")$("#view").innerHTML=todayView();if(state.view==="week")$("#view").innerHTML=weekView();if(state.view==="shop")$("#view").innerHTML=shopView();if(state.view==="recipes")$("#view").innerHTML=recipeView();if(state.view==="offers")$("#view").innerHTML=offersView();wire()}
 function todayView(){
- let i=dayIndexInMatWeek(),p=state.week[i]||state.week[0],t=state.week[(i+1)%7],remaining=shopping().filter(x=>!state.checked.has(x.key)).length,hand=currentHandoverType();
+ if(!state.week.length)return `<section class="page-head"><span class="kicker">Matappen</span><h1>Recepten uppdateras</h1><p>Receptbanken innehåller bara recept från ICA, Arla och Köket.</p></section><div class="card empty-state"><b>Inga källrecept inlästa ännu</b><span>Kör “Uppdatera Matappen” i GitHub Actions så hämtas recepten.</span></div>`;
+ let i=dayIndexInMatWeek(),p=state.week[i]||state.week[0],t=state.week[(i+1)%7]||state.week[0],remaining=shopping().filter(x=>!state.checked.has(x.key)).length,hand=currentHandoverType();
  return `<section class="cycle-strip"><b>${matWeekLabel()}</b><span>${hand==="arrival"?"👨‍👩‍👧‍👦 Barnvecka från torsdag":"🌶️ Vuxenvecka från torsdag"}</span></section>
  <section class="hero-card">${image(p.recipe,"hero-image")}
  <div class="hero-label">${p.day} ${p.dateLabel} · dagens middag</div>
@@ -119,12 +124,13 @@ function todayView(){
  ${featuredOffers()}
  <div class="home-glance"><button class="glance-card" data-goto="shop"><span class="glance-icon">🛒</span><span><b>${remaining} saker kvar</b><small>Öppna inköpslistan</small></span><span class="chev">›</span></button></div>
  <div class="budget-card">${budgetSummary()}</div>
- <div class="status-line ${state.offerStatus==="live"?"ok":"warn"}">${state.offerStatus==="live"?"Veckoplanen prioriterar ICA-erbjudanden. Samma huvudingrediens används högst två gånger.":offerCoverageText()}</div>
+ ${state.offerStatus==="live"?`<div class="home-offer-line">🔥 ${state.offers.length} ICA-erbjudanden inne</div>`:""}
  <section class="section"><div class="section-head"><div><h2>I morgon</h2><div class="muted">Nästa middag i planen</div></div></div><div class="card mini-meal">${image(t.recipe,"thumb")}<div><div class="day">${t.day} ${t.dateLabel}</div><div class="meal">${esc(t.recipe.name)}</div>${familyChip(t)}${offerBadge(t.recipe)}</div></div></section>`;
 }
 function weekView(){
+ if(!state.week.length)return `<section class="page-head"><span class="kicker">Matvecka · torsdag–onsdag</span><h1>${matWeekLabel()}</h1><p>Recepten hämtas från ICA, Arla och Köket.</p></section><div class="card empty-state"><b>Ingen veckoplan ännu</b><span>Receptbanken väntar på nästa uppdatering.</span></div>`;
  let hand=currentHandoverType();
- return `<section class="page-head"><span class="kicker">Matvecka · torsdag–onsdag</span><h1>${matWeekLabel()}</h1><p>${hand==="arrival"?"Barnen kommer på torsdag.":"Barnen lämnas på torsdag."} Erbjudanden prioriteras, men samma huvudingrediens används högst två gånger.</p></section>
+ return `<section class="page-head"><span class="kicker">Matvecka · torsdag–onsdag</span><h1>${matWeekLabel()}</h1><p>${hand==="arrival"?"Barnen kommer på torsdag.":"Barnen lämnas på torsdag."}</p></section>
  ${featuredOffers()}
  <section class="week-list">${state.week.map((p,i)=>`<article class="card week-card">${image(p.recipe,"thumb")}<div class="week-main"><div class="day">${p.day} · ${p.dateLabel}</div><div class="meal">${esc(p.recipe.name)}</div>${familyChip(p)}<div class="row">${meta(p.recipe)}</div>${offerBadge(p.recipe)}<div class="week-actions"><button class="secondary-btn" data-recipeid="${esc(recipeKey(p.recipe))}">Visa recept</button><button class="tertiary-btn" data-swap="${i}">↻ Byt</button></div></div></article>`).join("")}</section>`;
 }
@@ -182,24 +188,71 @@ function purchasePlan(item){
 }
 
 function productPack(p){
- let s=canon(`${p.pack||""} ${p.name||""}`),m;
+ let s=canon(`${p.pack||""} ${p.name||""}`),m,total;
+ if((m=s.match(/(\d+)\s*[x×]\s*(\d+(?:[.,]\d+)?)\s*(kg|g|l|dl|cl|ml)\b/))){
+   let mult=Number(m[1]),v=Number(m[2].replace(",",".")),u=m[3];
+   if(u==="kg")return {kind:"g",amount:mult*v*1000};
+   if(u==="g")return {kind:"g",amount:mult*v};
+   if(u==="l")return {kind:"ml",amount:mult*v*1000};
+   if(u==="dl")return {kind:"ml",amount:mult*v*100};
+   if(u==="cl")return {kind:"ml",amount:mult*v*10};
+   if(u==="ml")return {kind:"ml",amount:mult*v};
+ }
  if((m=s.match(/(\d+(?:[.,]\d+)?)\s*kg\b/)))return {kind:"g",amount:Number(m[1].replace(",","."))*1000};
  if((m=s.match(/(\d+(?:[.,]\d+)?)\s*g\b/)))return {kind:"g",amount:Number(m[1].replace(",","."))};
  if((m=s.match(/(\d+(?:[.,]\d+)?)\s*(?:l|liter)\b/)))return {kind:"ml",amount:Number(m[1].replace(",","."))*1000};
  if((m=s.match(/(\d+(?:[.,]\d+)?)\s*dl\b/)))return {kind:"ml",amount:Number(m[1].replace(",","."))*100};
+ if((m=s.match(/(\d+(?:[.,]\d+)?)\s*cl\b/)))return {kind:"ml",amount:Number(m[1].replace(",","."))*10};
+ if((m=s.match(/(\d+(?:[.,]\d+)?)\s*ml\b/)))return {kind:"ml",amount:Number(m[1].replace(",","."))};
  if((m=s.match(/(\d+)\s*(?:-p|p\b|pack|st\b)/)))return {kind:"st",amount:Number(m[1])};
  return null
 }
 function itemTokens(name){return canon(name).split(/\s+/).filter(x=>x.length>2&&!["färsk","fryst","hackad","riven","skivad","finhackad"].includes(x))}
+
+function priceSearchName(name){
+ let n=shopName(name);
+ const aliases=[
+  [/creme fraiche|crème fraiche/,"crème fraiche"],
+  [/matlagningsgrädde|vispgrädde|grädde/,"grädde"],
+  [/gul lök|röd lök|silverlök/,"lök"],
+  [/morötter|morot/,"morot"],
+  [/krossade tomater|passerade tomater/,"tomater"],
+  [/nötfärs|blandfärs|köttfärs/,"köttfärs"],
+  [/kycklingfilé|kycklinglårfilé|kycklingbröst/,"kyckling"],
+  [/spaghetti|penne|makaroner/,"pasta"],
+  [/vitlöksklyftor|vitlöksklyfta/,"vitlök"],
+  [/äggulor|äggula/,"ägg"]
+ ];
+ for(const [re,to] of aliases)if(re.test(n))return to;
+ return n.replace(/\b(färsk|fryst|hackad|finhackad|riven|skivad|ekologisk|eko)\b/g," ").replace(/\s+/g," ").trim()
+}
+function tokenScore(a,b){
+ let A=new Set(canon(a).split(/\s+/).filter(x=>x.length>2)),B=new Set(canon(b).split(/\s+/).filter(x=>x.length>2));
+ if(!A.size||!B.size)return 0;
+ let hit=0;A.forEach(x=>{if(B.has(x))hit++});
+ return hit/A.size
+}
 function realProductForItem(item){
- let tokens=itemTokens(item.name),plan=purchasePlan(item);
- let c=state.prices.filter(p=>{let h=canon(`${p.query||""} ${p.name||""}`);return tokens.length&&tokens.every(t=>h.includes(t))}).map(p=>{
+ let wanted=priceSearchName(item.name),plan=purchasePlan(item);
+ let candidates=state.prices.map(p=>{
+   let queryText=Array.isArray(p.queries)?p.queries.join(" "):(p.query||"");
+   let productText=`${p.name||""} ${p.brand||""}`;
+   let queryScore=Math.max(...String(queryText).split("|").map(q=>tokenScore(wanted,q)),0);
+   let nameScore=tokenScore(wanted,productText);
+   let exact=canon(queryText).includes(canon(wanted))||canon(productText).includes(canon(wanted));
+   let relevance=Math.max(queryScore,nameScore)+(exact?0.45:0);
+   if(relevance<0.66)return null;
    let pack=productPack(p),packs=1;
    if(pack&&pack.kind===plan.kind&&Number(plan.need)>0)packs=Math.max(1,Math.ceil(plan.need/pack.amount));
-   let cost=Number(p.price)*packs;
-   return {...p,packs,cost,score:cost-(/(?:^|\s)ica(?:\s|$)/.test(canon(p.name))?2:0)}
- }).filter(x=>Number.isFinite(x.cost)&&x.cost>0);
- c.sort((a,b)=>a.score-b.score);return c[0]||null
+   let price=Number(p.promotion_price||p.price);
+   let cost=price*packs;
+   if(!Number.isFinite(cost)||cost<=0)return null;
+   let ownBrand=/(^|\s)ica(\s|$)/.test(canon(`${p.brand||""} ${p.name||""}`))?0.08:0;
+   let available=p.available===false?-1:0;
+   return {...p,packs,cost,relevance:relevance+ownBrand+available,packParsed:pack}
+ }).filter(Boolean);
+ candidates.sort((a,b)=>b.relevance-a.relevance||a.cost-b.cost);
+ return candidates[0]||null
 }
 function bestOfferPriceForItem(item){
  if(state.offerStatus!=="live")return null;
@@ -248,13 +301,15 @@ function offerCost(o){
  return null
 }
 function estimateShop(){
- let items=shopping(),planned=0,priced=0,total=0;
+ let items=shopping(),planned=0,priced=0,total=0,missing=[];
  for(const item of items){
-   if(state.checked.has(item.key))continue; total++;
+   total++;
    if(item.offerItem&&Number(item.plannedCost)>0){planned+=Number(item.plannedCost);priced++;continue}
-   let p=realProductForItem(item);if(p){planned+=p.cost;priced++}
+   let p=realProductForItem(item);
+   if(p){planned+=p.cost;priced++}
+   else missing.push(item.name)
  }
- return {planned,priced,total}
+ return {planned,priced,total,missing}
 }
 
 function budgetPeriod(date=new Date()){
@@ -293,9 +348,9 @@ function removeOfferFromCart(id){
 }
 function plannedOfferTotal(){return estimateShop().planned}
 function offerCoverageText(){
- if(state.offerStatus!=="live")return "ICA-erbjudanden kunde inte verifieras just nu.";
- if(state.offerPageCount && state.offers.length < state.offerPageCount)return `${state.offers.length} av ${state.offerPageCount} erbjudanden kunde läsas in.`;
- return `${state.offers.length} erbjudanden inlästa från ICA Maxi Växjö.`;
+ if(state.offerStatus!=="live")return "";
+ let total=Number(state.offerPageCount)||state.offers.length;
+ return total>state.offers.length?`${state.offers.length} av ${total} erbjudanden`:`${state.offers.length} erbjudanden`;
 }
 function featuredOffers(){
  if(state.offerStatus!=="live")return"";
@@ -304,8 +359,19 @@ function featuredOffers(){
  return `<section class="deal-focus"><div class="deal-focus-head"><div><span class="kicker">ICA Maxi Växjö</span><h2>Veckans fynd</h2></div><button class="deal-link" data-goto="offers">Alla ${state.offers.length} ›</button></div><div class="deal-scroll">${useful.map(o=>`<div class="deal-card"><b>${esc(o.name)}</b><span>${esc(o.price||"Erbjudande")}</span><button data-offer-add="${esc(offerId(o))}" ${offerInCart(o)?"disabled":""}>${offerInCart(o)?"✓ Tillagd":"＋ Lägg till"}</button></div>`).join("")}</div></section>`;
 }
 function budgetSummary(){
- let spent=monthSpent(),est=estimateShop(),planned=est.planned,left=Math.max(0,state.settings.monthlyBudget-spent),projected=Math.max(0,state.settings.monthlyBudget-spent-planned),pct=Math.min(100,Math.round(spent/state.settings.monthlyBudget*100)||0);
- return `<div class="budget-head"><div><span class="kicker">Budgetperiod ${budgetPeriodLabel()}</span><strong>${Math.round(spent).toLocaleString("sv-SE")} kr</strong></div><span class="budget-left">${Math.round(left).toLocaleString("sv-SE")} kr kvar</span></div><div class="budget-track"><span style="width:${pct}%"></span></div><div class="budget-foot"><span>Av ${state.settings.monthlyBudget.toLocaleString("sv-SE")} kr</span><span>Ny period den 25:e</span></div><div class="budget-plan"><b>Planerat från inköpslistan</b><span>${Math.round(planned).toLocaleString("sv-SE")} kr</span></div><div class="budget-note">${est.priced} av ${est.total} kvarvarande varor matchade mot riktiga onlinepriser hos Maxi ICA Växjö. Inga schablonpriser används.</div>${est.priced?`<div class="budget-projected">Efter registrerade + prissatta planerade köp: <b>${Math.round(projected).toLocaleString("sv-SE")} kr kvar</b></div>`:""}`;
+ let spent=monthSpent(),est=estimateShop(),planned=est.planned,left=Math.max(0,state.settings.monthlyBudget-spent),projected=Math.max(0,state.settings.monthlyBudget-spent-planned);
+ let pct=Math.min(100,Math.round(spent/state.settings.monthlyBudget*100)||0);
+ let weekPct=Math.min(100,Math.round(planned/state.settings.weeklyBudget*100)||0);
+ return `<div class="budget-main-row">
+   <div><span class="kicker">Veckans inköp</span><strong>${Math.round(planned).toLocaleString("sv-SE")} kr</strong></div>
+   <div class="budget-target ${planned>state.settings.weeklyBudget?"over":""}">mål ${state.settings.weeklyBudget.toLocaleString("sv-SE")} kr</div>
+ </div>
+ <div class="budget-track weekly"><span style="width:${weekPct}%"></span></div>
+ <div class="budget-mini-row"><span>${est.priced}/${est.total} priser</span>${est.missing.length?`<span>${est.missing.length} saknas</span>`:`<span>Alla priser klara</span>`}</div>
+ <div class="budget-divider"></div>
+ <div class="budget-head"><div><span class="kicker">25:e–24:e</span><strong>${Math.round(spent).toLocaleString("sv-SE")} kr registrerat</strong></div><span class="budget-left">${Math.round(left).toLocaleString("sv-SE")} kr kvar</span></div>
+ <div class="budget-track"><span style="width:${pct}%"></span></div>
+ <div class="budget-foot"><span>Budget ${state.settings.monthlyBudget.toLocaleString("sv-SE")} kr</span><span>Efter veckolistan: ${Math.round(projected).toLocaleString("sv-SE")} kr kvar</span></div>`;
 }
 
 function quickSuggestions(){
@@ -322,19 +388,23 @@ function addQuickItem(value){
  render();
 }
 function shopView(){
- let items=shopping(),done=items.filter(x=>state.checked.has(x.key)).length,remaining=Math.max(0,items.length-done),suggestions=quickSuggestions();
- return `<section class="page-head shop-page-head"><span class="kicker">Handla</span><h1>Inköpslista</h1><p>${remaining} kvar att köpa${done?` · ${done} klara`:""} · riktiga priser från Maxi ICA Växjö</p></section><section class="add-shop-card"><label for="quickAddInput">Lägg till vara</label><div class="quick-add-row"><input id="quickAddInput" autocomplete="off" placeholder="T.ex. mjölk eller toalettpapper"><button id="quickAddBtn">＋</button></div><div class="smart-label">Snabbval</div><div class="smart-chips">${suggestions.map(x=>`<button class="smart-chip" data-quick-add="${esc(x)}">${esc(x)}</button>`).join("")}</div></section><div class="shop-offer-shortcut"><button data-goto="offers">🔥 Se alla ICA-erbjudanden <span>›</span></button></div><div class="budget-card">${budgetSummary()}<div class="budget-actions"><button class="secondary-btn" id="addGroceryExpense">＋ Registrera butik</button><button class="tertiary-btn" id="addTakeaway">🍕 Hämtmat</button></div></div><div class="list-toolbar"><div><b>Att köpa</b><small>Rätt förpackning väljs från Maxi ICA Växjös onlinesortiment</small></div><span>${items.length} varor</span></div><section class="shopping-list">${items.length?items.map(x=>{let p=realProductForItem(x),plan=x.purchase||purchasePlan(x);let direct=x.offerItem&&x.plannedCost;return `<div class="check-row ${state.checked.has(x.key)?"done":""}"><input type="checkbox" data-check="${esc(x.key)}" ${state.checked.has(x.key)?"checked":""}><label><b>${esc(x.name)}</b>${direct?`<span class="quantity">${esc(plan.label)}</span><small class="buy-plan">🔥 ICA-erbjudande · ${Math.round(x.plannedCost)} kr</small>`:p?`<span class="quantity">${p.packs>1?`${p.packs} × `:""}${esc(p.name)}</span><small class="buy-plan">Maxi ICA Växjö online · ${p.cost.toFixed(2).replace(".",",")} kr${p.promotion?` · 🔥 ${esc(p.promotion)}`:""}</small>`:`<span class="quantity">${esc(plan.label)}</span><small class="buy-plan missing-price">Pris kunde inte matchas ännu</small>`}</label><button class="remove-shop" data-remove-shop="${esc(x.key)}" ${x.offerItem?`data-remove-offer="${esc(x.offers[0].id)}"`:""}>×</button></div>`}).join(""):`<div class="empty-state"><b>Listan är tom</b></div>`}</section>`;
+ let items=shopping(),done=items.filter(x=>state.checked.has(x.key)).length,remaining=Math.max(0,items.length-done),suggestions=quickSuggestions(),est=estimateShop();
+ return `<section class="page-head shop-page-head"><span class="kicker">Handla</span><h1>Inköpslista</h1><p>${remaining} kvar${done?` · ${done} klara`:""}</p></section>
+ <section class="add-shop-card"><label for="quickAddInput">Lägg till vara</label><div class="quick-add-row"><input id="quickAddInput" autocomplete="off" placeholder="T.ex. mjölk"><button id="quickAddBtn" aria-label="Lägg till">＋</button></div><div class="smart-chips">${suggestions.map(x=>`<button class="smart-chip" data-quick-add="${esc(x)}">${esc(x)}</button>`).join("")}</div></section>
+ <div class="budget-card">${budgetSummary()}<div class="budget-actions"><button class="secondary-btn" id="addGroceryExpense">＋ Registrera butik</button><button class="tertiary-btn" id="addTakeaway">🍕 Hämtmat</button></div></div>
+ <div class="list-toolbar"><div><b>Att köpa</b>${est.missing.length?`<small>${est.missing.length} ${est.missing.length===1?"vara saknar":"varor saknar"} pris</small>`:""}</div><button class="text-link" data-goto="offers">ICA-erbjudanden</button></div>
+ <section class="shopping-list">${items.length?items.map(x=>{let p=realProductForItem(x),plan=x.purchase||purchasePlan(x);let direct=x.offerItem&&x.plannedCost;return `<div class="check-row ${state.checked.has(x.key)?"done":""}"><input type="checkbox" data-check="${esc(x.key)}" ${state.checked.has(x.key)?"checked":""} aria-label="Klar"><label><b>${esc(x.name)}</b>${direct?`<span class="quantity">${esc(plan.label)}</span><small class="buy-plan">🔥 ${Math.round(x.plannedCost)} kr</small>`:p?`<span class="quantity">${p.packs>1?`${p.packs} × `:""}${esc(p.name)}</span><small class="buy-plan">${p.cost.toFixed(2).replace(".",",")} kr${p.promotion?` · 🔥 ${esc(p.promotion)}`:""}</small>`:`<span class="quantity">${esc(plan.label)}</span><small class="buy-plan missing-price">Pris saknas</small>`}</label><button class="remove-shop" data-remove-shop="${esc(x.key)}" ${x.offerItem?`data-remove-offer="${esc(x.offers[0].id)}"`:""} aria-label="Ta bort">×</button></div>`}).join(""):`<div class="empty-state"><b>Listan är tom</b><span>Lägg till en vara ovan.</span></div>`}</section>`;
 }
 
 function offersView(){
- let q=(state.offerSearch||"").toLowerCase(),arr=state.offers.filter(o=>(o.name+" "+(o.details||"")).toLowerCase().includes(q));
- return `<section class="page-head"><span class="kicker">ICA Maxi Växjö</span><h1>Alla erbjudanden</h1><p>${offerCoverageText()} Lägg till sådant ni vill köpa direkt härifrån.</p></section>
- <input class="search" id="offerSearch" placeholder="Sök bland erbjudanden, t.ex. chips eller bars" value="${esc(state.offerSearch||"")}">
- <div class="offer-list">${arr.map(o=>{let added=offerInCart(o);return `<article class="offer-row"><div><b>${esc(o.name)}</b><span>${esc(o.price||"Erbjudande")}</span>${o.details?`<small>${esc(o.details)}</small>`:""}</div><button data-offer-add="${esc(offerId(o))}" ${added?"disabled":""}>${added?"✓":"＋"}</button></article>`}).join("")||`<div class="empty-state"><b>Inga träffar</b><span>Prova ett annat sökord.</span></div>`}</div>`;
+ let offers=state.offers||[],total=Number(state.offerPageCount)||offers.length;
+ return `<section class="page-head"><span class="kicker">Maxi ICA Växjö</span><h1>Erbjudanden</h1><p>${offers.length}${total>offers.length?` av ${total}`:""} aktuella</p></section>
+ <div class="offer-search-wrap"><input id="offerSearch" class="search" placeholder="Sök erbjudanden"></div>
+ <section id="offerList" class="offer-list">${offerRows(offers)}</section>`;
 }
 function recipeView(){
- let external=state.recipes.filter(r=>r.external).length;
- return `<section class="page-head"><span class="kicker">Receptbank</span><h1>Hitta något gott</h1><p>${state.recipes.length} recept · ${external} externa · ${state.customRecipes.length} egna</p></section>
+ let sourced=state.recipes.filter(r=>approvedSourceRecipe(r)).length;
+ return `<section class="page-head"><span class="kicker">Receptbank</span><h1>Hitta något gott</h1><p>${sourced} från ICA, Arla och Köket${state.customRecipes.length?` · ${state.customRecipes.length} egna`:""}</p></section>
  <div class="recipe-actions"><input class="search" id="search" placeholder="Sök på recept eller ingrediens, t.ex. kyckling…"><button class="add-recipe-btn" id="addRecipe">＋ Eget</button></div>
  <div class="filter-row">${["Alla","👍 Gillade","🔥 ICA-match","≤30 min","ICA","Arla","Köket"].map((x,i)=>`<button class="filter ${i===0?'active':''}" data-filter="${x}">${x}</button>`).join("")}</div>
  <div id="recipeList" class="recipe-list">${recipeCards(state.recipes.slice(0,220))}</div>`;
@@ -373,7 +443,7 @@ function customAdd(){
 }
 function showInfo(){
  ensureAnchor();
- showSheet(`<div class="sheet-kicker">Inställningar</div><h3>Matappen v31</h3><p class="sheet-intro">Matveckan går torsdag–onsdag och budgeten den 25:e–24:e.</p>
+ showSheet(`<div class="sheet-kicker">Inställningar</div><h3>Matappen v33</h3><p class="sheet-intro">Matveckan går torsdag–onsdag och budgeten den 25:e–24:e.</p>
  <label class="form-label">Ankare för barnveckan</label><input class="search" type="date" id="anchorThursday" value="${esc(state.settings.anchorThursday)}">
  <label class="form-label">Den torsdagen</label><select class="search" id="handover"><option value="arrival" ${state.settings.handover==="arrival"?"selected":""}>kommer barnen</option><option value="departure" ${state.settings.handover==="departure"?"selected":""}>lämnas barnen</option></select>
  <div class="settings-note">Välj en torsdag du vet stämmer. Därefter växlar Matappen automatiskt varannan torsdag.</div>
