@@ -30,10 +30,13 @@ jobs:
       - name: Hämta ICA-erbjudanden för Maxi Växjö
         run: python scripts/update_offers.py
 
-      - name: Spara recept och erbjudanden
+      - name: Hämta riktiga onlinepriser från Maxi ICA Växjö
+        run: python scripts/update_prices.py
+
+      - name: Spara recept, erbjudanden och priser
         run: |
           git config user.name "Matappen Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add recipes.json offers.json
-          git diff --cached --quiet || git commit -m "Uppdatera recept och ICA-erbjudanden"
+          git add recipes.json offers.json prices.json
+          git diff --cached --quiet || git commit -m "Uppdatera recept, ICA-erbjudanden och priser"
           git push
