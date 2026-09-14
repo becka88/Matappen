@@ -1,9 +1,7 @@
 {
   "store_id": "1003571",
   "store": "Maxi ICA Stormarknad Växjö",
-  "updated_at": "2026-09-14T17:43:07.311177+00:00",
   "status": "unavailable",
-  "queries_ok": 19,
-  "queries_failed": 71,
+  "updated_at": null,
   "products": []
 }
