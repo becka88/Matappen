@@ -193,6 +193,79 @@ div[data-testid="stExpander"] {
     }
 }
 
+
+/* v10: calmer, app-like hierarchy */
+:root {
+    --mat-bg: #f6f5f0;
+    --mat-card: #ffffff;
+    --mat-text: #20231f;
+    --mat-muted: #6e746b;
+    --mat-accent: #315f47;
+    --mat-soft: #e9efe9;
+    --mat-warm: #f1e7d6;
+}
+.stApp { background: var(--mat-bg) !important; color: var(--mat-text); }
+.mat-topbar {
+    display:flex; align-items:center; justify-content:space-between;
+    gap:.7rem; margin:.1rem 0 .65rem 0;
+}
+.mat-brand { font-size:1.38rem; font-weight:800; letter-spacing:-.04em; }
+.mat-status {
+    display:inline-flex; align-items:center; gap:.3rem;
+    background:var(--mat-soft); padding:.35rem .6rem;
+    border-radius:999px; font-size:.78rem; font-weight:700;
+}
+.mat-kicker {
+    font-size:.74rem; font-weight:800; text-transform:uppercase;
+    letter-spacing:.08em; color:var(--mat-muted); margin-bottom:.25rem;
+}
+.mat-meal {
+    font-size:clamp(1.7rem,7vw,2.55rem); line-height:1.04;
+    font-weight:820; letter-spacing:-.045em; margin:.1rem 0 .55rem 0;
+}
+.mat-meta { color:var(--mat-muted); font-size:.91rem; }
+.mat-section {
+    font-size:1.18rem; font-weight:790; letter-spacing:-.025em;
+    margin:1.15rem 0 .55rem 0;
+}
+.mat-day {
+    font-weight:800; font-size:.82rem; text-transform:uppercase;
+    letter-spacing:.065em; color:var(--mat-muted);
+}
+.mat-weekmeal { font-size:1.12rem; font-weight:760; margin:.15rem 0 .3rem 0; }
+.mat-pill {
+    display:inline-block; background:#f0f1ed; border-radius:999px;
+    padding:.3rem .55rem; font-size:.78rem; font-weight:650;
+    margin:.12rem .18rem .1rem 0;
+}
+.mat-offer {
+    background:#edf5ee; border-radius:14px; padding:.65rem .75rem;
+    font-size:.88rem; margin:.65rem 0 .2rem 0;
+}
+.mat-empty {
+    border:1px dashed rgba(0,0,0,.16); border-radius:18px;
+    padding:1.2rem; text-align:center; color:var(--mat-muted);
+}
+div[data-testid="stVerticalBlockBorderWrapper"] {
+    border: 0 !important;
+    box-shadow: 0 3px 18px rgba(33,42,35,.055) !important;
+}
+div[data-testid="stExpander"] {
+    border: 0 !important;
+    box-shadow: 0 2px 12px rgba(33,42,35,.045);
+}
+.stButton > button[kind="primary"] {
+    font-weight: 780 !important;
+}
+@media (max-width: 640px) {
+    .mat-topbar { margin-top:0; }
+    .mat-brand { font-size:1.26rem; }
+    .mat-meal { font-size:2rem; }
+    .mat-section { margin-top:1rem; }
+    div[data-testid="stHorizontalBlock"] {
+        flex-wrap: nowrap !important;
+    }
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -592,6 +665,47 @@ def choose_recipe(i,kids,taco,used,offers=None):
         ranked.append((score,r))
     return sorted(ranked,key=lambda x:x[0],reverse=True)[0][1]
 
+
+def ranked_recipes(i, kids, taco, used=None, offers=None):
+    """Return good dinner alternatives in UX-friendly order."""
+    used = used or set()
+    options = [r for r in RECIPES if r["cat"] == "Middag"]
+    ranked = []
+    for r in options:
+        score = 0
+        if taco and i == 4 and "taco" in r["name"].lower():
+            score += 20
+        if kids and "barnvänlig" in r["tags"]:
+            score += 9
+        if not kids and "vuxen" in r["tags"]:
+            score += 9
+        if i < 4 and r["mins"] <= 35:
+            score += 5
+        if r["lunch"] >= 4:
+            score += 3
+        if r["freeze"] >= 4:
+            score += 1
+        if offer_for_recipe(r, offers or []):
+            score += 12
+        if r["name"] in used:
+            score -= 7
+        ranked.append((score, r["mins"], r["name"], r))
+    ranked.sort(key=lambda x: (-x[0], x[1], x[2]))
+    return [x[3] for x in ranked]
+
+def recipe_by_name(name):
+    return next((r for r in RECIPES if r["name"] == name), None)
+
+def swap_meal(day_index, current_name, kids, taco, offers):
+    options = ranked_recipes(day_index, kids, taco, set(), offers)
+    names = [r["name"] for r in options]
+    try:
+        pos = names.index(current_name)
+    except ValueError:
+        pos = -1
+    next_recipe = options[(pos + 1) % len(options)]
+    st.session_state.meal_overrides[day_index] = next_recipe["name"]
+
 # ---------- State ----------
 defaults={
  "kids_arrive":True,"lunchboxes":2,"taco":True,"budget":1200,
@@ -599,26 +713,31 @@ defaults={
  "common_items":["Mjölk","Yoghurt","Bröd","Ägg","Diskmedel","Toapapper"],
  "freezer_levels":{"Pizzabullar":"Okej","Köttfärspiroger":"Okej","Bananpannkakor":"Fullt"},
  "freezer_exact":{"Middagsportioner":2,"Kycklingpaket":1,"Köttfärspaket":0},
- "ratings":{},"pantry":[],"offers":["Falukorv 800 g – 2 för 65 kr (verifierat exempel)"]
+ "ratings":{},"pantry":[],"offers":["Falukorv 800 g – 2 för 65 kr (verifierat exempel)"],
+ "meal_overrides":{},"shopping_checked":[]
 }
 for k,v in defaults.items():
     if k not in st.session_state: st.session_state[k]=v
 
 # ---------- UI ----------
-st.markdown('<div class="matappen-eyebrow">Familjens matplanering</div>', unsafe_allow_html=True)
-st.markdown('<div class="matappen-hero">Matappen</div>', unsafe_allow_html=True)
-st.markdown('<div class="matappen-subtle">Veckomat, handling och fryskoll — utan onödigt admin.</div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="mat-topbar"><div class="mat-brand">🍽️ Matappen</div>'
+    '<div class="mat-status">● Privat</div></div>',
+    unsafe_allow_html=True,
+)
 
-# Live ICA data (cached for six hours; refreshable in Handla)
+# ICA is intentionally loaded once per rerun and cached by the existing data layer.
 ica_data = get_current_ica_offers()
 live_offers = ica_data.get("offers", [])
 
-# Build plan dynamically
+# Build the plan. A manual swap wins over the automatic suggestion.
 used = set()
 plan = []
 for i, d in enumerate(DAYS):
     kh = kids_here(i, st.session_state.kids_arrive)
-    r = choose_recipe(i, kh, st.session_state.taco and kh, used, live_offers)
+    auto = choose_recipe(i, kh, st.session_state.taco and kh, used, live_offers)
+    override = recipe_by_name(st.session_state.meal_overrides.get(i))
+    r = override or auto
     used.add(r["name"])
     plan.append({
         "day": d,
@@ -628,346 +747,350 @@ for i, d in enumerate(DAYS):
         "offer": offer_for_recipe(r, live_offers),
     })
 
-tabs = st.tabs(["🍽 Idag", "📅 Vecka", "🛒 Handla", "📖 Recept", "••• Mer"])
+tabs = st.tabs(["Idag", "Vecka", "Handla", "Recept", "Mer"])
 
 # ---------- IDAG ----------
 with tabs[0]:
     today_idx = min(date.today().weekday(), 6)
     p = plan[today_idx]
+    tomorrow = plan[(today_idx + 1) % 7]
 
-    st.write("")
-    with st.container(border=True):
-        st.markdown(f'<div class="matappen-eyebrow">{p["day"]} · {"Barnen hemma" if p["kids"] else "Vuxenkväll"}</div>', unsafe_allow_html=True)
-        st.markdown(f"## {p['recipe']['name']}")
+    st.markdown(
+        f'<div class="mat-kicker">{p["day"]} · {"Barnen hemma" if p["kids"] else "Vuxenkväll"}</div>'
+        f'<div class="mat-meal">{p["recipe"]["name"]}</div>'
+        f'<div class="mat-meta">⏱ {p["recipe"]["mins"]} min · 🍽 {p["portions"]} portioner · 🥡 matlåda {p["recipe"]["lunch"]}/5</div>',
+        unsafe_allow_html=True,
+    )
+
+    if p["offer"]:
         st.markdown(
-            f'<span class="matappen-chip">⏱ {p["recipe"]["mins"]} min</span>'
-            f'<span class="matappen-chip">🍽 {p["portions"]} portioner</span>'
-            f'<span class="matappen-chip">🥡 Matlåda {p["recipe"]["lunch"]}/5</span>',
+            f'<div class="mat-offer">🔥 <b>ICA-match</b><br>{p["offer"].get("name","")} · {p["offer"].get("offer","")}</div>',
             unsafe_allow_html=True,
         )
-        if p.get("offer"):
-            st.success(f"🔥 ICA-match: {p['offer'].get('name')} — {p['offer'].get('offer')}")
-        with st.expander("Visa recept"):
+
+    c1, c2 = st.columns(2)
+    with c1:
+        with st.popover("👩‍🍳 Recept", use_container_width=True):
+            st.markdown(f"### {p['recipe']['name']}")
             st.write("**Ingredienser**")
             for k, v in p["recipe"]["ings"].items():
-                st.write(f"• {k}: {v}")
+                st.write(f"{k} · {v}")
             st.write("**Gör så här**")
-            for n, s in enumerate(p["recipe"]["steps"], 1):
-                st.write(f"{n}. {s}")
+            for n, step in enumerate(p["recipe"]["steps"], 1):
+                st.write(f"{n}. {step}")
+    with c2:
+        if st.button("↻ Byt middag", type="primary", key="swap_today"):
+            swap_meal(
+                today_idx, p["recipe"]["name"], p["kids"],
+                st.session_state.taco and p["kids"], live_offers
+            )
+            st.rerun()
 
-    st.write("")
-    st.markdown("### Snabbt att göra")
-    cols = st.columns(3)
-    quick_home = ["Mjölk", "Bröd", "Ägg"]
-    for i, item in enumerate(quick_home):
-        if cols[i].button(f"+ {item}", key=f"homequick_{item}"):
+    st.markdown('<div class="mat-section">Lägg till på listan</div>', unsafe_allow_html=True)
+    with st.form("today_quick_add", clear_on_submit=True):
+        q1, q2 = st.columns([3, 1])
+        item = q1.text_input(
+            "Vara", placeholder="Mjölk, bröd, diskmedel …",
+            label_visibility="collapsed"
+        )
+        add = q2.form_submit_button("Lägg till")
+        if add and item.strip():
+            val = item.strip()
+            if val not in st.session_state.snabblista:
+                st.session_state.snabblista.append(val)
+            st.rerun()
+
+    qcols = st.columns(3)
+    for i, item in enumerate(["Mjölk", "Bröd", "Ägg"]):
+        if qcols[i].button(f"+ {item}", key=f"today_{item}"):
             if item not in st.session_state.snabblista:
                 st.session_state.snabblista.append(item)
             st.rerun()
 
-    st.write("")
-    st.markdown("### Läget hemma")
-    level_score = {"Fullt": 3, "Okej": 2, "Börjar ta slut": 1, "Slut": 0}
-    mellis_status = min(
-        st.session_state.freezer_levels.values(),
-        key=lambda x: level_score.get(x, 0),
-    ) if st.session_state.freezer_levels else "Okej"
+    st.markdown('<div class="mat-section">I morgon</div>', unsafe_allow_html=True)
+    with st.container(border=True):
+        st.markdown(f'<div class="mat-day">{tomorrow["day"]}</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="mat-weekmeal">{tomorrow["recipe"]["name"]}</div>', unsafe_allow_html=True)
+        st.markdown(
+            f'<span class="mat-pill">⏱ {tomorrow["recipe"]["mins"]} min</span>'
+            f'<span class="mat-pill">{"👨‍👩‍👧‍👦 Barn" if tomorrow["kids"] else "🌙 Vuxen"}</span>',
+            unsafe_allow_html=True,
+        )
 
-    a, b = st.columns(2)
-    a.metric("Mellis", mellis_status)
-    b.metric("Snabblista", f"{len(st.session_state.snabblista)} varor")
-    st.caption(f"❄️ {st.session_state.freezer_exact.get('Middagsportioner', 0)} färdiga middagsportioner i frysen")
+    low_snacks = [k for k,v in st.session_state.freezer_levels.items() if v in ("Börjar ta slut","Slut")]
+    if low_snacks:
+        st.info(f"❄️ Mellis att fylla på: {', '.join(low_snacks[:2])}")
 
-    if any(v in ["Börjar ta slut", "Slut"] for v in st.session_state.freezer_levels.values()):
-        st.warning("Mellis börjar ta slut. Kolla Recept → Mellis när ni vill fylla på.")
-
-# ---------- VECKAN ----------
+# ---------- VECKA ----------
 with tabs[1]:
-    st.markdown("### Veckans middagar")
-    st.caption("Barnveckan skiftar automatiskt på torsdag.")
+    st.markdown('<div class="mat-section">Veckans middagar</div>', unsafe_allow_html=True)
+    st.caption("Tryck Byt när en middag inte känns rätt. Resten av veckan ligger kvar.")
 
-    for p in plan:
+    for i, p in enumerate(plan):
         with st.container(border=True):
-            left, right = st.columns([4, 1])
-            with left:
-                st.markdown(f"**{p['day']}**")
-                st.markdown(f"### {p['recipe']['name']}")
+            top1, top2 = st.columns([4, 1])
+            with top1:
+                st.markdown(f'<div class="mat-day">{p["day"]}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="mat-weekmeal">{p["recipe"]["name"]}</div>', unsafe_allow_html=True)
                 st.markdown(
-                    f'<span class="matappen-chip">{"👨‍👩‍👧‍👦 Barnen hemma" if p["kids"] else "🌙 Vuxenkväll"}</span>'
-                    f'<span class="matappen-chip">⏱ {p["recipe"]["mins"]} min</span>'
-                    f'<span class="matappen-chip">🍽 {p["portions"]} port</span>',
+                    f'<span class="mat-pill">{"👨‍👩‍👧‍👦 Barn" if p["kids"] else "🌙 Vuxen"}</span>'
+                    f'<span class="mat-pill">⏱ {p["recipe"]["mins"]} min</span>'
+                    f'<span class="mat-pill">🥡 {p["recipe"]["lunch"]}/5</span>',
                     unsafe_allow_html=True,
                 )
-            with right:
-                if p.get("offer"):
-                    st.markdown("🔥 **ICA**")
+            with top2:
+                if st.button("Byt", key=f"swap_{i}"):
+                    swap_meal(
+                        i, p["recipe"]["name"], p["kids"],
+                        st.session_state.taco and p["kids"], live_offers
+                    )
+                    st.rerun()
 
-            with st.expander("Recept & ingredienser"):
-                if p.get("offer"):
-                    st.success(f"ICA just nu: {p['offer'].get('name')} — {p['offer'].get('offer')}")
+            if p["offer"]:
+                st.markdown(
+                    f'<div class="mat-offer">🔥 {p["offer"].get("name","")} · {p["offer"].get("offer","")}</div>',
+                    unsafe_allow_html=True,
+                )
+
+            with st.expander("Recept"):
                 st.write("**Ingredienser**")
                 for k, v in p["recipe"]["ings"].items():
-                    st.write(f"• {k}: {v}")
+                    st.write(f"{k} · {v}")
                 st.write("**Gör så här**")
-                for n, s in enumerate(p["recipe"]["steps"], 1):
-                    st.write(f"{n}. {s}")
-                st.caption(f"Matlåda {p['recipe']['lunch']}/5 · Frys {p['recipe']['freeze']}/5")
+                for n, step in enumerate(p["recipe"]["steps"], 1):
+                    st.write(f"{n}. {step}")
+
+    a, b = st.columns(2)
+    if a.button("↺ Återställ veckan"):
+        st.session_state.meal_overrides = {}
+        st.rerun()
+    if b.button("🎲 Ny vecka"):
+        # Shift each day one good option forward for quick variety.
+        for i, p in enumerate(plan):
+            swap_meal(
+                i, p["recipe"]["name"], p["kids"],
+                st.session_state.taco and p["kids"], live_offers
+            )
+        st.rerun()
 
 # ---------- HANDLA ----------
 with tabs[2]:
-    shop_view = st.segmented_control(
+    view = st.segmented_control(
         "Handla",
-        ["Inköpslista", "Snabblista", "ICA-erbjudanden"],
-        default="Inköpslista",
-        label_visibility="collapsed",
+        ["Lista", "Snabbt", "ICA"],
+        default="Lista",
+        label_visibility="collapsed"
     )
 
-    if shop_view == "Inköpslista":
-        st.markdown("### Inköpslistan")
-        st.caption("Veckans recept och Snabblistan är redan sammanslagna.")
+    # Build merged list.
+    agg = Counter()
+    for p in plan:
+        for ing in p["recipe"]["ings"]:
+            agg[ing] += 1
+    quick = [x.strip() for x in st.session_state.snabblista if x.strip()]
+    merged = set(agg.keys()) | set(quick)
 
-        agg = Counter()
-        for p in plan:
-            for ing in p["recipe"]["ings"]:
-                agg[ing] += 1
+    def category(item):
+        x = item.lower()
+        if any(k in x for k in ["mjölk","yoghurt","ost","grädde","crème","ägg","parmesan","mozzarella"]):
+            return "🥛 Mejeri"
+        if any(k in x for k in ["kyckling","färs","korv","fläsk","högrev","skinka","bacon","chorizo"]):
+            return "🥩 Kött & chark"
+        if any(k in x for k in ["potatis","morot","lök","sallad","broccoli","banan","chili","paprika","citron","lime","äpple","gurka","tomat","spenat","champinjon"]):
+            return "🥕 Frukt & grönt"
+        if any(k in x for k in ["diskmedel","toapapper","hushåll","tvätt"]):
+            return "🧻 Hushåll"
+        return "🥫 Skafferi"
 
-        quick = [x.strip() for x in st.session_state.snabblista if x.strip()]
-        merged = set(agg.keys()) | set(quick)
+    if view == "Lista":
+        st.markdown('<div class="mat-section">Inköpslista</div>', unsafe_allow_html=True)
+        checked = set(st.session_state.shopping_checked)
+        total = len(merged)
+        done = len([x for x in merged if x in checked])
+        st.caption(f"{done} av {total} avbockade")
 
-        def category(item):
-            x = item.lower()
-            if any(k in x for k in ["mjölk", "yoghurt", "ost", "grädde", "ägg"]): return "Mejeri"
-            if any(k in x for k in ["kyckling", "färs", "korv", "fläsk", "högrev", "skinka"]): return "Kött & chark"
-            if any(k in x for k in ["potatis", "morot", "lök", "sallad", "broccoli", "banan", "chili"]): return "Frukt & grönt"
-            if any(k in x for k in ["diskmedel", "toapapper", "hushåll", "tvätt"]): return "Hushåll"
-            return "Skafferi / övrigt"
+        if not merged:
+            st.markdown('<div class="mat-empty">Listan är tom.</div>', unsafe_allow_html=True)
+        else:
+            groups = {}
+            for item in sorted(merged, key=lambda x: (category(x), x.lower())):
+                groups.setdefault(category(item), []).append(item)
 
-        rows = []
-        for ing in sorted(merged, key=lambda x: (category(x), x.lower())):
-            src = []
-            if ing in agg: src.append(f"{agg[ing]} rätter")
-            if ing in quick: src.append("Snabb")
-            offer_hit = next(
-                (o for o in live_offers if ing.lower() in (o.get("name", "") + " " + o.get("query", "")).lower()),
-                None,
-            )
-            rows.append({
-                "✓": False,
-                "Avdelning": category(ing),
-                "Vara": ing,
-                "Från": " + ".join(src),
-                "ICA": ("🔥 " + offer_hit.get("offer", "")) if offer_hit else "",
-            })
+            new_checked = set(checked)
+            for cat, items in groups.items():
+                st.markdown(f"**{cat}**")
+                for item in items:
+                    hit = next(
+                        (o for o in live_offers if item.lower() in (o.get("name","")+" "+o.get("query","")).lower()),
+                        None,
+                    )
+                    suffix = f"  🔥 {hit.get('offer','')}" if hit else ""
+                    is_done = st.checkbox(
+                        f"{item}{suffix}",
+                        value=item in checked,
+                        key=f"buy_{cat}_{item}"
+                    )
+                    if is_done:
+                        new_checked.add(item)
+                    else:
+                        new_checked.discard(item)
 
-        edited = st.data_editor(
-            rows,
-            hide_index=True,
-            use_container_width=True,
-            height=min(580, 42 + len(rows) * 35),
-            column_config={"✓": st.column_config.CheckboxColumn("✓")},
-            disabled=["Avdelning", "Vara", "Från", "ICA"],
-        )
+            st.session_state.shopping_checked = list(new_checked)
 
-        if st.button("Rensa avbockade", type="primary"):
-            checked = [r["Vara"] for r in edited if r.get("✓")]
-            st.session_state.snabblista = [x for x in st.session_state.snabblista if x not in checked]
+        c1, c2 = st.columns(2)
+        if c1.button("Rensa köpta"):
+            bought = set(st.session_state.shopping_checked)
+            st.session_state.snabblista = [x for x in st.session_state.snabblista if x not in bought]
+            st.session_state.shopping_checked = []
+            st.rerun()
+        if c2.button("Nollställ ✓"):
+            st.session_state.shopping_checked = []
             st.rerun()
 
-        sio = io.StringIO()
-        w = csv.DictWriter(sio, fieldnames=["Avdelning", "Vara", "Från", "ICA"])
-        w.writeheader()
-        for r in rows:
-            w.writerow({k: r.get(k, "") for k in ["Avdelning", "Vara", "Från", "ICA"]})
-        st.download_button("Spara listan som CSV", sio.getvalue(), "inkopslista.csv", "text/csv")
+    elif view == "Snabbt":
+        st.markdown('<div class="mat-section">Snabblista</div>', unsafe_allow_html=True)
+        st.caption("För allt som inte hör till veckans recept.")
 
-    elif shop_view == "Snabblista":
-        st.markdown("### Lägg till på vägen")
-        st.caption("För sådant någon märker håller på att ta slut.")
-
-        cols = st.columns(3)
-        for i, item in enumerate(st.session_state.common_items):
-            if cols[i % 3].button(f"+ {item}", key=f"quick_{item}"):
+        common = ["Mjölk","Yoghurt","Bröd","Ägg","Diskmedel","Toapapper"]
+        cols = st.columns(2)
+        for i, item in enumerate(common):
+            if cols[i % 2].button(f"+ {item}", key=f"common_{item}"):
                 if item not in st.session_state.snabblista:
                     st.session_state.snabblista.append(item)
                 st.rerun()
 
-        with st.form("add_quick_item", clear_on_submit=True):
-            new_item = st.text_input("Annan vara", placeholder="Kaffe, tandkräm, ketchup …")
-            if st.form_submit_button("Lägg till"):
-                val = new_item.strip()
+        with st.form("quick_custom", clear_on_submit=True):
+            custom = st.text_input("Annan vara", placeholder="Skriv en vara …")
+            if st.form_submit_button("Lägg till", type="primary"):
+                val = custom.strip()
                 if val and val not in st.session_state.snabblista:
                     st.session_state.snabblista.append(val)
-                    st.rerun()
+                st.rerun()
 
         if st.session_state.snabblista:
-            st.markdown("#### På Snabblistan")
             for i, item in enumerate(list(st.session_state.snabblista)):
-                with st.container(border=True):
-                    a, b = st.columns([5, 1])
-                    a.write(f"**{item}**")
-                    if b.button("×", key=f"rm_{i}_{item}", help="Ta bort"):
-                        st.session_state.snabblista.remove(item)
-                        st.rerun()
-        else:
-            st.success("Snabblistan är tom.")
+                r1, r2 = st.columns([5,1])
+                r1.write(f"**{item}**")
+                if r2.button("×", key=f"delete_quick_{i}"):
+                    st.session_state.snabblista.remove(item)
+                    st.rerun()
 
     else:
-        st.markdown("### ICA Maxi Växjö")
-        a, b = st.columns(2)
-        a.metric("Status", ica_data["status"])
-        b.metric("Verifierade träffar", len(live_offers))
-        st.caption(f"Kontrollerad butik: {ica_data['store']} · Vecka {ica_data['week']}")
+        st.markdown('<div class="mat-section">ICA Maxi Växjö</div>', unsafe_allow_html=True)
+        st.caption(f"{ica_data['status']} · vecka {ica_data['week']} · {len(live_offers)} verifierade träffar")
 
-        if st.button("Hämta ICA igen"):
+        if st.button("↻ Uppdatera ICA"):
             get_current_ica_offers.clear()
             st.rerun()
 
         if ica_data.get("errors"):
-            st.warning("ICA kunde inte läsas fullt ut från alla källor. Matappen visar bara det som kunnat verifieras.")
+            st.warning("ICA kunde inte läsas fullt ut. Matappen visar bara sådant som kunnat verifieras.")
 
-        meat, other = [], []
-        for o in live_offers:
-            txt = (o.get("name", "") + " " + o.get("query", "")).lower()
-            (meat if any(t in txt for t in MEAT_TERMS) else other).append(o)
-
-        if meat:
-            st.markdown("#### Kött, kyckling & chark")
-            for o in meat[:30]:
-                with st.container(border=True):
-                    st.write(f"**{o.get('name', 'Vara')}**")
-                    st.markdown(f'<div class="matappen-price">🔥 {o.get("offer", "Erbjudande")}</div>', unsafe_allow_html=True)
-                    st.caption(o.get("source", "ICA"))
-        else:
-            st.info("Inga kötterbjudanden kunde verifieras just nu.")
-
-        with st.expander("Övriga erbjudanden"):
-            for o in other[:40]:
-                st.write(f"**{o.get('name','Vara')}** — {o.get('offer','Erbjudande')}")
+        if not live_offers:
+            st.info("Inga aktuella erbjudanden kunde verifieras just nu.")
+        for o in live_offers[:35]:
+            with st.container(border=True):
+                st.markdown(f"**{o.get('name','Vara')}**")
+                st.markdown(f"🔥 {o.get('offer','Erbjudande')}")
+                if o.get("source"):
+                    st.caption(o["source"])
 
 # ---------- RECEPT ----------
 with tabs[3]:
-    recipe_type = st.segmented_control(
-        "Typ",
-        ["Middag", "Mellis", "Alla"],
-        default="Middag",
-        label_visibility="collapsed",
+    st.markdown('<div class="mat-section">Recept</div>', unsafe_allow_html=True)
+
+    type_filter = st.segmented_control(
+        "Typ", ["Middag","Mellis"], default="Middag", label_visibility="collapsed"
     )
-    q = st.text_input("Sök", placeholder="Sök recept eller ingrediens", label_visibility="collapsed")
-    recipe_filter = st.radio(
+    q = st.text_input("Sök", placeholder="Sök t.ex. kyckling, pasta, snabbt …", label_visibility="collapsed")
+    filter_choice = st.radio(
         "Filter",
-        ["Alla", "Snabbt", "Barnvänligt", "Matlåda", "Frys", "Vuxen"],
+        ["Alla","≤30 min","Barn","Matlåda","Frys","Vuxen"],
         horizontal=True,
-        label_visibility="collapsed",
+        label_visibility="collapsed"
     )
 
     filtered = []
     for r in RECIPES:
-        if recipe_type != "Alla" and r["cat"] != recipe_type:
+        if r["cat"] != type_filter:
             continue
-        if recipe_filter == "Snabbt" and r["mins"] > 30:
+        hay = (r["name"]+" "+" ".join(r["ings"].keys())+" "+" ".join(r["tags"])).lower()
+        if q.lower().strip() not in hay:
             continue
-        if recipe_filter == "Barnvänligt" and "barnvänlig" not in r["tags"]:
+        if filter_choice == "≤30 min" and r["mins"] > 30:
             continue
-        if recipe_filter == "Matlåda" and r["lunch"] < 4:
+        if filter_choice == "Barn" and "barnvänlig" not in r["tags"]:
             continue
-        if recipe_filter == "Frys" and r["freeze"] < 4:
+        if filter_choice == "Matlåda" and r["lunch"] < 4:
             continue
-        if recipe_filter == "Vuxen" and "vuxen" not in r["tags"]:
+        if filter_choice == "Frys" and r["freeze"] < 4:
             continue
-        hay = (r["name"] + " " + " ".join(r["ings"].keys()) + " " + " ".join(r["tags"])).lower()
-        if q.lower() not in hay:
+        if filter_choice == "Vuxen" and "vuxen" not in r["tags"]:
             continue
         filtered.append(r)
 
-    if recipe_type == "Mellis":
-        priority = {"Slut": 0, "Börjar ta slut": 1, "Okej": 2, "Fullt": 3}
-        low = sorted(st.session_state.freezer_levels.items(), key=lambda x: priority.get(x[1], 9))
-        if low and low[0][1] in ["Slut", "Börjar ta slut"]:
-            st.info(f"Bra nästa sats: **{low[0][0]}** · nivån är {low[0][1]}.")
+    if not filtered:
+        st.markdown('<div class="mat-empty">Inga recept matchar filtret.</div>', unsafe_allow_html=True)
 
     for r in filtered:
-        with st.container(border=True):
-            st.markdown(f"### {r['name']}")
-            tags = "".join(f'<span class="matappen-chip">{tag}</span>' for tag in r["tags"][:4])
+        with st.expander(f"{r['name']} · {r['mins']} min"):
             st.markdown(
-                f'<span class="matappen-chip">⏱ {r["mins"]} min</span>'
-                f'<span class="matappen-chip">❄️ {r["freeze"]}/5</span>{tags}',
-                unsafe_allow_html=True,
+                f'<span class="mat-pill">❄️ {r["freeze"]}/5</span>'
+                f'<span class="mat-pill">🥡 {r["lunch"]}/5</span>',
+                unsafe_allow_html=True
             )
-            with st.expander("Öppna recept"):
-                st.write("**Ingredienser**")
-                for k, v in r["ings"].items():
-                    st.write(f"• {k}: {v}")
-                st.write("**Gör så här**")
-                for i, s in enumerate(r["steps"], 1):
-                    st.write(f"{i}. {s}")
-                if r["cat"] == "Mellis":
-                    st.info("Frys portionsvis eller styckvis och märk gärna med namn och datum.")
-                rating = st.select_slider(
-                    "Familjens betyg",
-                    ["👎", "😐", "👍", "❤️"],
-                    value=st.session_state.ratings.get(r["name"], "👍"),
-                    key="rate_" + r["name"],
-                )
-                st.session_state.ratings[r["name"]] = rating
+            st.write("**Ingredienser**")
+            for k,v in r["ings"].items():
+                st.write(f"{k} · {v}")
+            st.write("**Gör så här**")
+            for i,step in enumerate(r["steps"],1):
+                st.write(f"{i}. {step}")
 
 # ---------- MER ----------
 with tabs[4]:
-    more_view = st.segmented_control(
-        "Mer",
-        ["Frysen", "Familjen", "Om appen"],
-        default="Frysen",
-        label_visibility="collapsed",
+    st.markdown('<div class="mat-section">Mer</div>', unsafe_allow_html=True)
+    more = st.segmented_control(
+        "Mer", ["Frys","Familj","App"], default="Frys", label_visibility="collapsed"
     )
 
-    if more_view == "Frysen":
-        st.markdown("### Fryskoll")
-        st.caption("Mellis ungefärligt. Middagsportioner och köttpaket exakt.")
-
+    if more == "Frys":
         st.markdown("#### Mellis")
-        nivåer = ["Fullt", "Okej", "Börjar ta slut", "Slut"]
+        levels = ["Fullt","Okej","Börjar ta slut","Slut"]
         for item in list(st.session_state.freezer_levels):
-            current = st.session_state.freezer_levels[item]
+            cur = st.session_state.freezer_levels[item]
             st.session_state.freezer_levels[item] = st.selectbox(
-                item, nivåer, index=nivåer.index(current), key="lvl_" + item
+                item, levels, index=levels.index(cur), key=f"freeze_{item}"
             )
-
         st.markdown("#### Exakt lager")
         for item in list(st.session_state.freezer_exact):
             st.session_state.freezer_exact[item] = st.number_input(
-                item, 0, 100, int(st.session_state.freezer_exact[item]), 1, key="exact_" + item
+                item, 0, 100, int(st.session_state.freezer_exact[item]), 1, key=f"exact_{item}"
             )
 
-    elif more_view == "Familjen":
-        st.markdown("### Familjen")
+    elif more == "Familj":
         st.session_state.kids_arrive = st.radio(
             "Vad händer på torsdag?",
-            ["Barnen kommer", "Barnen åker"],
+            ["Barnen kommer","Barnen åker"],
             index=0 if st.session_state.kids_arrive else 1,
-            horizontal=True,
+            horizontal=True
         ) == "Barnen kommer"
-
         st.session_state.lunchboxes = st.slider(
-            "Matlådor efter en vanlig middag",
-            0, 4, st.session_state.lunchboxes
+            "Matlådor efter middagen", 0, 4, st.session_state.lunchboxes
         )
-        st.session_state.taco = st.checkbox(
+        st.session_state.taco = st.toggle(
             "Tacos på fredag när barnen är hemma",
-            st.session_state.taco
+            value=st.session_state.taco
         )
         st.session_state.budget = st.number_input(
-            "Målbudget per vecka",
-            500, 3000, st.session_state.budget, 100
+            "Veckobudget", 500, 3000, st.session_state.budget, 100
         )
-        st.caption("När barnen inte är hemma prioriteras friare vuxenmat. Matlådorna räknas ändå med.")
+        st.caption("Ändringar påverkar nästa automatiska veckoplan.")
 
     else:
-        st.markdown("### Matappen v9")
-        st.write("En privat familjeapp för veckomat, handling, mellis, recept och fryskoll.")
-        st.write("ICA-data markeras bara som verifierad när Matappen faktiskt kan läsa den från butikens publika källor.")
-        if st.button("Logga ut"):
+        st.write("**Matappen v10**")
+        st.caption("Mobil först · privat familjeapp · ICA Maxi Växjö")
+        if st.button("Logga ut", type="primary"):
             st.session_state["authenticated"] = False
             st.rerun()
 
-st.write("")
-st.caption("Matappen v9 · privat familjeapp")
+st.caption("Matappen v10")
