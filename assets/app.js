@@ -1,226 +1,68 @@
 let state={
  recipes:[],offers:[],offerStatus:"waiting",view:"today",week:[],
- disliked:new Set(JSON.parse(localStorage.getItem("disliked")||"[]")),
- liked:new Set(JSON.parse(localStorage.getItem("liked")||"[]")),
+ liked:new Set(JSON.parse(localStorage.getItem("likedV24")||"[]")),
+ disliked:new Set(JSON.parse(localStorage.getItem("dislikedV24")||"[]")),
  checked:new Set(JSON.parse(localStorage.getItem("checked")||"[]")),
- quick:JSON.parse(localStorage.getItem("quick")||"[]"),
- quickStats:JSON.parse(localStorage.getItem("quickStats")||"{}"),
- filter:"Alla",
- customRecipes:JSON.parse(localStorage.getItem("customRecipes")||"[]"),
- hiddenShop:new Set(JSON.parse(localStorage.getItem("hiddenShop")||"[]"))
+ quick:JSON.parse(localStorage.getItem("quick")||"[]"),quickStats:JSON.parse(localStorage.getItem("quickStats")||"{}"),
+ filter:"Alla",customRecipes:JSON.parse(localStorage.getItem("customRecipes")||"[]"),
+ hiddenShop:new Set(JSON.parse(localStorage.getItem("hiddenShopV24")||"[]")),
+ settings:JSON.parse(localStorage.getItem("familySettingsV24")||'{"handover":"arrival","handoverDay":4,"weeklyBudget":1600,"monthlyBudget":12000}'),
+ expenses:JSON.parse(localStorage.getItem("expensesV24")||"[]")
 };
-const $=s=>document.querySelector(s);
-const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-const mins=r=>r.minutes??null;
+const $=s=>document.querySelector(s), esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 const days=["Måndag","Tisdag","Onsdag","Torsdag","Fredag","Lördag","Söndag"];
-const stop=new Set(["och","med","utan","färsk","färska","svensk","svenska","ica","arla","st","g","kg","dl","ml","msk","tsk","port","ca"]);
 const canon=s=>String(s||"").toLowerCase().replace(/[,:()]/g," ").replace(/filéer/g,"filé").replace(/kycklingbröst/g,"kycklingfilé").replace(/färsen/g,"färs").replace(/\s+/g," ").trim();
-function words(s){return canon(s).split(" ").filter(w=>w.length>=4&&!stop.has(w))}
+const recipeKey=r=>String(r.id||((r.source||"")+":"+(r.name||"")));
+const mins=r=>r.minutes??null;
+function isoWeek(d=new Date()){let x=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));x.setUTCDate(x.getUTCDate()+4-(x.getUTCDay()||7));let y=new Date(Date.UTC(x.getUTCFullYear(),0,1));return Math.ceil((((x-y)/86400000)+1)/7)}
+function weekKey(){let d=new Date();return `${d.getFullYear()}-W${isoWeek(d)}`}
+function save(){localStorage.setItem("familySettingsV24",JSON.stringify(state.settings));localStorage.setItem("expensesV24",JSON.stringify(state.expenses));localStorage.setItem("hiddenShopV24",JSON.stringify([...state.hiddenShop]));}
+function isKidsDay(i){const childWeek=isoWeek()%2===0;const before=i<3; if(state.settings.handover==="arrival") return childWeek ? !before : before; return childWeek ? before : !before;}
+function targetPortions(i){return isKidsDay(i)?6:4}
 const offerRules=[
- {id:"filled_pasta", offer:/\b(fylld pasta|tortellini|ravioli)\b/, recipe:/\b(fylld pasta|tortellini|ravioli)\b/, weight:4},
- {id:"dry_pasta", offer:/\b(spaghetti|penne|makaron|torr pasta)\b/, recipe:/\b(spaghetti|penne|makaron|torr pasta)\b/, weight:3},
- {id:"chicken_fillet", offer:/\bkycklingfil[eé]\b/, recipe:/\b(kycklingfil[eé]|kycklingbröst)\b/, weight:5},
- {id:"mince", offer:/\b(nötfärs|blandfärs|köttfärs|färs)\b/, recipe:/\b(nötfärs|blandfärs|köttfärs|färs)\b/, weight:5},
- {id:"salmon", offer:/\blax\b/, recipe:/\blax\b/, weight:5},
- {id:"cod", offer:/\btorsk\b/, recipe:/\btorsk\b/, weight:5},
- {id:"sausage", offer:/\b(falukorv|middagskorv)\b/, recipe:/\b(falukorv|middagskorv)\b/, weight:5},
- {id:"hard_cheese", offer:/\b(herrgård|präst|grevé|hushållsost|hårdost)\b/, recipe:/\b(hårdost|riven ost|ost)\b/, weight:2},
- {id:"potato", offer:/\bpotatis\b/, recipe:/\bpotatis\b/, weight:2},
- {id:"carrot", offer:/\bmorötter?\b/, recipe:/\bmorötter?\b/, weight:2},
- {id:"mushroom", offer:/\b(champinjon|champinjoner|svamp)\b/, recipe:/\b(champinjon|champinjoner|svamp)\b/, weight:2},
- {id:"corn", offer:/\bmajs\b/, recipe:/\bmajs\b/, weight:2},
- {id:"yogurt", offer:/\byoghurt\b/, recipe:/\byoghurt\b/, weight:1}
+ ["filled_pasta",/\b(fylld pasta|tortellini|ravioli)\b/,/\b(fylld pasta|tortellini|ravioli)\b/,4],
+ ["dry_pasta",/\b(spaghetti|penne|makaron|torr pasta)\b/,/\b(spaghetti|penne|makaron|torr pasta)\b/,3],
+ ["chicken",/\bkycklingfil[eé]\b/,/\b(kycklingfil[eé]|kycklingbröst)\b/,5],["mince",/\b(nötfärs|blandfärs|köttfärs|färs)\b/,/\b(nötfärs|blandfärs|köttfärs|färs)\b/,5],
+ ["salmon",/\blax\b/,/\blax\b/,5],["cod",/\btorsk\b/,/\btorsk\b/,5],["sausage",/\b(falukorv|middagskorv)\b/,/\b(falukorv|middagskorv)\b/,5],
+ ["cheese",/\b(herrgård|präst|grevé|hushållsost|hårdost|riven ost)\b/,/\b(hårdost|riven ost|ost)\b/,2],["potato",/\bpotatis\b/,/\bpotatis\b/,2],["carrot",/\bmorötter?\b/,/\bmorötter?\b/,2],["corn",/\bmajs\b/,/\bmajs\b/,2],["creme",/\bcr[eè]me fraiche\b/,/\bcr[eè]me fraiche\b/,2]
 ];
-function matchOfferToRecipe(o,r){
- const ot=canon((o.name||"")+" "+(o.details||""));
- const rt=canon((r.name||"")+" "+(r.ingredients||[]).join(" "));
- for(const rule of offerRules) if(rule.offer.test(ot)) return rule.recipe.test(rt)?rule.weight:0;
- // Conservative fallback: require a distinctive whole ingredient word on both sides.
- const generic=new Set(["pasta","ost","sås","färsk","fryst","svensk","original"]);
- const ow=words(o.name).filter(w=>!generic.has(w));
- return ow.some(w=>new RegExp(`\\b${w.replace(/[.*+?^${}()|[\\]\\]/g,"\\$&")}\\b`).test(rt))?1:0;
-}
-function offerMatches(r){
- if(state.offerStatus!=="live")return [];
- return state.offers.map(o=>({offer:o,weight:matchOfferToRecipe(o,r)})).filter(x=>x.weight>0).sort((a,b)=>b.weight-a.weight).slice(0,4);
-}
-function stableJitter(r,i){
- const w=new Date(),week=Math.ceil((((w-new Date(w.getFullYear(),0,1))/86400000)+new Date(w.getFullYear(),0,1).getDay()+1)/7);
- let s=(r.id||r.name)+":"+week+":"+i,h=0;for(let c of s)h=(h*31+c.charCodeAt(0))>>>0;return (h%100)/100;
-}
-function score(r,i){
- let s=0,m=mins(r),matches=offerMatches(r);
- if(matches.length){const offerPower=matches.reduce((n,x)=>n+x.weight,0);s+=Math.min(75,offerPower*11);}
- if(state.liked.has(r.name))s+=18;
- if(i<4&&m&&m<=35)s+=12;
- if(r.lunch>=4)s+=6;if(r.freeze>=4)s+=3;
- if((r.tags||[]).includes("barnvänlig"))s+=4;
- if(i===4&&((r.tags||[]).includes("fredag")||/taco|burrito|quesadilla/i.test(r.name)))s+=15;
- if(state.disliked.has(r.name))s-=999;
- return s+stableJitter(r,i)*3;
-}
-function buildWeek(){
- const used=new Set();state.week=[];
- for(let i=0;i<7;i++){
-   let pool=state.recipes.filter(r=>!used.has(r.name)&&!state.disliked.has(r.name));
-   if(!pool.length)pool=state.recipes;
-   pool=[...pool].sort((a,b)=>score(b,i)-score(a,i));
-   let r=pool[0];used.add(r.name);state.week.push({day:days[i],recipe:r});
- }
-}
-async function init(){
- try{
-   const [rr,oo]=await Promise.all([
-     fetch("./recipes.json?"+Date.now()).then(r=>r.json()),
-     fetch("./offers.json?"+Date.now()).then(r=>r.ok?r.json():({status:"unavailable",offers:[]}))
-   ]);
-   state.recipes=[...state.customRecipes,...rr];state.offerStatus=oo.status||"unavailable";state.offers=oo.offers||[];
-   buildWeek();render();bindNav();
- }catch(e){$("#view").innerHTML='<div class="card">Kunde inte läsa Matappens data just nu.</div>'}
-}
-function bindNav(){
- document.querySelectorAll(".nav-btn").forEach(b=>b.onclick=()=>{state.view=b.dataset.view;document.querySelectorAll(".nav-btn").forEach(x=>x.classList.toggle("active",x===b));render();window.scrollTo({top:0,behavior:"smooth"})});
- $("#profileBtn").onclick=showInfo;
-}
-function meta(r,onHero=false){
- let a=[];if(mins(r))a.push(`⏱ ${mins(r)} min`);
- if(r.external)a.push(`↗ ${r.source}`);
- else{if(r.lunch)a.push(`🥡 Matlåda ${r.lunch}/5`);if(r.freeze)a.push(`❄️ Frys ${r.freeze}/5`)}
- return a.map(x=>`<span class="soft-chip">${esc(x)}</span>`).join("");
-}
-function offerBadge(r){
- const m=offerMatches(r);if(!m.length)return "";
- const names=m.map(x=>`<b>${esc(x.offer.name)}</b>${x.offer.price?` · ${esc(x.offer.price)}`:""}`).join(" + ");
- return `<div class="offer">🔥 ${m.length} ingrediens${m.length>1?"er":""} på ICA-erbjudande: ${names}</div>`;
-}
+function matchOfferToRecipe(o,r){const ot=canon((o.name||"")+" "+(o.details||"")),rt=canon((r.name||"")+" "+(r.ingredients||[]).join(" "));for(const [,ore,rre,w] of offerRules)if(ore.test(ot))return rre.test(rt)?w:0;return 0}
+function offerMatches(r){if(state.offerStatus!=="live")return[];return state.offers.map(o=>({offer:o,weight:matchOfferToRecipe(o,r)})).filter(x=>x.weight>0).sort((a,b)=>b.weight-a.weight).slice(0,4)}
+function mainGroup(r){const t=canon((r.name||"")+" "+(r.ingredients||[]).join(" "));for(const [g,re] of [["falukorv",/\bfalukorv\b/],["korv",/\bkorv\b/],["kyckling",/\bkyckling\b/],["lax",/\blax\b/],["fisk",/\b(?:torsk|sej|fisk)\b/],["färs",/\b(?:köttfärs|nötfärs|blandfärs|färs)\b/],["fläsk",/\b(?:fläsk|kotlett|fläskfilé)\b/],["vegetariskt",/\b(?:linser|bönor|tofu|halloumi|vegetar)\b/]])if(re.test(t))return g;return "annat"}
+function baseScore(r,i,counts){let s=0,key=recipeKey(r),m=mins(r),kids=isKidsDay(i),g=mainGroup(r),matches=offerMatches(r);if(state.liked.has(key))s+=28;if(state.disliked.has(key))return-9999;if(matches.length)s+=Math.min(22,8+matches.reduce((n,x)=>n+x.weight,0)*2);if(counts[g])s-=g==="annat"?8:55*counts[g];if(kids){if((r.tags||[]).includes("barnvänlig")||/taco|pasta|köttbull|pannkak|mild/i.test(r.name))s+=12;if(/stark|chili/i.test(r.name))s-=12}else{if(/curry|chili|gryta|asiat/i.test(r.name))s+=5}if(i<4&&m&&m<=35)s+=8;if(i===4&&/taco|pizza|burg|quesadilla/i.test(r.name))s+=10;return s}
+function buildWeek(){let used=new Set(),counts={},week=[];for(let i=0;i<7;i++){let pool=state.recipes.filter(r=>!used.has(recipeKey(r))&&!state.disliked.has(recipeKey(r)));pool.sort((a,b)=>baseScore(b,i,counts)-baseScore(a,i,counts));let r=pool[0];if(!r)continue;used.add(recipeKey(r));let g=mainGroup(r);counts[g]=(counts[g]||0)+1;week.push({day:days[i],recipe:r,kids:isKidsDay(i),portions:targetPortions(i)});}state.week=week;resetHiddenForWeek()}
+function resetHiddenForWeek(){const k="hiddenShopWeekV24";if(localStorage.getItem(k)!==weekKey()){state.hiddenShop.clear();localStorage.setItem(k,weekKey());localStorage.setItem("hiddenShopV24","[]")}}
+async function init(){try{const[rr,oo]=await Promise.all([fetch("./recipes.json?"+Date.now()).then(r=>r.json()),fetch("./offers.json?"+Date.now()).then(r=>r.ok?r.json():({status:"unavailable",offers:[]}))]);state.recipes=[...state.customRecipes,...rr];state.offerStatus=oo.status||"unavailable";state.offers=oo.offers||[];buildWeek();render();bindNav()}catch(e){$("#view").innerHTML='<div class="card">Kunde inte läsa Matappens data just nu.</div>'}}
+function bindNav(){document.querySelectorAll(".nav-btn").forEach(b=>b.onclick=()=>{state.view=b.dataset.view;document.querySelectorAll(".nav-btn").forEach(x=>x.classList.toggle("active",x===b));render();scrollTo(0,0)});$("#profileBtn").onclick=showInfo}
 function image(r,cls="recipe-image"){return r.image?`<img class="${cls}" src="${esc(r.image)}" alt="" loading="lazy" referrerpolicy="no-referrer">`:""}
+function meta(r){let a=[];if(mins(r))a.push(`⏱ ${mins(r)} min`);if(r.external)a.push(`↗ ${r.source}`);return a.map(x=>`<span class="soft-chip">${esc(x)}</span>`).join("")}
+function offerBadge(r){let m=offerMatches(r);if(!m.length)return"";return `<div class="offer">🔥 Passar veckans erbjudande: ${m.map(x=>`<b>${esc(x.offer.name)}</b>`).join(" + ")}</div>`}
+function familyChip(p){return `<span class="family-chip ${p.kids?'kids':'adult'}">${p.kids?'👨‍👩‍👧‍👦 Barnen hemma':'🌶️ Vuxenkväll'} · ${p.portions} port</span>`}
 function render(){if(state.view==="today")$("#view").innerHTML=todayView();if(state.view==="week")$("#view").innerHTML=weekView();if(state.view==="shop")$("#view").innerHTML=shopView();if(state.view==="recipes")$("#view").innerHTML=recipeView();wire()}
-function todayView(){
- const d=new Date().getDay(),idx=d===0?6:d-1,p=state.week[idx],t=state.week[(idx+1)%7];
- const status=state.offerStatus==="live"?`🔥 ${state.offers.length} ICA-erbjudanden inlästa`:"ICA-erbjudanden kunde inte verifieras – veckan byggs utan dem";
- return `<section class="hero-card">${image(p.recipe,"hero-image")}<div class="hero-label">${p.day} · dagens middag</div><div class="hero-title">${esc(p.recipe.name)}</div><div class="meta">${meta(p.recipe,true)}</div>${offerBadge(p.recipe)}<div class="hero-actions"><button class="light" data-recipeid="${esc(p.recipe.id)}">Visa recept</button><button class="ghost" data-swap="${idx}">↻ Byt rätt</button></div></section>
- <div class="status-line ${state.offerStatus==="live"?"ok":"warn"}">${esc(status)}</div>
- <section class="section"><div class="section-head"><h2>Lägg till snabbt</h2><span class="muted">lär sig vad du brukar lägga till</span></div><div class="quick-grid">${smartQuick().map(x=>`<button class="quick" data-add="${esc(x)}">＋ ${esc(x)}<small>${state.quickStats[x]?`tillagd ${state.quickStats[x]} ggr`:"till inköpslistan"}</small></button>`).join("")}</div></section>
- <section class="section"><div class="section-head"><h2>I morgon</h2></div><div class="card mini-meal">${image(t.recipe,"thumb")}<div><div class="day">${t.day}</div><div class="meal">${esc(t.recipe.name)}</div><div class="row">${meta(t.recipe)}</div>${offerBadge(t.recipe)}</div></div></section>`;
-}
-function smartQuick(){
- const defaults=["Mjölk","Bröd","Ägg","Yoghurt","Diskmedel","Toalettpapper"];
- return [...new Set([...Object.entries(state.quickStats).sort((a,b)=>b[1]-a[1]).map(x=>x[0]),...defaults])].slice(0,4);
-}
-function weekView(){
- return `<section class="section" style="margin-top:4px"><div class="section-head"><div><h2>Veckans middagar</h2><div class="muted">${state.offerStatus==="live"?"Prioriterar aktuella ICA-erbjudanden":"ICA-data ej verifierad just nu"}</div></div></div>${state.week.map((p,i)=>`<div class="card week-card">${image(p.recipe,"thumb")}<div class="week-main"><div class="day">${p.day}</div><div class="source-badge">${esc(p.recipe.source||"Matappen")}</div><div class="meal">${esc(p.recipe.name)}</div><div class="row">${meta(p.recipe)}</div>${offerBadge(p.recipe)}<div class="week-actions"><button class="secondary-btn" data-recipeid="${esc(p.recipe.id)}">Recept</button><button class="secondary-btn" data-swap="${i}">↻ Byt</button></div></div></div>`).join("")}</section>`;
-}
-function parseIngredient(line){
- let s=String(line||"").trim(),name=s,qty="",unit="";
- // "Majs: 1 burk", "1 burk majs", "2 x 340 g majs"
- let m=s.match(/^(.+?):\s*([\d.,½¼¾⅓⅔]+)\s*([a-zA-ZåäöÅÄÖ]+)?/);
- if(m){name=m[1].trim();qty=m[2];unit=m[3]||"";return {name,qty,unit,raw:s}}
- m=s.match(/^([\d.,½¼¾⅓⅔]+)\s*(?:x\s*[\d.,]+\s*(?:g|kg|ml|l)\s*)?([a-zA-ZåäöÅÄÖ]+)?\s+(.+)$/i);
- if(m){qty=m[1];unit=m[2]||"";name=m[3].replace(/^av\s+/i,"").trim();return {name,qty,unit,raw:s}}
- return {name:s,qty:"",unit:"",raw:s};
-}
-function num(s){if(!s)return null;s=String(s).replace(",",".");const f={"½":.5,"¼":.25,"¾":.75,"⅓":1/3,"⅔":2/3};if(f[s])return f[s];let n=parseFloat(s);return Number.isFinite(n)?n:null}
+function todayView(){let d=new Date().getDay(),i=d===0?6:d-1,p=state.week[i]||state.week[0],t=state.week[(i+1)%7];return `<section class="hero-card">${image(p.recipe,"hero-image")}<div class="hero-label">${p.day} · dagens middag</div><div class="hero-title">${esc(p.recipe.name)}</div><div class="meta">${familyChip(p)}${meta(p.recipe)}</div>${offerBadge(p.recipe)}<div class="hero-actions"><button class="light" data-recipeid="${esc(recipeKey(p.recipe))}">Visa recept</button><button class="ghost" data-swap="${i}">↻ Byt rätt</button></div></section><div class="budget-card">${budgetSummary()}</div><div class="status-line ${state.offerStatus==='live'?'ok':'warn'}">${state.offerStatus==='live'?`🔥 ${state.offers.length} verifierade ICA-materbjudanden används som bonus`:'ICA-erbjudanden kunde inte verifieras – veckan byggs utan dem'}</div><section class="section"><div class="section-head"><h2>I morgon</h2></div><div class="card mini-meal">${image(t.recipe,"thumb")}<div><div class="day">${t.day}</div><div class="meal">${esc(t.recipe.name)}</div>${familyChip(t)}${offerBadge(t.recipe)}</div></div></section>`}
+function weekView(){return `<section class="section" style="margin-top:4px"><div class="section-head"><div><h2>Veckans middagar</h2><div class="muted">Variation först · erbjudanden som bonus</div></div></div>${state.week.map((p,i)=>`<div class="card week-card">${image(p.recipe,"thumb")}<div class="week-main"><div class="day">${p.day}</div><div class="meal">${esc(p.recipe.name)}</div>${familyChip(p)}<div class="row">${meta(p.recipe)}</div>${offerBadge(p.recipe)}<div class="week-actions"><button class="secondary-btn" data-recipeid="${esc(recipeKey(p.recipe))}">Recept</button><button class="secondary-btn" data-swap="${i}">↻ Byt</button></div></div></div>`).join("")}</section>`}
+function parseIngredient(line){let s=String(line||"").trim(),m=s.match(/^(.+?):\s*([\d.,½¼¾⅓⅔]+)\s*([a-zA-ZåäöÅÄÖ]+)?/);if(m)return{name:m[1].trim(),qty:m[2],unit:m[3]||""};m=s.match(/^([\d.,½¼¾⅓⅔]+)\s*([a-zA-ZåäöÅÄÖ]+)?\s+(.+)$/);if(m)return{name:m[3].trim(),qty:m[1],unit:m[2]||""};return{name:s,qty:"",unit:""}}
+function num(s){if(!s)return null;const f={"½":.5,"¼":.25,"¾":.75,"⅓":1/3,"⅔":2/3};if(f[s])return f[s];let n=parseFloat(String(s).replace(",","."));return Number.isFinite(n)?n:null}
 function unitKey(u){u=canon(u);if(["gram","g"].includes(u))return"g";if(["kilogram","kg"].includes(u))return"kg";if(["deciliter","dl"].includes(u))return"dl";if(["milliliter","ml"].includes(u))return"ml";if(["liter","l"].includes(u))return"l";if(["stycken","styck","st"].includes(u))return"st";if(["burkar","burk"].includes(u))return"burk";if(["förpackningar","förpackning","förp","paket","pkt"].includes(u))return"förp";return u}
-function shopName(name){
- let n=canon(name)
-   .replace(/\([^)]*\)/g," ")
-   .replace(/\b(?:ca|cirka|avrunnen|avrunnet|konserverad|konserverade)\b/g," ")
-   .replace(/\b(?:på|i)\s+burk\b/g," ")
-   .replace(/\s+/g," ").trim();
- const aliases=[
-   [/^(?:majskorn|sötmajs|majs(?:korn)?)$/,"majs"],
-   [/^(?:gul lök|gula lökar|lök gul)$/,"gul lök"],
-   [/^(?:röd lök|rödlök|röda lökar)$/,"rödlök"],
-   [/^(?:vitlöksklyfta|vitlöksklyftor|vitlök)$/,"vitlök"],
-   [/^(?:krossad tomat|krossade tomater)$/,"krossade tomater"],
-   [/^(?:kidneyböna|kidneybönor)$/,"kidneybönor"]
- ];
- for(const [re,to] of aliases)if(re.test(n))return to;
- return n;
-}
-function shopping(){
- let map=new Map();
- const neverBuy=new Set(["vatten","kranvatten"]);
- const add=(x)=>{
-   const key=shopName(x.name),u=unitKey(x.unit),n=num(x.qty);
-   if(neverBuy.has(key))return;
-   // Same grocery is merged. If units agree, quantities are summed.
-   let item=[...map.values()].find(v=>v.key===key && (v.unit===u || !v.unit || !u));
-   if(!item){item={key,name:x.name,unit:u,qty:n!==null?0:null,offers:[]};map.set(key+"|"+u,item)}
-   if(n!==null){if(item.qty===null)item.qty=0;if(!item.unit)item.unit=u;item.qty+=n}
- };
- state.week.forEach(p=>(p.recipe.ingredients||[]).forEach(line=>add(parseIngredient(line))));
- state.quick.forEach(x=>{const key=shopName(x);if(![...map.values()].some(v=>v.key===key))map.set(key+"|",{key,name:x,unit:"",qty:null,raw:x,offers:[]})});
- for(const item of map.values()){
-   if(state.offerStatus==="live")item.offers=state.offers.filter(o=>matchOfferToRecipe(o,{name:item.name,ingredients:[item.name]})>0).slice(0,1);
- }
- return [...map.values()].filter(x=>!state.hiddenShop.has(x.key)).sort((a,b)=>a.name.localeCompare(b.name,"sv"));
-}
-function fmtQty(x){if(x.qty===null)return "";let q=Math.round(x.qty*100)/100;if(x.unit==="g"&&q>=1000)return `${Math.round(q/100)/10} kg`;if(x.unit==="ml"&&q>=1000)return `${Math.round(q/100)/10} l`;return `${String(q).replace(".",",")} ${x.unit}`.trim()}
-function shopView(){
- const items=shopping();
- return `<section class="section" style="margin-top:4px"><div class="section-head"><div><h2>Inköpslista</h2><div class="muted">Mängder från hela veckans recept slås ihop</div></div><button class="section-link" id="addCustom">＋ Lägg till</button></div>${items.map((x,i)=>`<div class="check-row ${state.checked.has(x.name)?"done":""}"><input type="checkbox" data-check="${esc(x.name)}" ${state.checked.has(x.name)?"checked":""}><label><b>${esc(x.name)}</b>${fmtQty(x)?`<span class="quantity">${esc(fmtQty(x))}</span>`:""}${x.offers.length?`<small class="deal-line">🔥 ICA: ${esc(x.offers[0].name)}${x.offers[0].price?` · ${esc(x.offers[0].price)}`:""}</small>`:""}</label><button class="remove-shop" data-remove-shop="${esc(x.key)}" aria-label="Har hemma – ta bort">×</button></div>`).join("")}<div style="height:14px"></div><button class="secondary-btn" id="clearBought">Ta bort köpta</button></section>`;
-}
-function recipeView(){
- const external=state.recipes.filter(r=>r.external).length;
- return `<section class="section" style="margin-top:4px"><div class="section-head"><div><h2>Recept</h2><div class="muted">${state.recipes.length} recept · ${external} externa · ${state.customRecipes.length} egna</div></div><button class="section-link" id="addRecipe">＋ Eget recept</button></div><input class="search" id="search" placeholder="Sök kyckling, pasta, gryta…"><div class="filter-row">${["Alla","👍 Gillade","🔥 ICA-match","≤30 min","ICA","Arla","Köket"].map((x,i)=>`<button class="filter ${i===0?"active":""}" data-filter="${x}">${x}</button>`).join("")}</div><div id="recipeList">${recipeCards(state.recipes.slice(0,180))}</div></section>`;
-}
-function recipeCards(arr){return arr.map(r=>`<div class="card recipe-card" data-id="${esc(r.id)}">${image(r,"card-image")}<div class="source-badge">${esc(r.source||"Matappen")}${state.liked.has(r.name)?" · 👍 Gillad":""}</div><div class="meal">${esc(r.name)}</div><div class="row">${meta(r)}</div>${offerBadge(r)}</div>`).join("")}
-function wire(){
- document.querySelectorAll("[data-recipeid]").forEach(b=>b.onclick=()=>showRecipe(b.dataset.recipeid));
- document.querySelectorAll(".recipe-card").forEach(c=>c.onclick=()=>showRecipe(c.dataset.id));
- document.querySelectorAll("[data-swap]").forEach(b=>b.onclick=()=>swapMeal(Number(b.dataset.swap)));
- document.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>addQuick(b.dataset.add));
- document.querySelectorAll("[data-check]").forEach(c=>c.onchange=()=>{c.checked?state.checked.add(c.dataset.check):state.checked.delete(c.dataset.check);localStorage.setItem("checked",JSON.stringify([...state.checked]))});
- document.querySelectorAll("[data-remove-shop]").forEach(b=>b.onclick=()=>{state.hiddenShop.add(b.dataset.removeShop);localStorage.setItem("hiddenShop",JSON.stringify([...state.hiddenShop]));render();toast("Borttagen – du har den hemma")});
- if($("#clearBought"))$("#clearBought").onclick=()=>{state.quick=state.quick.filter(x=>!state.checked.has(x));localStorage.setItem("quick",JSON.stringify(state.quick));state.checked.clear();localStorage.removeItem("checked");render()};
- if($("#addCustom"))$("#addCustom").onclick=customAdd;if($("#addRecipe"))$("#addRecipe").onclick=addOwnRecipe;if($("#search"))$("#search").oninput=filterRecipes;
- document.querySelectorAll("[data-filter]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-filter]").forEach(x=>x.classList.remove("active"));b.classList.add("active");state.filter=b.dataset.filter;filterRecipes()});
-}
-function addQuick(v){if(!state.quick.includes(v))state.quick.push(v);state.quickStats[v]=(state.quickStats[v]||0)+1;localStorage.setItem("quick",JSON.stringify(state.quick));localStorage.setItem("quickStats",JSON.stringify(state.quickStats));toast(`${v} tillagd`);render()}
-function swapMeal(i){
- const cur=state.week[i].recipe;let pool=state.recipes.filter(r=>r.name!==cur.name&&!state.disliked.has(r.name)&&!state.week.some((p,j)=>j!==i&&p.recipe.name===r.name));
- pool.sort((a,b)=>score(b,i)-score(a,i));if(pool.length)state.week[i].recipe=pool[0];render();toast("Bytte middag");
-}
-function showRecipe(id){
- const r=state.recipes.find(x=>x.id===id)||state.week.map(x=>x.recipe).find(x=>x.id===id);if(!r)return;
- const liked=state.liked.has(r.name),disliked=state.disliked.has(r.name);
- let body=`${image(r,"sheet-image")}<div class="source-badge">${esc(r.source||"Matappen")}</div><h3>${esc(r.name)}</h3><div class="row">${meta(r)}</div>${offerBadge(r)}
- <div class="taste-actions"><button class="${liked?"taste-on":""}" id="likeRecipe">👍 ${liked?"Gillad":"Den här gillar vi"}</button><button class="${disliked?"taste-bad":""}" id="dislikeRecipe">👎 ${disliked?"Undviks":"Inte för oss"}</button></div>`;
- if((r.ingredients||[]).length)body+=`<h4>Ingredienser</h4>${r.ingredients.map(x=>`<div class="ingredient">${esc(x)}</div>`).join("")}`;
- if(r.external&&r.url)body+=`<p class="muted">Tillagningen öppnas hos originalkällan.</p><a href="${esc(r.url)}" target="_blank" rel="noopener" class="wide-btn link-btn">Öppna hos ${esc(r.source)} ↗</a>`;
- else if(r.steps)body+=`<h4>Gör så här</h4>${r.steps.map((s,i)=>`<div class="step"><b>${i+1}.</b> ${esc(s)}</div>`).join("")}`;
- showSheet(body);
- setTimeout(()=>{
-   $("#likeRecipe").onclick=()=>{state.liked.add(r.name);state.disliked.delete(r.name);saveTaste();buildWeek();closeSheet();render();toast("👍 Sparat – påverkar framtida veckor")};
-   $("#dislikeRecipe").onclick=()=>{state.disliked.add(r.name);state.liked.delete(r.name);saveTaste();buildWeek();closeSheet();render();toast("👎 Sparat – receptet undviks")};
- },10);
-}
-function saveTaste(){localStorage.setItem("liked",JSON.stringify([...state.liked]));localStorage.setItem("disliked",JSON.stringify([...state.disliked]))}
-function filterRecipes(){
- const q=$("#search").value.toLowerCase().trim(),f=state.filter;let arr=state.recipes.filter(r=>(r.name+" "+(r.ingredients||[]).join(" ")+" "+(r.tags||[]).join(" ")).toLowerCase().includes(q));
- if(f==="≤30 min")arr=arr.filter(r=>mins(r)&&mins(r)<=30);if(["ICA","Arla","Köket"].includes(f))arr=arr.filter(r=>r.source===f);if(f==="👍 Gillade")arr=arr.filter(r=>state.liked.has(r.name));if(f==="🔥 ICA-match")arr=arr.filter(r=>offerMatches(r).length);
- $("#recipeList").innerHTML=recipeCards(arr.slice(0,220));document.querySelectorAll(".recipe-card").forEach(c=>c.onclick=()=>showRecipe(c.dataset.id));
-}
-function showInfo(){showSheet(`<h3>Matappen v19</h3><p><b>Veckoplaneringen väger nu ICA-erbjudanden tyngst.</b> Därefter familjens 👍/👎, vardagstid, matlådor, frys och variation.</p><p class="muted">ICA-status: ${esc(state.offerStatus)} · ${state.offers.length} erbjudanden i filen. Bara status “live” får påverka planeringen.</p><button class="secondary-btn" id="clearTaste">Återställ 👍/👎</button>`);setTimeout(()=>{$("#clearTaste").onclick=()=>{state.liked.clear();state.disliked.clear();saveTaste();buildWeek();closeSheet();render();toast("Smakprofil återställd")}},10)}
-
-function addOwnRecipe(){
- showSheet(`<h3>＋ Eget recept</h3><p class="muted">Skriv en ingrediens per rad, gärna med mängd. Matappen använder ingredienserna när den jämför med ICA:s extrapris.</p>
- <label class="form-label">Namn</label><input class="search" id="ownName" placeholder="T.ex. vår kycklinggryta">
- <div class="form-grid"><div><label class="form-label">Portioner</label><input class="search" id="ownPortions" inputmode="numeric" value="4"></div><div><label class="form-label">Tid, min</label><input class="search" id="ownMinutes" inputmode="numeric" placeholder="30"></div></div>
- <label class="form-label">Ingredienser</label><textarea class="recipe-textarea" id="ownIngredients" placeholder="800 g kycklingfilé\n2 paprikor\n3 dl crème fraiche"></textarea>
- <label class="form-label">Gör så här</label><textarea class="recipe-textarea" id="ownSteps" placeholder="Bryn kycklingen.\nTillsätt resten och låt puttra."></textarea>
- <button class="wide-btn" id="saveOwnRecipe">Spara recept</button>`);
- setTimeout(()=>{$("#saveOwnRecipe").onclick=()=>{
-   const name=$("#ownName").value.trim(),ingredients=$("#ownIngredients").value.split(/\n/).map(x=>x.trim()).filter(Boolean),steps=$("#ownSteps").value.split(/\n/).map(x=>x.trim()).filter(Boolean);
-   if(!name||!ingredients.length){toast("Fyll i namn och ingredienser");return}
-   const r={id:"own-"+Date.now(),name,source:"Eget recept",external:false,ingredients,steps,minutes:Number($("#ownMinutes").value)||null,portions:Number($("#ownPortions").value)||4,lunch:3,freeze:3,tags:["eget"]};
-   state.customRecipes.unshift(r);localStorage.setItem("customRecipes",JSON.stringify(state.customRecipes));state.recipes.unshift(r);buildWeek();closeSheet();render();toast("Receptet är sparat och används i planeringen");
- }},10)
-}
-
-function customAdd(){showSheet(`<h3>Lägg till vara</h3><input class="search" id="customInput" placeholder="T.ex. kaffe"><button class="wide-btn" id="saveCustom">Lägg till</button>`);setTimeout(()=>{$("#saveCustom").onclick=()=>{const v=$("#customInput").value.trim();if(v)addQuick(v);closeSheet();render()}},10)}
-function showSheet(html){$("#sheet").innerHTML=html;$("#sheetBackdrop").classList.remove("hidden");$("#sheet").classList.remove("hidden");$("#sheetBackdrop").onclick=closeSheet}
-function closeSheet(){$("#sheetBackdrop").classList.add("hidden");$("#sheet").classList.add("hidden")}
-function toast(msg){let t=document.createElement("div");t.textContent=msg;t.className="toast";document.body.appendChild(t);setTimeout(()=>t.remove(),1900)}
+function shopName(n){n=canon(n).replace(/\([^)]*\)/g," ").replace(/\b(?:ca|cirka|avrunnen|avrunnet|konserverad|konserverade)\b/g," ").replace(/\b(?:på|i)\s+burk\b/g," ").replace(/\s+/g," ").trim();for(const[re,to]of[[/^(?:majskorn|sötmajs|majs(?:korn)?)$/,"majs"],[/^(?:gul lök|gula lökar)$/,"gul lök"],[/^(?:vitlöksklyfta|vitlöksklyftor|vitlök)$/,"vitlök"],[/^(?:krossad tomat|krossade tomater)$/,"krossade tomater"]])if(re.test(n))return to;return n}
+function expandIngredient(line){let raw=String(line||"").trim(),c=canon(raw);if(!raw||/^(?:till servering|servering|garnering|sås|dressing|marinad)\s*:?\s*$/i.test(raw))return[];if(/\bkebabsås\b/.test(c)&&/\b(?:hemmagjord|hemgjord|se (?:länk|recept))\b/.test(c))return["2 dl turkisk yoghurt","1 dl majonnäs","1 vitlöksklyfta","1 tsk paprikapulver"];if(/\b(?:se länk|se recept|enligt recept|recept finns)\b/.test(c))return[];return[raw]}
+function shopping(){let map=new Map(),never=new Set(["vatten","kranvatten"]);const add=(x,factor=1)=>{let key=shopName(x.name),u=unitKey(x.unit),n=num(x.qty);if(!key||never.has(key))return;let k=key+"|"+u,item=map.get(k);if(!item){item={key,name:key,unit:u,qty:n===null?null:0,offers:[]};map.set(k,item)}if(n!==null){if(item.qty===null)item.qty=0;item.qty+=n*factor}};state.week.forEach(p=>{let factor=p.portions/Number(p.recipe.portions||4);(p.recipe.ingredients||[]).forEach(line=>expandIngredient(line).forEach(x=>add(parseIngredient(x),factor)))});state.quick.forEach(x=>add({name:x,qty:"",unit:""}));for(const item of map.values())if(state.offerStatus==="live")item.offers=state.offers.filter(o=>matchOfferToRecipe(o,{name:item.name,ingredients:[item.name]})>0).slice(0,1);return[...map.values()].filter(x=>!state.hiddenShop.has(x.key)).sort((a,b)=>a.name.localeCompare(b.name,"sv"))}
+function fmtQty(x){if(x.qty===null)return"";let q=Math.round(x.qty*100)/100;if(x.unit==="g"&&q>=1000)return`${Math.round(q/100)/10} kg`;if(x.unit==="ml"&&q>=1000)return`${Math.round(q/100)/10} l`;return`${String(q).replace(".",",")} ${x.unit}`.trim()}
+function offerCost(o){let p=canon(o.price),m=p.match(/(\d+) för (\d+(?:[.,]\d+)?)/);if(m)return Number(m[2].replace(",","."))/Number(m[1]);m=p.match(/(\d+(?:[.,]\d+)?) kr\/st/);return m?Number(m[1].replace(",",".")):null}
+function estimateShop(){let known=0,count=0,total=shopping().length;shopping().forEach(x=>{if(x.offers[0]){let p=offerCost(x.offers[0]);if(p){known+=p;count++}}});return{known,count,total}}
+function monthSpent(){let d=new Date(),ym=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;return state.expenses.filter(x=>x.date.startsWith(ym)).reduce((n,x)=>n+Number(x.amount||0),0)}
+function budgetSummary(){let spent=monthSpent(),left=Math.max(0,state.settings.monthlyBudget-spent),est=estimateShop();return `<b>💰 Budget</b><span>${Math.round(spent).toLocaleString('sv-SE')} / ${state.settings.monthlyBudget.toLocaleString('sv-SE')} kr denna månad</span><small>${Math.round(left).toLocaleString('sv-SE')} kr kvar · veckomål ${state.settings.weeklyBudget.toLocaleString('sv-SE')} kr</small>${est.count?`<small>ICA-pris verifierat för ${est.count} av ${est.total} inköpsvaror. Totalen visas först när priserna är tillräckligt kompletta.</small>`:""}`}
+function shopView(){let items=shopping();return `<section class="section" style="margin-top:4px"><div class="budget-card">${budgetSummary()}<div class="budget-actions"><button class="secondary-btn" id="addGroceryExpense">＋ Matbutik</button><button class="secondary-btn" id="addTakeaway">🍕 Hämtmat</button></div></div><div class="section-head"><div><h2>Inköpslista</h2><div class="muted">Rätt mängd för barn/vuxen-dagar · vatten filtreras bort</div></div><button class="section-link" id="addCustom">＋ Lägg till</button></div>${items.map(x=>`<div class="check-row ${state.checked.has(x.key)?'done':''}"><input type="checkbox" data-check="${esc(x.key)}" ${state.checked.has(x.key)?'checked':''}><label><b>${esc(x.name)}</b>${fmtQty(x)?`<span class="quantity">${esc(fmtQty(x))}</span>`:""}${x.offers.length?`<small class="deal-line">🔥 ICA: ${esc(x.offers[0].name)} · ${esc(x.offers[0].price||"")}</small>`:""}</label><button class="remove-shop" data-remove-shop="${esc(x.key)}">×</button></div>`).join("")}</section>`}
+function recipeView(){let external=state.recipes.filter(r=>r.external).length;return `<section class="section" style="margin-top:4px"><div class="section-head"><div><h2>Recept</h2><div class="muted">${state.recipes.length} recept · ${external} externa · ${state.customRecipes.length} egna</div></div><button class="section-link" id="addRecipe">＋ Eget recept</button></div><input class="search" id="search" placeholder="Sök recept eller ingrediens, t.ex. kyckling…"><div class="filter-row">${["Alla","👍 Gillade","🔥 ICA-match","≤30 min","ICA","Arla","Köket"].map((x,i)=>`<button class="filter ${i===0?'active':''}" data-filter="${x}">${x}</button>`).join("")}</div><div id="recipeList">${recipeCards(state.recipes.slice(0,220))}</div></section>`}
+function recipeCards(arr){return arr.map(r=>`<div class="card recipe-card" data-id="${esc(recipeKey(r))}">${image(r,"card-image")}<div class="source-badge">${esc(r.source||"Matappen")}${state.liked.has(recipeKey(r))?' · 👍 Gillad':''}</div><div class="meal">${esc(r.name)}</div><div class="row">${meta(r)}</div>${offerBadge(r)}</div>`).join("")}
+function wire(){document.querySelectorAll("[data-recipeid]").forEach(b=>b.onclick=()=>showRecipe(b.dataset.recipeid));document.querySelectorAll(".recipe-card").forEach(c=>c.onclick=()=>showRecipe(c.dataset.id));document.querySelectorAll("[data-swap]").forEach(b=>b.onclick=()=>swapMeal(Number(b.dataset.swap)));document.querySelectorAll("[data-check]").forEach(c=>c.onchange=()=>{c.checked?state.checked.add(c.dataset.check):state.checked.delete(c.dataset.check);localStorage.setItem("checked",JSON.stringify([...state.checked]))});document.querySelectorAll("[data-remove-shop]").forEach(b=>b.onclick=()=>{state.hiddenShop.add(b.dataset.removeShop);save();render()});if($("#addCustom"))$("#addCustom").onclick=customAdd;if($("#addRecipe"))$("#addRecipe").onclick=addOwnRecipe;if($("#search"))$("#search").oninput=filterRecipes;if($("#addGroceryExpense"))$("#addGroceryExpense").onclick=()=>addExpense("Matbutik");if($("#addTakeaway"))$("#addTakeaway").onclick=()=>addExpense("Hämtmat");document.querySelectorAll("[data-filter]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-filter]").forEach(x=>x.classList.remove("active"));b.classList.add("active");state.filter=b.dataset.filter;filterRecipes()})}
+function swapMeal(i){let cur=state.week[i].recipe,counts={};state.week.forEach((p,j)=>{if(j!==i)counts[mainGroup(p.recipe)]=(counts[mainGroup(p.recipe)]||0)+1});let pool=state.recipes.filter(r=>recipeKey(r)!==recipeKey(cur)&&!state.disliked.has(recipeKey(r))&&!state.week.some((p,j)=>j!==i&&recipeKey(p.recipe)===recipeKey(r)));pool.sort((a,b)=>baseScore(b,i,counts)-baseScore(a,i,counts));if(pool[0])state.week[i]={...state.week[i],recipe:pool[0]};render()}
+function showRecipe(id){let r=state.recipes.find(x=>recipeKey(x)===id);if(!r)return;let key=recipeKey(r),body=`${image(r,"sheet-image")}<div class="source-badge">${esc(r.source||"Matappen")}</div><h3>${esc(r.name)}</h3><div class="row">${meta(r)}</div>${offerBadge(r)}<div class="taste-actions"><button class="${state.liked.has(key)?'taste-on':''}" id="likeRecipe">👍 Den här gillar vi</button><button class="${state.disliked.has(key)?'taste-bad':''}" id="dislikeRecipe">👎 Inte för oss</button></div>`;if((r.ingredients||[]).length)body+=`<h4>Ingredienser</h4>${r.ingredients.map(x=>`<div class="ingredient">${esc(x)}</div>`).join("")}`;if(r.external&&r.url)body+=`<a href="${esc(r.url)}" target="_blank" rel="noopener" class="wide-btn link-btn">Öppna hos ${esc(r.source)} ↗</a>`;else if(r.steps)body+=`<h4>Gör så här</h4>${r.steps.map((s,i)=>`<div class="step"><b>${i+1}.</b> ${esc(s)}</div>`).join("")}`;showSheet(body);setTimeout(()=>{$("#likeRecipe").onclick=()=>{state.liked.add(key);state.disliked.delete(key);saveTaste();buildWeek();closeSheet();render()};$("#dislikeRecipe").onclick=()=>{state.disliked.add(key);state.liked.delete(key);saveTaste();buildWeek();closeSheet();render()}},10)}
+function saveTaste(){localStorage.setItem("likedV24",JSON.stringify([...state.liked]));localStorage.setItem("dislikedV24",JSON.stringify([...state.disliked]))}
+function filterRecipes(){let q=$("#search").value.toLowerCase().trim(),f=state.filter,arr=state.recipes.filter(r=>(r.name+" "+(r.ingredients||[]).join(" ")+" "+(r.tags||[]).join(" ")).toLowerCase().includes(q));if(f==="≤30 min")arr=arr.filter(r=>mins(r)&&mins(r)<=30);if(["ICA","Arla","Köket"].includes(f))arr=arr.filter(r=>r.source===f);if(f==="👍 Gillade")arr=arr.filter(r=>state.liked.has(recipeKey(r)));if(f==="🔥 ICA-match")arr=arr.filter(r=>offerMatches(r).length);$("#recipeList").innerHTML=recipeCards(arr.slice(0,220));document.querySelectorAll(".recipe-card").forEach(c=>c.onclick=()=>showRecipe(c.dataset.id))}
+function addOwnRecipe(){showSheet(`<h3>＋ Eget recept</h3><label class="form-label">Namn</label><input class="search" id="ownName"><div class="form-grid"><div><label class="form-label">Portioner</label><input class="search" id="ownPortions" value="4"></div><div><label class="form-label">Tid, min</label><input class="search" id="ownMinutes"></div></div><label class="form-label">Ingredienser – en per rad</label><textarea class="recipe-textarea" id="ownIngredients"></textarea><label class="form-label">Gör så här</label><textarea class="recipe-textarea" id="ownSteps"></textarea><button class="wide-btn" id="saveOwnRecipe">Spara recept</button>`);setTimeout(()=>{$("#saveOwnRecipe").onclick=()=>{let name=$("#ownName").value.trim(),ingredients=$("#ownIngredients").value.split(/\n/).map(x=>x.trim()).filter(Boolean);if(!name||!ingredients.length)return;let r={id:"own-"+Date.now(),name,source:"Eget recept",external:false,ingredients,steps:$("#ownSteps").value.split(/\n/).filter(Boolean),minutes:Number($("#ownMinutes").value)||null,portions:Number($("#ownPortions").value)||4,tags:["eget"]};state.customRecipes.unshift(r);localStorage.setItem("customRecipes",JSON.stringify(state.customRecipes));state.recipes.unshift(r);buildWeek();closeSheet();render()}},10)}
+function addExpense(type){showSheet(`<h3>${type==='Hämtmat'?'🍕 Hämtmat':'🛒 Matbutik'}</h3><input class="search" id="expenseAmount" inputmode="decimal" placeholder="Belopp i kr"><button class="wide-btn" id="saveExpense">Spara</button>`);setTimeout(()=>{$("#saveExpense").onclick=()=>{let amount=Number($("#expenseAmount").value.replace(",","."));if(!amount)return;state.expenses.push({date:new Date().toISOString().slice(0,10),type,amount});save();closeSheet();render()}},10)}
+function customAdd(){showSheet(`<h3>Lägg till vara</h3><input class="search" id="customInput"><button class="wide-btn" id="saveCustom">Lägg till</button>`);setTimeout(()=>{$("#saveCustom").onclick=()=>{let v=$("#customInput").value.trim();if(v){state.quick.push(v);localStorage.setItem("quick",JSON.stringify(state.quick))}closeSheet();render()}},10)}
+function showInfo(){showSheet(`<h3>Matappen v24</h3><p><b>Familj:</b> två vuxna + två tonåringar. Barnstatus räknas per dag med byte på torsdag.</p><label class="form-label">Torsdagen är</label><select class="search" id="handover"><option value="arrival" ${state.settings.handover==='arrival'?'selected':''}>ankomstdag varannan vecka</option><option value="departure" ${state.settings.handover==='departure'?'selected':''}>avresedag varannan vecka</option></select><label class="form-label">Veckomål</label><input class="search" id="weeklyBudget" value="${state.settings.weeklyBudget}"><label class="form-label">Månadsbudget</label><input class="search" id="monthlyBudget" value="${state.settings.monthlyBudget}"><button class="wide-btn" id="saveSettings">Spara</button><p class="muted">ICA-erbjudanden: ${esc(state.offerStatus)} · ${state.offers.length}. Erbjudanden är bonus, inte ett krav.</p>`);setTimeout(()=>{$("#saveSettings").onclick=()=>{state.settings.handover=$("#handover").value;state.settings.weeklyBudget=Number($("#weeklyBudget").value)||1600;state.settings.monthlyBudget=Number($("#monthlyBudget").value)||12000;save();buildWeek();closeSheet();render()}},10)}
+function showSheet(html){$("#sheet").innerHTML=html;$("#sheetBackdrop").classList.remove("hidden");$("#sheet").classList.remove("hidden");$("#sheetBackdrop").onclick=closeSheet}function closeSheet(){$("#sheetBackdrop").classList.add("hidden");$("#sheet").classList.add("hidden")}
 init();

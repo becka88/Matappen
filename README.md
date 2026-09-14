@@ -1,7 +1,17 @@
-# Matappen v19
+# Matappen v24
 
-- Produktmedveten ICA-matchning: färsk fylld pasta matchar inte längre vanlig torr pasta.
-- Huvudråvaror som kycklingfilé, färs, lax, torsk och falukorv väger tyngre än tillbehör.
-- Egna recept deltar i samma erbjudandematchning och veckoplanering.
-- Receptimporten hämtar bild från receptets strukturerade data och använder sidans `og:image`/`twitter:image` som reserv när källan exponerar bilden där.
-- Bilder länkas från originalkällan; Matappen hittar inte på en bild när källan saknar en användbar receptbild.
+Samlad version efter genomgång av tidigare prototyper.
+
+- Barn/vuxen-status per dag, med torsdagsbyte och inställning för ankomst/avresa.
+- Portionsmål: barn hemma = 4 middagar + 2 lunchlådor (6 port), vuxenkväll = 2 middagar + 2 lunchlådor (4 port).
+- Veckoplanering väljer en hel varierad vecka. Samma huvudråvara får kraftigt repetitionsstraff; ICA-erbjudanden är bonus, inte styrning.
+- Egna recept ingår i samma planering och erbjudandematchning.
+- Stabilt recept-ID används för 👍/👎.
+- Inköpsmängder skalas efter dagens portionsmål, slås ihop, vatten filtreras bort och "har hemma" återställs per vecka.
+- Instruktionsrader filtreras; kända hemmagjorda delrecept kan expanderas till faktiska ingredienser.
+- Budget: 12 000 kr/månad och 1 600 kr/vecka som standard, med registrering av faktisk matbutik/hämtmat.
+- ICA-erbjudandepriser visas där de kan verifieras. Appen hittar inte på en totalprisprognos när ordinarie onlinepriser saknas.
+- Receptsökning söker i namn, ingredienser och taggar.
+- Daglig receptuppdaterare behåller katalogen och försöker komplettera saknade originalbilder från receptsidan.
+
+Obs: exakt vanlig onlinepris-matchning för hela ICA-korgen kräver en stabil verifierad produktkälla. v24 visar därför endast verifierade kampanjpriser och faktisk registrerad kostnad tills sådan källa är bekräftad.

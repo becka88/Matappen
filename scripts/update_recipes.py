@@ -1,3 +1,64 @@
+
+def best_recipe_image(soup, base_url):
+    """Prefer the recipe page's own main/share image."""
+    candidates = []
+    for attrs in (
+        {"property":"og:image"},
+        {"name":"twitter:image"},
+        {"property":"twitter:image"},
+    ):
+        tag=soup.find("meta", attrs=attrs)
+        if tag and tag.get("content"):
+            candidates.append(tag.get("content"))
+    # JSON-LD Recipe image is often the most semantically precise fallback.
+    for tag in soup.find_all("script", type="application/ld+json"):
+        try:
+            data=json.loads(tag.string or tag.get_text() or "{}")
+        except Exception:
+            continue
+        stack=data if isinstance(data,list) else [data]
+        while stack:
+            obj=stack.pop()
+            if isinstance(obj,dict):
+                typ=obj.get("@type")
+                types=typ if isinstance(typ,list) else [typ]
+                if "Recipe" in types:
+                    im=obj.get("image")
+                    if isinstance(im,str): candidates.append(im)
+                    elif isinstance(im,list):
+                        candidates.extend(x for x in im if isinstance(x,str))
+                    elif isinstance(im,dict) and isinstance(im.get("url"),str):
+                        candidates.append(im["url"])
+                stack.extend(v for v in obj.values() if isinstance(v,(dict,list)))
+            elif isinstance(obj,list):
+                stack.extend(obj)
+    from urllib.parse import urljoin
+    for u in candidates:
+        u=urljoin(base_url,u)
+        if u.startswith("http") and not any(x in u.lower() for x in ("logo","icon","avatar")):
+            return u
+    return ""
+
+def enrich_missing_images(items):
+    """Visit each source recipe page only when its image is missing."""
+    missing=[x for x in items if not x.get("image") and x.get("url")]
+    print(f"Bildkontroll: {len(missing)} recept saknar bild")
+    session=requests.Session()
+    session.headers.update(HEAD)
+    fixed=0
+    for i,item in enumerate(missing,1):
+        try:
+            rr=session.get(item["url"],timeout=20)
+            rr.raise_for_status()
+            im=best_recipe_image(BeautifulSoup(rr.text,"html.parser"),item["url"])
+            if im:
+                item["image"]=im
+                fixed+=1
+        except Exception as e:
+            print("IMAGE", item.get("source"), item.get("url"), type(e).__name__)
+    print(f"Bildkontroll: hittade {fixed} nya originalbilder")
+    return items
+
 import json,re,hashlib,time
 from pathlib import Path
 from urllib.parse import urljoin,urlparse
@@ -11,24 +72,24 @@ TIMEOUT=15
 
 PAGES={
 "ICA":[
- "https://www.ica.se/recept/vardag/",
- "https://www.ica.se/recept/vardag/middag/",
- "https://www.ica.se/recept/ingredienser/kyckling/",
- "https://www.ica.se/recept/ingredienser/kottfars/",
- "https://www.ica.se/recept/pasta/",
- "https://www.ica.se/recept/korv/"
+ "https://www.ica.se/recept/vardag/","https://www.ica.se/recept/vardag/middag/",
+ "https://www.ica.se/recept/ingredienser/kyckling/","https://www.ica.se/recept/ingredienser/kottfars/",
+ "https://www.ica.se/recept/ingredienser/lax/","https://www.ica.se/recept/ingredienser/torsk/",
+ "https://www.ica.se/recept/pasta/","https://www.ica.se/recept/korv/",
+ "https://www.ica.se/recept/vegetariskt/","https://www.ica.se/recept/soppa/",
+ "https://www.ica.se/recept/gryta/","https://www.ica.se/recept/under-30-minuter/"
 ],
 "Arla":[
- "https://www.arla.se/recept/samling/vardag-pasta/",
- "https://www.arla.se/recept/samling/kyckling-pasta/",
- "https://www.arla.se/recept/samling/kottfars-pasta/",
- "https://www.arla.se/recept/samling/kottfars-vardag/"
+ "https://www.arla.se/recept/samling/kyckling-vardag/","https://www.arla.se/recept/samling/vardag-pasta/",
+ "https://www.arla.se/recept/samling/kyckling-pasta/","https://www.arla.se/recept/samling/kottfars-pasta/",
+ "https://www.arla.se/recept/samling/kottfars-vardag/","https://www.arla.se/recept/samling/lax-vardag/",
+ "https://www.arla.se/recept/samling/fisk-vardag/","https://www.arla.se/recept/samling/vegetarisk-vardag/"
 ],
 "Köket":[
- "https://www.koket.se/recept",
- "https://www.koket.se/vardag",
- "https://www.koket.se/populara-recept",
- "https://www.koket.se/mat/typ-av-maltid/vardagsmiddag"
+ "https://www.koket.se/recept","https://www.koket.se/vardag","https://www.koket.se/populara-recept",
+ "https://www.koket.se/mat/typ-av-maltid/vardagsmiddag","https://www.koket.se/kyckling",
+ "https://www.koket.se/lax","https://www.koket.se/pasta","https://www.koket.se/torsk",
+ "https://www.koket.se/korv","https://www.koket.se/vegetariskt"
 ]}
 
 def get(u):
@@ -100,7 +161,7 @@ def links(html,base,source):
   elif source=="Arla":ok=p.startswith("/recept/") and "/samling/" not in p
   else:ok=p.count("/")>=1 and not any(x in p for x in ["/mat/typ-av-maltid","/populara-recept"])
   if ok and u not in seen:seen.add(u);out.append(u)
- return out[:150]
+ return out[:500]
 
 existing=json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else []
 byurl={r.get("url"):r for r in existing if r.get("url")}
@@ -117,7 +178,7 @@ for source,pages in PAGES.items():
    print(source,page,type(e).__name__)
 
 seen=set()
-for source,u in candidates[:500]:
+for source,u in candidates[:2500]:
  if u in seen:continue
  seen.add(u)
  try:
@@ -128,5 +189,6 @@ for source,u in candidates[:500]:
 
 external=sorted(byurl.values(),key=lambda r:(r.get("source",""),r.get("name","")))
 allrecipes=fallback+external
+allrecipes = enrich_missing_images(allrecipes)
 OUT.write_text(json.dumps(allrecipes,ensure_ascii=False,indent=2),encoding="utf-8")
 print(f"Saved {len(allrecipes)} recipes ({len(external)} external)")
