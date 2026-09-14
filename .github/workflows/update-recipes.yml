@@ -1,4 +1,4 @@
-name: Uppdatera recept
+name: Uppdatera Matappen
 
 on:
   workflow_dispatch:
@@ -21,16 +21,19 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Installera receptverktyg
+      - name: Installera verktyg
         run: pip install -r scripts/requirements.txt
 
       - name: Hämta nya recept
         run: python scripts/update_recipes.py
 
-      - name: Spara nya recept
+      - name: Hämta ICA-erbjudanden för Maxi Växjö
+        run: python scripts/update_offers.py
+
+      - name: Spara recept och erbjudanden
         run: |
           git config user.name "Matappen Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add recipes.json
-          git diff --cached --quiet || git commit -m "Uppdatera receptkatalog"
+          git add recipes.json offers.json
+          git diff --cached --quiet || git commit -m "Uppdatera recept och ICA-erbjudanden"
           git push
