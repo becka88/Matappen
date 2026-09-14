@@ -1,0 +1,9 @@
+{
+  "name": "Matappen",
+  "short_name": "Matappen",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F6F0E7",
+  "theme_color": "#243A2E",
+  "icons": []
+}
