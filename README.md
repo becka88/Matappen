@@ -15,3 +15,13 @@ Samlad version efter genomgång av tidigare prototyper.
 - Daglig receptuppdaterare behåller katalogen och försöker komplettera saknade originalbilder från receptsidan.
 
 Obs: exakt vanlig onlinepris-matchning för hela ICA-korgen kräver en stabil verifierad produktkälla. v24 visar därför endast verifierade kampanjpriser och faktisk registrerad kostnad tills sådan källa är bekräftad.
+
+## v25 – UX/UI-genomgång
+- Startsidan är renare: dagens middag, budgetläge, ICA-status och en kompakt länk till inköpslistan.
+- Ingen snabb-inmatning på startsidan.
+- Inköpslistan har nu "Lägg till vara" högst upp, följt av smarta snabbval.
+- Snabbvalen lär sig vilka manuella varor som används oftast.
+- Tydligare hierarki, större tryckytor, jämnare typografi, färre visuella element och mer konsekventa kort/knappar.
+- Budgeten visas med tydlig progress och "kvar"-belopp.
+- Receptbanken har renare sök- och filterlayout.
+- Befintliga lokala inställningar och preferenser från v24 behålls.
