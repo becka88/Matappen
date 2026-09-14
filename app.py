@@ -1,5 +1,6 @@
 
 import streamlit as st
+import hmac
 from pathlib import Path
 from datetime import date, timedelta
 from collections import Counter, defaultdict
@@ -7,7 +8,46 @@ import json, csv, io, re
 import requests
 from bs4 import BeautifulSoup
 
+
 st.set_page_config(page_title="Matappen", page_icon="🍽️", layout="wide")
+
+# ---------- Private access ----------
+def require_login():
+    """Stop the app before any family data or ICA UI is shown unless authenticated."""
+    if st.session_state.get("authenticated", False):
+        return
+
+    try:
+        expected_password = str(st.secrets["APP_PASSWORD"])
+    except Exception:
+        st.title("🔐 Matappen")
+        st.error("Appen är inte färdigkonfigurerad ännu.")
+        st.info('Ägaren behöver lägga till `APP_PASSWORD = "ditt-lösenord"` under Streamlit → Advanced settings → Secrets.')
+        st.stop()
+
+    st.title("🔐 Matappen")
+    st.write("Privat familjeapp")
+    with st.form("login_form", clear_on_submit=False):
+        password = st.text_input("Lösenord", type="password", autocomplete="current-password")
+        submitted = st.form_submit_button("Logga in", use_container_width=True)
+
+    if submitted:
+        if hmac.compare_digest(password, expected_password):
+            st.session_state["authenticated"] = True
+            st.rerun()
+        else:
+            st.error("Fel lösenord.")
+    st.stop()
+
+require_login()
+
+# Small logout control in the sidebar after successful login.
+with st.sidebar:
+    st.caption("🔒 Privat Matapp")
+    if st.button("Logga ut", use_container_width=True):
+        st.session_state["authenticated"] = False
+        st.rerun()
+
 
 
 # ---------- ICA live data ----------
@@ -535,6 +575,6 @@ with tabs[6]:
     st.info("Varor här dyker automatiskt upp på den samlade inköpslistan. Finns samma vara redan där via ett recept blir den inte dubbel.")
 
 st.divider()
-st.caption("Matappen v6 · live ICA-kontroll, familjeplanering, recept, mellis, snabblista och samlad inköpslista")
+st.caption("Matappen v7 · live ICA-kontroll, familjeplanering, recept, mellis, snabblista och samlad inköpslista")
 st.divider()
 
