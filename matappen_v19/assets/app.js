@@ -6,8 +6,7 @@ let state={
  quick:JSON.parse(localStorage.getItem("quick")||"[]"),
  quickStats:JSON.parse(localStorage.getItem("quickStats")||"{}"),
  filter:"Alla",
- customRecipes:JSON.parse(localStorage.getItem("customRecipes")||"[]"),
- hiddenShop:new Set(JSON.parse(localStorage.getItem("hiddenShop")||"[]"))
+ customRecipes:JSON.parse(localStorage.getItem("customRecipes")||"[]")
 };
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
@@ -140,10 +139,8 @@ function shopName(name){
 }
 function shopping(){
  let map=new Map();
- const neverBuy=new Set(["vatten","kranvatten"]);
  const add=(x)=>{
    const key=shopName(x.name),u=unitKey(x.unit),n=num(x.qty);
-   if(neverBuy.has(key))return;
    // Same grocery is merged. If units agree, quantities are summed.
    let item=[...map.values()].find(v=>v.key===key && (v.unit===u || !v.unit || !u));
    if(!item){item={key,name:x.name,unit:u,qty:n!==null?0:null,offers:[]};map.set(key+"|"+u,item)}
@@ -154,12 +151,12 @@ function shopping(){
  for(const item of map.values()){
    if(state.offerStatus==="live")item.offers=state.offers.filter(o=>matchOfferToRecipe(o,{name:item.name,ingredients:[item.name]})>0).slice(0,1);
  }
- return [...map.values()].filter(x=>!state.hiddenShop.has(x.key)).sort((a,b)=>a.name.localeCompare(b.name,"sv"));
+ return [...map.values()].sort((a,b)=>a.name.localeCompare(b.name,"sv"));
 }
 function fmtQty(x){if(x.qty===null)return "";let q=Math.round(x.qty*100)/100;if(x.unit==="g"&&q>=1000)return `${Math.round(q/100)/10} kg`;if(x.unit==="ml"&&q>=1000)return `${Math.round(q/100)/10} l`;return `${String(q).replace(".",",")} ${x.unit}`.trim()}
 function shopView(){
  const items=shopping();
- return `<section class="section" style="margin-top:4px"><div class="section-head"><div><h2>Inköpslista</h2><div class="muted">Mängder från hela veckans recept slås ihop</div></div><button class="section-link" id="addCustom">＋ Lägg till</button></div>${items.map((x,i)=>`<div class="check-row ${state.checked.has(x.name)?"done":""}"><input type="checkbox" data-check="${esc(x.name)}" ${state.checked.has(x.name)?"checked":""}><label><b>${esc(x.name)}</b>${fmtQty(x)?`<span class="quantity">${esc(fmtQty(x))}</span>`:""}${x.offers.length?`<small class="deal-line">🔥 ICA: ${esc(x.offers[0].name)}${x.offers[0].price?` · ${esc(x.offers[0].price)}`:""}</small>`:""}</label><button class="remove-shop" data-remove-shop="${esc(x.key)}" aria-label="Har hemma – ta bort">×</button></div>`).join("")}<div style="height:14px"></div><button class="secondary-btn" id="clearBought">Ta bort köpta</button></section>`;
+ return `<section class="section" style="margin-top:4px"><div class="section-head"><div><h2>Inköpslista</h2><div class="muted">Mängder från hela veckans recept slås ihop</div></div><button class="section-link" id="addCustom">＋ Lägg till</button></div>${items.map((x,i)=>`<div class="check-row ${state.checked.has(x.name)?"done":""}"><input type="checkbox" data-check="${esc(x.name)}" ${state.checked.has(x.name)?"checked":""}><label><b>${esc(x.name)}</b>${fmtQty(x)?`<span class="quantity">${esc(fmtQty(x))}</span>`:""}${x.offers.length?`<small class="deal-line">🔥 ICA: ${esc(x.offers[0].name)}${x.offers[0].price?` · ${esc(x.offers[0].price)}`:""}</small>`:""}</label></div>`).join("")}<div style="height:14px"></div><button class="secondary-btn" id="clearBought">Ta bort köpta</button></section>`;
 }
 function recipeView(){
  const external=state.recipes.filter(r=>r.external).length;
@@ -172,7 +169,6 @@ function wire(){
  document.querySelectorAll("[data-swap]").forEach(b=>b.onclick=()=>swapMeal(Number(b.dataset.swap)));
  document.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>addQuick(b.dataset.add));
  document.querySelectorAll("[data-check]").forEach(c=>c.onchange=()=>{c.checked?state.checked.add(c.dataset.check):state.checked.delete(c.dataset.check);localStorage.setItem("checked",JSON.stringify([...state.checked]))});
- document.querySelectorAll("[data-remove-shop]").forEach(b=>b.onclick=()=>{state.hiddenShop.add(b.dataset.removeShop);localStorage.setItem("hiddenShop",JSON.stringify([...state.hiddenShop]));render();toast("Borttagen – du har den hemma")});
  if($("#clearBought"))$("#clearBought").onclick=()=>{state.quick=state.quick.filter(x=>!state.checked.has(x));localStorage.setItem("quick",JSON.stringify(state.quick));state.checked.clear();localStorage.removeItem("checked");render()};
  if($("#addCustom"))$("#addCustom").onclick=customAdd;if($("#addRecipe"))$("#addRecipe").onclick=addOwnRecipe;if($("#search"))$("#search").oninput=filterRecipes;
  document.querySelectorAll("[data-filter]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-filter]").forEach(x=>x.classList.remove("active"));b.classList.add("active");state.filter=b.dataset.filter;filterRecipes()});

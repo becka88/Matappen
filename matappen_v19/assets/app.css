@@ -17,5 +17,3 @@
 @media(max-width:390px){.hero-title{font-size:31px}.hero-actions{grid-template-columns:1fr}.week-card{display:block}.week-card .thumb{width:100%;height:150px;margin-bottom:12px}.section-head .muted{max-width:155px;text-align:right}}
 /* v18 own recipes */
 .form-label{display:block;font-size:13px;font-weight:850;margin:12px 0 7px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.form-grid .search{margin-bottom:0}.recipe-textarea{width:100%;min-height:120px;border:0;background:white;border-radius:16px;padding:15px 16px;outline:none;box-shadow:0 6px 18px rgba(58,50,39,.06);resize:vertical;font:inherit;line-height:1.45;margin-bottom:8px}
-
-.remove-shop{margin-left:auto;border:0;background:transparent;font-size:28px;line-height:1;padding:8px 4px 8px 14px;color:var(--muted);cursor:pointer}.check-row label{flex:1}.remove-shop:active{transform:scale(.92)}
