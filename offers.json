@@ -1,8 +1,14 @@
 {
   "store_id": "1003571",
   "store": "Maxi ICA Stormarknad Växjö",
-  "updated_at": null,
-  "status": "waiting",
+  "updated_at": "2026-09-14T14:16:05.498946+00:00",
+  "status": "live",
   "source_url": "https://www.ica.se/erbjudanden/maxi-ica-stormarknad-vaxjo-1003571/",
-  "offers": []
+  "offers": [
+    {
+      "name": "fop.headertitle.other",
+      "price": "Sök Kyckling",
+      "source": "ICA online"
+    }
+  ]
 }
