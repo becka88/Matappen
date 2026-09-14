@@ -85,3 +85,10 @@ Schablonpriser är borttagna. GitHub Action hämtar butiksspecifika produktprise
 - Kryddor och övriga ingredienser sparas precis som de finns i källans ingredienslista; Matappen fyller inte i eller hittar på ingredienser.
 - Egna recept finns endast om familjen själv lägger in dem i appen.
 - Appen har tomläge och kraschar inte om en källuppdatering tillfälligt ger 0 recept.
+
+## v35 – inkrementell receptuppdatering
+- Behåller redan verifierade källrecept.
+- Kontrollerar högst 30 receptsidor per körning.
+- Receptsteget har 75 sekunders egen tidsgräns.
+- Hela GitHub-jobbet har 5 minuters maxgräns.
+- Endast ICA, Arla och Köket accepteras som automatisk receptkälla.

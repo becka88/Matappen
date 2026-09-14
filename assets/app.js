@@ -443,7 +443,7 @@ function customAdd(){
 }
 function showInfo(){
  ensureAnchor();
- showSheet(`<div class="sheet-kicker">Inställningar</div><h3>Matappen v34</h3><p class="sheet-intro">Matveckan går torsdag–onsdag och budgeten den 25:e–24:e.</p>
+ showSheet(`<div class="sheet-kicker">Inställningar</div><h3>Matappen v35</h3><p class="sheet-intro">Matveckan går torsdag–onsdag och budgeten den 25:e–24:e.</p>
  <label class="form-label">Ankare för barnveckan</label><input class="search" type="date" id="anchorThursday" value="${esc(state.settings.anchorThursday)}">
  <label class="form-label">Den torsdagen</label><select class="search" id="handover"><option value="arrival" ${state.settings.handover==="arrival"?"selected":""}>kommer barnen</option><option value="departure" ${state.settings.handover==="departure"?"selected":""}>lämnas barnen</option></select>
  <div class="settings-note">Välj en torsdag du vet stämmer. Därefter växlar Matappen automatiskt varannan torsdag.</div>

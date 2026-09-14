@@ -8,10 +8,10 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "recipes.json"
 HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; MatappenRecipeIndexer/3.1)", "Accept-Language": "sv-SE,sv;q=0.9"}
 TIMEOUT = 8
-MAX_LINKS_PER_SOURCE = 80
-MAX_TOTAL_PAGES = 180
-MAX_WORKERS = 10
-MAX_RUNTIME_SECONDS = 6 * 60
+MAX_LINKS_PER_SOURCE = 12
+MAX_TOTAL_PAGES = 30
+MAX_WORKERS = 8
+MAX_RUNTIME_SECONDS = 75
 
 SOURCES = {
     "ICA": {"hosts": {"www.ica.se","ica.se"}, "seeds": [
