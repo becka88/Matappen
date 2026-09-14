@@ -25,3 +25,48 @@ Obs: exakt vanlig onlinepris-matchning för hela ICA-korgen kräver en stabil ve
 - Budgeten visas med tydlig progress och "kvar"-belopp.
 - Receptbanken har renare sök- och filterlayout.
 - Befintliga lokala inställningar och preferenser från v24 behålls.
+
+## v26 – torsdag–onsdag och erbjudanden i centrum
+- Matveckan går nu torsdag till onsdag.
+- Familjens varannan-vecka-cykel använder en riktig torsdags-ankardag i stället för jämn/udda ISO-vecka.
+- Inställningar låter familjen välja en torsdag som de vet är ankomst- eller avresedag.
+- Startsida och veckovy visar tydligt om det är barnvecka eller vuxenvecka.
+- ICA-erbjudanden har fått betydligt högre vikt i veckoplaneringen.
+- Samma huvudingrediens används högst två gånger per matvecka, även om den är billig.
+- Falukorv och annan korv räknas som samma huvudgrupp.
+- "Veckans fynd" visas tydligt på både startsidan och veckovyn.
+
+## v27 – budget från den 25:e
+- Hushållsbudgeten räknas nu per period 25:e–24:e i stället för kalendermånad.
+- Den 25:e börjar automatiskt en ny budgetperiod med hela månadsbudgeten tillgänglig.
+- Tidigare registrerade utgifter ligger kvar i historiken men räknas bara i den period de tillhör.
+- Budgetkortet visar aktuell period och att nästa period börjar den 25:e.
+
+## v28 – alla ICA-erbjudanden + korrekt planerad budget
+- ICA-skriptet sparar nu alla erbjudanden det kan läsa, inte bara produkter klassade som middagsmat.
+- Ny flik "Erbjudanden" med sökning och direktknapp till inköpslistan.
+- Chips, bars, snacks, dryck och andra erbjudanden kan därför läggas till manuellt.
+- Valda erbjudanden med tydligt styck- eller flerpackpris räknas som planerade köp i budgeten.
+- Kg-priser visas men räknas inte automatiskt som ett exakt planerat belopp utan känd vikt.
+- Den tidigare missvisande texten "ICA-pris verifierat för X av Y" är borttagen.
+- Budgeten skiljer på faktiskt spenderat och planerade erbjudandeköp.
+- Matveckan torsdag–onsdag och riktig torsdagsankare för barnveckan ingår.
+- ICA-erbjudanden prioriteras starkt i receptplaneringen, men samma huvudingrediens används högst två gånger.
+
+## v29 – ägg + inköpsbudget
+- Äggulor slås nu ihop med ägg i inköpslistan.
+- Exempel: 2 ägg + 2 äggulor blir 4 ägg att köpa.
+- Inköpslistan räknar om planerad budget direkt när varor läggs till, tas bort eller bockas av.
+- Kända ICA-erbjudandepriser används automatiskt där mängd/enhet går att tolka säkert.
+- Varor utan säkert pris räknas inte som ett påhittat belopp; budgetkortet visar hur många kvarvarande varor som faktiskt har känt pris.
+
+## v30 – köpbara förpackningar + budget för hela inköpslistan
+- Inköpslistan räknar nu om receptmängder till sådant man faktiskt köper.
+- Exempel: 3 msk vitlökspulver blir 1 burk/påse, 5 dl mjölk blir 1 liter, 350 g pasta blir 1 paket och 7 ägg blir en förpackning som täcker behovet.
+- Budgeten räknar hela förpackningar, inte bara gram/dl som går åt i receptet.
+- ICA-erbjudandepris används när det finns och går att tolka.
+- När ett aktuellt ICA-pris saknas används ett tydligt märkt ca-pris som planeringsvärde i stället för att lämna varan som 0 kr.
+- Budgeten uppdateras direkt när inköpslistan ändras eller en vara bockas av.
+
+## v31 – riktiga Maxi ICA Växjö-priser
+Schablonpriser är borttagna. GitHub Action hämtar butiksspecifika produktpriser från ICA Handla Online för butik 1003571. Budgeten använder bara matchade riktiga priser eller explicit valda erbjudanden.

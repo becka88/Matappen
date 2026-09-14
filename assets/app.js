@@ -7,17 +7,45 @@ let state={
  filter:"Alla",customRecipes:JSON.parse(localStorage.getItem("customRecipes")||"[]"),
  hiddenShop:new Set(JSON.parse(localStorage.getItem("hiddenShopV24")||"[]")),
  settings:JSON.parse(localStorage.getItem("familySettingsV24")||'{"handover":"arrival","handoverDay":4,"weeklyBudget":1600,"monthlyBudget":12000}'),
- expenses:JSON.parse(localStorage.getItem("expensesV24")||"[]")
+ expenses:JSON.parse(localStorage.getItem("expensesV24")||"[]"),
+ offerCart:JSON.parse(localStorage.getItem("offerCartV28")||"[]"),
+ prices:[],priceStatus:"unavailable",priceUpdated:null
 };
 const $=s=>document.querySelector(s), esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-const days=["Måndag","Tisdag","Onsdag","Torsdag","Fredag","Lördag","Söndag"];
+const days=["Torsdag","Fredag","Lördag","Söndag","Måndag","Tisdag","Onsdag"];
 const canon=s=>String(s||"").toLowerCase().replace(/[,:()]/g," ").replace(/filéer/g,"filé").replace(/kycklingbröst/g,"kycklingfilé").replace(/färsen/g,"färs").replace(/\s+/g," ").trim();
 const recipeKey=r=>String(r.id||((r.source||"")+":"+(r.name||"")));
 const mins=r=>r.minutes??null;
 function isoWeek(d=new Date()){let x=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));x.setUTCDate(x.getUTCDate()+4-(x.getUTCDay()||7));let y=new Date(Date.UTC(x.getUTCFullYear(),0,1));return Math.ceil((((x-y)/86400000)+1)/7)}
-function weekKey(){let d=new Date();return `${d.getFullYear()}-W${isoWeek(d)}`}
-function save(){localStorage.setItem("familySettingsV24",JSON.stringify(state.settings));localStorage.setItem("expensesV24",JSON.stringify(state.expenses));localStorage.setItem("hiddenShopV24",JSON.stringify([...state.hiddenShop]));}
-function isKidsDay(i){const childWeek=isoWeek()%2===0;const before=i<3; if(state.settings.handover==="arrival") return childWeek ? !before : before; return childWeek ? before : !before;}
+
+function localDateKey(d){let y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,"0"),day=String(d.getDate()).padStart(2,"0");return `${y}-${m}-${day}`}
+function parseLocalDate(s){let [y,m,d]=String(s||"").split("-").map(Number);return new Date(y,m-1,d,12)}
+function matWeekStart(date=new Date()){let d=new Date(date.getFullYear(),date.getMonth(),date.getDate(),12),diff=(d.getDay()-4+7)%7;d.setDate(d.getDate()-diff);return d}
+function addDays(d,n){let x=new Date(d);x.setDate(x.getDate()+n);return x}
+function dayIndexInMatWeek(date=new Date()){return (date.getDay()-4+7)%7}
+function shortDate(d){return d.toLocaleDateString("sv-SE",{day:"numeric",month:"short"}).replace(".","")}
+function matWeekLabel(){let s=matWeekStart(),e=addDays(s,6);return `${shortDate(s)}–${shortDate(e)}`}
+function ensureAnchor(){
+ if(!state.settings.anchorThursday){
+   state.settings.anchorThursday=localDateKey(matWeekStart());
+   state.settings.handover=state.settings.handover||"arrival";
+   save();
+ }
+}
+function currentHandoverType(){
+ ensureAnchor();
+ let start=matWeekStart(),anchor=parseLocalDate(state.settings.anchorThursday);
+ let weeks=Math.round((start-anchor)/604800000),same=((weeks%2)+2)%2===0;
+ return same?(state.settings.handover||"arrival"):((state.settings.handover||"arrival")==="arrival"?"departure":"arrival");
+}
+function weekKey(){return `THU-${localDateKey(matWeekStart())}`}
+function save(){
+ localStorage.setItem("familySettingsV24",JSON.stringify(state.settings));
+ localStorage.setItem("expensesV24",JSON.stringify(state.expenses));
+ localStorage.setItem("hiddenShopV24",JSON.stringify([...state.hiddenShop]));
+ localStorage.setItem("offerCartV28",JSON.stringify(state.offerCart));
+}
+function isKidsDay(i){return currentHandoverType()==="arrival"}
 function targetPortions(i){return isKidsDay(i)?6:4}
 const offerRules=[
  ["filled_pasta",/\b(fylld pasta|tortellini|ravioli)\b/,/\b(fylld pasta|tortellini|ravioli)\b/,4],
@@ -28,53 +56,256 @@ const offerRules=[
 ];
 function matchOfferToRecipe(o,r){const ot=canon((o.name||"")+" "+(o.details||"")),rt=canon((r.name||"")+" "+(r.ingredients||[]).join(" "));for(const [,ore,rre,w] of offerRules)if(ore.test(ot))return rre.test(rt)?w:0;return 0}
 function offerMatches(r){if(state.offerStatus!=="live")return[];return state.offers.map(o=>({offer:o,weight:matchOfferToRecipe(o,r)})).filter(x=>x.weight>0).sort((a,b)=>b.weight-a.weight).slice(0,4)}
-function mainGroup(r){const t=canon((r.name||"")+" "+(r.ingredients||[]).join(" "));for(const [g,re] of [["falukorv",/\bfalukorv\b/],["korv",/\bkorv\b/],["kyckling",/\bkyckling\b/],["lax",/\blax\b/],["fisk",/\b(?:torsk|sej|fisk)\b/],["färs",/\b(?:köttfärs|nötfärs|blandfärs|färs)\b/],["fläsk",/\b(?:fläsk|kotlett|fläskfilé)\b/],["vegetariskt",/\b(?:linser|bönor|tofu|halloumi|vegetar)\b/]])if(re.test(t))return g;return "annat"}
-function baseScore(r,i,counts){let s=0,key=recipeKey(r),m=mins(r),kids=isKidsDay(i),g=mainGroup(r),matches=offerMatches(r);if(state.liked.has(key))s+=28;if(state.disliked.has(key))return-9999;if(matches.length)s+=Math.min(22,8+matches.reduce((n,x)=>n+x.weight,0)*2);if(counts[g])s-=g==="annat"?8:55*counts[g];if(kids){if((r.tags||[]).includes("barnvänlig")||/taco|pasta|köttbull|pannkak|mild/i.test(r.name))s+=12;if(/stark|chili/i.test(r.name))s-=12}else{if(/curry|chili|gryta|asiat/i.test(r.name))s+=5}if(i<4&&m&&m<=35)s+=8;if(i===4&&/taco|pizza|burg|quesadilla/i.test(r.name))s+=10;return s}
-function buildWeek(){let used=new Set(),counts={},week=[];for(let i=0;i<7;i++){let pool=state.recipes.filter(r=>!used.has(recipeKey(r))&&!state.disliked.has(recipeKey(r)));pool.sort((a,b)=>baseScore(b,i,counts)-baseScore(a,i,counts));let r=pool[0];if(!r)continue;used.add(recipeKey(r));let g=mainGroup(r);counts[g]=(counts[g]||0)+1;week.push({day:days[i],recipe:r,kids:isKidsDay(i),portions:targetPortions(i)});}state.week=week;resetHiddenForWeek()}
+function mainGroup(r){
+ const t=canon((r.name||"")+" "+(r.ingredients||[]).join(" "));
+ for(const [g,re] of [
+  ["korv",/\b(?:falukorv|middagskorv|korv)\b/],
+  ["kyckling",/\bkyckling\b/],["lax",/\blax\b/],["fisk",/\b(?:torsk|sej|fisk)\b/],
+  ["färs",/\b(?:köttfärs|nötfärs|blandfärs|färs)\b/],["fläsk",/\b(?:fläsk|kotlett|fläskfilé)\b/],
+  ["vegetariskt",/\b(?:linser|bönor|tofu|halloumi|vegetar)\b/]
+ ]) if(re.test(t))return g;
+ return "annat"
+}
+function baseScore(r,i,counts){
+ let s=0,key=recipeKey(r),m=mins(r),kids=isKidsDay(i),g=mainGroup(r),matches=offerMatches(r),repeat=counts[g]||0;
+ if(state.liked.has(key))s+=28;
+ if(state.disliked.has(key))return-9999;
+ if(repeat>=2 && g!=="annat")return-9998;
+ if(matches.length){
+   s+=Math.min(52,28+matches.reduce((n,x)=>n+x.weight,0)*4);
+   if(repeat===1 && g!=="annat")s-=10;
+ }else if(repeat){
+   s-=g==="annat"?7:38*repeat;
+ }
+ if(kids){
+   if((r.tags||[]).includes("barnvänlig")||/taco|pasta|köttbull|pannkak|mild/i.test(r.name))s+=12;
+   if(/stark|chili/i.test(r.name))s-=12;
+ }else if(/curry|chili|gryta|asiat/i.test(r.name))s+=5;
+ if(i<5&&m&&m<=35)s+=7;
+ if(i===1&&/taco|pizza|burg|quesadilla/i.test(r.name))s+=9;
+ return s
+}
+function buildWeek(){
+ ensureAnchor();
+ let used=new Set(),counts={},week=[],start=matWeekStart();
+ for(let i=0;i<7;i++){
+   let pool=state.recipes.filter(r=>!used.has(recipeKey(r))&&!state.disliked.has(recipeKey(r)));
+   pool.sort((a,b)=>baseScore(b,i,counts)-baseScore(a,i,counts));
+   let r=pool[0]; if(!r)continue;
+   used.add(recipeKey(r));
+   let g=mainGroup(r);counts[g]=(counts[g]||0)+1;
+   let date=addDays(start,i);
+   week.push({day:days[i],date:localDateKey(date),dateLabel:shortDate(date),recipe:r,kids:isKidsDay(i),portions:targetPortions(i)});
+ }
+ state.week=week;
+ resetHiddenForWeek();
+}
 function resetHiddenForWeek(){const k="hiddenShopWeekV24";if(localStorage.getItem(k)!==weekKey()){state.hiddenShop.clear();localStorage.setItem(k,weekKey());localStorage.setItem("hiddenShopV24","[]")}}
-async function init(){try{const[rr,oo]=await Promise.all([fetch("./recipes.json?"+Date.now()).then(r=>r.json()),fetch("./offers.json?"+Date.now()).then(r=>r.ok?r.json():({status:"unavailable",offers:[]}))]);state.recipes=[...state.customRecipes,...rr];state.offerStatus=oo.status||"unavailable";state.offers=oo.offers||[];buildWeek();render();bindNav()}catch(e){$("#view").innerHTML='<div class="card">Kunde inte läsa Matappens data just nu.</div>'}}
+async function init(){try{const[rr,oo,pp]=await Promise.all([fetch("./recipes.json?"+Date.now()).then(r=>r.json()),fetch("./offers.json?"+Date.now()).then(r=>r.ok?r.json():({status:"unavailable",offers:[]})),fetch("./prices.json?"+Date.now()).then(r=>r.ok?r.json():({status:"unavailable",products:[]})).catch(()=>({status:"unavailable",products:[]}))]);state.recipes=[...state.customRecipes,...rr];state.offerStatus=oo.status||"unavailable";state.offers=oo.offers||[];state.offerPageCount=oo.page_offer_count||state.offers.length;state.offerCoverage=oo.coverage||"";state.priceStatus=pp.status||"unavailable";state.prices=pp.products||[];state.priceUpdated=pp.updated_at||null;buildWeek();render();bindNav()}catch(e){$("#view").innerHTML='<div class="card">Kunde inte läsa Matappens data just nu.</div>'}}
 function bindNav(){document.querySelectorAll(".nav-btn").forEach(b=>b.onclick=()=>{state.view=b.dataset.view;document.querySelectorAll(".nav-btn").forEach(x=>x.classList.toggle("active",x===b));render();scrollTo(0,0)});$("#profileBtn").onclick=showInfo}
 function image(r,cls="recipe-image"){return r.image?`<img class="${cls}" src="${esc(r.image)}" alt="" loading="lazy" referrerpolicy="no-referrer">`:""}
 function meta(r){let a=[];if(mins(r))a.push(`⏱ ${mins(r)} min`);if(r.external)a.push(`↗ ${r.source}`);return a.map(x=>`<span class="soft-chip">${esc(x)}</span>`).join("")}
 function offerBadge(r){let m=offerMatches(r);if(!m.length)return"";return `<div class="offer">🔥 Passar veckans erbjudande: ${m.map(x=>`<b>${esc(x.offer.name)}</b>`).join(" + ")}</div>`}
 function familyChip(p){return `<span class="family-chip ${p.kids?'kids':'adult'}">${p.kids?'👨‍👩‍👧‍👦 Barnen hemma':'🌶️ Vuxenkväll'} · ${p.portions} port</span>`}
-function render(){if(state.view==="today")$("#view").innerHTML=todayView();if(state.view==="week")$("#view").innerHTML=weekView();if(state.view==="shop")$("#view").innerHTML=shopView();if(state.view==="recipes")$("#view").innerHTML=recipeView();wire()}
+function render(){if(state.view==="today")$("#view").innerHTML=todayView();if(state.view==="week")$("#view").innerHTML=weekView();if(state.view==="shop")$("#view").innerHTML=shopView();if(state.view==="recipes")$("#view").innerHTML=recipeView();if(state.view==="offers")$("#view").innerHTML=offersView();wire()}
 function todayView(){
- let d=new Date().getDay(),i=d===0?6:d-1,p=state.week[i]||state.week[0],t=state.week[(i+1)%7];
- let remaining=shopping().filter(x=>!state.checked.has(x.key)).length;
- return `<section class="hero-card">${image(p.recipe,"hero-image")}
- <div class="hero-label">${p.day} · dagens middag</div>
+ let i=dayIndexInMatWeek(),p=state.week[i]||state.week[0],t=state.week[(i+1)%7],remaining=shopping().filter(x=>!state.checked.has(x.key)).length,hand=currentHandoverType();
+ return `<section class="cycle-strip"><b>${matWeekLabel()}</b><span>${hand==="arrival"?"👨‍👩‍👧‍👦 Barnvecka från torsdag":"🌶️ Vuxenvecka från torsdag"}</span></section>
+ <section class="hero-card">${image(p.recipe,"hero-image")}
+ <div class="hero-label">${p.day} ${p.dateLabel} · dagens middag</div>
  <div class="hero-title">${esc(p.recipe.name)}</div>
  <div class="meta">${familyChip(p)}${meta(p.recipe)}</div>${offerBadge(p.recipe)}
  <div class="hero-actions"><button class="light" data-recipeid="${esc(recipeKey(p.recipe))}">Visa recept</button><button class="ghost" data-swap="${i}">↻ Byt rätt</button></div></section>
- <div class="home-glance">
-   <button class="glance-card" data-goto="shop"><span class="glance-icon">🛒</span><span><b>${remaining} saker kvar</b><small>Öppna inköpslistan</small></span><span class="chev">›</span></button>
- </div>
+ ${featuredOffers()}
+ <div class="home-glance"><button class="glance-card" data-goto="shop"><span class="glance-icon">🛒</span><span><b>${remaining} saker kvar</b><small>Öppna inköpslistan</small></span><span class="chev">›</span></button></div>
  <div class="budget-card">${budgetSummary()}</div>
- <div class="status-line ${state.offerStatus==='live'?'ok':'warn'}">${state.offerStatus==='live'?`${state.offers.length} verifierade ICA-erbjudanden används som bonus i planeringen`:'ICA-erbjudanden kunde inte verifieras – veckan byggs utan dem'}</div>
- <section class="section"><div class="section-head"><div><h2>I morgon</h2><div class="muted">Nästa middag i planen</div></div></div>
- <div class="card mini-meal">${image(t.recipe,"thumb")}<div><div class="day">${t.day}</div><div class="meal">${esc(t.recipe.name)}</div>${familyChip(t)}${offerBadge(t.recipe)}</div></div></section>`;
+ <div class="status-line ${state.offerStatus==="live"?"ok":"warn"}">${state.offerStatus==="live"?"Veckoplanen prioriterar ICA-erbjudanden. Samma huvudingrediens används högst två gånger.":offerCoverageText()}</div>
+ <section class="section"><div class="section-head"><div><h2>I morgon</h2><div class="muted">Nästa middag i planen</div></div></div><div class="card mini-meal">${image(t.recipe,"thumb")}<div><div class="day">${t.day} ${t.dateLabel}</div><div class="meal">${esc(t.recipe.name)}</div>${familyChip(t)}${offerBadge(t.recipe)}</div></div></section>`;
 }
 function weekView(){
- return `<section class="page-head"><span class="kicker">Veckoplan</span><h1>Veckans middagar</h1><p>Variation först. Erbjudanden hjälper till, men styr inte hela veckan.</p></section>
- <section class="week-list">${state.week.map((p,i)=>`<article class="card week-card">${image(p.recipe,"thumb")}<div class="week-main"><div class="day">${p.day}</div><div class="meal">${esc(p.recipe.name)}</div>${familyChip(p)}<div class="row">${meta(p.recipe)}</div>${offerBadge(p.recipe)}<div class="week-actions"><button class="secondary-btn" data-recipeid="${esc(recipeKey(p.recipe))}">Visa recept</button><button class="tertiary-btn" data-swap="${i}">↻ Byt</button></div></div></article>`).join("")}</section>`;
+ let hand=currentHandoverType();
+ return `<section class="page-head"><span class="kicker">Matvecka · torsdag–onsdag</span><h1>${matWeekLabel()}</h1><p>${hand==="arrival"?"Barnen kommer på torsdag.":"Barnen lämnas på torsdag."} Erbjudanden prioriteras, men samma huvudingrediens används högst två gånger.</p></section>
+ ${featuredOffers()}
+ <section class="week-list">${state.week.map((p,i)=>`<article class="card week-card">${image(p.recipe,"thumb")}<div class="week-main"><div class="day">${p.day} · ${p.dateLabel}</div><div class="meal">${esc(p.recipe.name)}</div>${familyChip(p)}<div class="row">${meta(p.recipe)}</div>${offerBadge(p.recipe)}<div class="week-actions"><button class="secondary-btn" data-recipeid="${esc(recipeKey(p.recipe))}">Visa recept</button><button class="tertiary-btn" data-swap="${i}">↻ Byt</button></div></div></article>`).join("")}</section>`;
 }
 function parseIngredient(line){let s=String(line||"").trim(),m=s.match(/^(.+?):\s*([\d.,½¼¾⅓⅔]+)\s*([a-zA-ZåäöÅÄÖ]+)?/);if(m)return{name:m[1].trim(),qty:m[2],unit:m[3]||""};m=s.match(/^([\d.,½¼¾⅓⅔]+)\s*([a-zA-ZåäöÅÄÖ]+)?\s+(.+)$/);if(m)return{name:m[3].trim(),qty:m[1],unit:m[2]||""};return{name:s,qty:"",unit:""}}
 function num(s){if(!s)return null;const f={"½":.5,"¼":.25,"¾":.75,"⅓":1/3,"⅔":2/3};if(f[s])return f[s];let n=parseFloat(String(s).replace(",","."));return Number.isFinite(n)?n:null}
-function unitKey(u){u=canon(u);if(["gram","g"].includes(u))return"g";if(["kilogram","kg"].includes(u))return"kg";if(["deciliter","dl"].includes(u))return"dl";if(["milliliter","ml"].includes(u))return"ml";if(["liter","l"].includes(u))return"l";if(["stycken","styck","st"].includes(u))return"st";if(["burkar","burk"].includes(u))return"burk";if(["förpackningar","förpackning","förp","paket","pkt"].includes(u))return"förp";return u}
-function shopName(n){n=canon(n).replace(/\([^)]*\)/g," ").replace(/\b(?:ca|cirka|avrunnen|avrunnet|konserverad|konserverade)\b/g," ").replace(/\b(?:på|i)\s+burk\b/g," ").replace(/\s+/g," ").trim();for(const[re,to]of[[/^(?:majskorn|sötmajs|majs(?:korn)?)$/,"majs"],[/^(?:gul lök|gula lökar)$/,"gul lök"],[/^(?:vitlöksklyfta|vitlöksklyftor|vitlök)$/,"vitlök"],[/^(?:krossad tomat|krossade tomater)$/,"krossade tomater"]])if(re.test(n))return to;return n}
+function unitKey(u){
+ let x=canon(u);
+ if(/^(?:st|styck|stycken|ägg|äggula|äggulor)$/.test(x))return "st";
+ return x
+}
+function shopName(s){
+ let x=canon(s).replace(/\([^)]*\)/g,"").trim();
+ const exact=[
+  [/^(?:äggula|äggulor|ägg)$/,"ägg"],
+  [/^(?:gul lök|lökar|lök)$/,"gul lök"],
+  [/^(?:vitlöksklyfta|vitlöksklyftor|vitlök)$/,"vitlök"],
+  [/^(?:krossad tomat|krossade tomater)$/,"krossade tomater"],
+  [/^(?:majs|majskorn)$/,"majs"]
+ ];
+ for(const [re,to] of exact)if(re.test(x))return to;
+ return x
+}
 function expandIngredient(line){let raw=String(line||"").trim(),c=canon(raw);if(!raw||/^(?:till servering|servering|garnering|sås|dressing|marinad)\s*:?\s*$/i.test(raw))return[];if(/\bkebabsås\b/.test(c)&&/\b(?:hemmagjord|hemgjord|se (?:länk|recept))\b/.test(c))return["2 dl turkisk yoghurt","1 dl majonnäs","1 vitlöksklyfta","1 tsk paprikapulver"];if(/\b(?:se länk|se recept|enligt recept|recept finns)\b/.test(c))return[];return[raw]}
-function shopping(){let map=new Map(),never=new Set(["vatten","kranvatten"]);const add=(x,factor=1)=>{let key=shopName(x.name),u=unitKey(x.unit),n=num(x.qty);if(!key||never.has(key))return;let k=key+"|"+u,item=map.get(k);if(!item){item={key,name:key,unit:u,qty:n===null?null:0,offers:[]};map.set(k,item)}if(n!==null){if(item.qty===null)item.qty=0;item.qty+=n*factor}};state.week.forEach(p=>{let factor=p.portions/Number(p.recipe.portions||4);(p.recipe.ingredients||[]).forEach(line=>expandIngredient(line).forEach(x=>add(parseIngredient(x),factor)))});state.quick.forEach(x=>add({name:x,qty:"",unit:""}));for(const item of map.values())if(state.offerStatus==="live")item.offers=state.offers.filter(o=>matchOfferToRecipe(o,{name:item.name,ingredients:[item.name]})>0).slice(0,1);return[...map.values()].filter(x=>!state.hiddenShop.has(x.key)).sort((a,b)=>a.name.localeCompare(b.name,"sv"))}
+
+function toBaseAmount(qty,unit,name){
+ let q=Number(qty); if(!Number.isFinite(q))return null;
+ let u=canon(unit),n=canon(name);
+ if(u==="kg")return {kind:"g",amount:q*1000};
+ if(u==="g")return {kind:"g",amount:q};
+ if(u==="l"||u==="liter")return {kind:"ml",amount:q*1000};
+ if(u==="dl")return {kind:"ml",amount:q*100};
+ if(u==="cl")return {kind:"ml",amount:q*10};
+ if(u==="ml")return {kind:"ml",amount:q};
+ if(u==="msk"){
+   if(/pulver|krydda|paprika|curry|oregano|timjan|kanel|chili|vitlökspulver/.test(n))return {kind:"g",amount:q*7};
+   return {kind:"ml",amount:q*15};
+ }
+ if(u==="tsk"){
+   if(/pulver|krydda|paprika|curry|oregano|timjan|kanel|chili|vitlökspulver/.test(n))return {kind:"g",amount:q*2.5};
+   return {kind:"ml",amount:q*5};
+ }
+ if(u==="krm")return {kind:"g",amount:q*0.7};
+ if(u==="st"||!u)return {kind:"st",amount:q};
+ return {kind:u,amount:q}
+}
+function roundPacks(amount,size){return Math.max(1,Math.ceil((amount||0)/size))}
+function purchasePlan(item){
+ let b=toBaseAmount(item.qty,item.unit,item.name),amount=b?.amount??null,kind=b?.kind||"",n=canon(item.name);
+ if(n==="ägg")return {label:`minst ${Math.max(1,Math.ceil(amount||1))} ägg`,need:Math.max(1,Math.ceil(amount||1)),kind:"st"};
+ if(/pulver|krydda|paprika|curry|oregano|timjan|kanel|chili|spiskummin|rosmarin|basilika|gurkmeja/.test(n))return {label:"1 burk/påse",need:amount||1,kind:"g"};
+ if(kind==="g")return {label:`minst ${Math.ceil(amount||1)} g`,need:amount||1,kind:"g"};
+ if(kind==="ml")return {label:`minst ${Math.ceil(amount||1)} ml`,need:amount||1,kind:"ml"};
+ if(kind==="st")return {label:`minst ${Math.ceil(amount||1)} st`,need:amount||1,kind:"st"};
+ return {label:"1 förpackning",need:1,kind:"st"}
+}
+
+function productPack(p){
+ let s=canon(`${p.pack||""} ${p.name||""}`),m;
+ if((m=s.match(/(\d+(?:[.,]\d+)?)\s*kg\b/)))return {kind:"g",amount:Number(m[1].replace(",","."))*1000};
+ if((m=s.match(/(\d+(?:[.,]\d+)?)\s*g\b/)))return {kind:"g",amount:Number(m[1].replace(",","."))};
+ if((m=s.match(/(\d+(?:[.,]\d+)?)\s*(?:l|liter)\b/)))return {kind:"ml",amount:Number(m[1].replace(",","."))*1000};
+ if((m=s.match(/(\d+(?:[.,]\d+)?)\s*dl\b/)))return {kind:"ml",amount:Number(m[1].replace(",","."))*100};
+ if((m=s.match(/(\d+)\s*(?:-p|p\b|pack|st\b)/)))return {kind:"st",amount:Number(m[1])};
+ return null
+}
+function itemTokens(name){return canon(name).split(/\s+/).filter(x=>x.length>2&&!["färsk","fryst","hackad","riven","skivad","finhackad"].includes(x))}
+function realProductForItem(item){
+ let tokens=itemTokens(item.name),plan=purchasePlan(item);
+ let c=state.prices.filter(p=>{let h=canon(`${p.query||""} ${p.name||""}`);return tokens.length&&tokens.every(t=>h.includes(t))}).map(p=>{
+   let pack=productPack(p),packs=1;
+   if(pack&&pack.kind===plan.kind&&Number(plan.need)>0)packs=Math.max(1,Math.ceil(plan.need/pack.amount));
+   let cost=Number(p.price)*packs;
+   return {...p,packs,cost,score:cost-(/(?:^|\s)ica(?:\s|$)/.test(canon(p.name))?2:0)}
+ }).filter(x=>Number.isFinite(x.cost)&&x.cost>0);
+ c.sort((a,b)=>a.score-b.score);return c[0]||null
+}
+function bestOfferPriceForItem(item){
+ if(state.offerStatus!=="live")return null;
+ let match=(item.offers||[])[0];
+ if(!match)return null;
+ let p=offerCost(match); if(!p)return null;
+ let plan=purchasePlan(item);
+ if(p.type==="bundle")return {cost:Math.ceil((plan.packs||1)/p.qty)*p.cost,label:match.price,source:"ICA-erbjudande"};
+ if(p.type==="st")return {cost:(plan.packs||1)*p.cost,label:match.price,source:"ICA-erbjudande"};
+ return null
+}
+function shopping(){
+ let map=new Map(),never=new Set(["vatten","kranvatten"]);
+ const add=(x,factor=1,extra={})=>{
+   let key=shopName(x.name),u=unitKey(x.unit),n=num(x.qty);
+   if(!key||never.has(key))return;
+   let k=extra.key||key+"|"+u,item=map.get(k);
+   if(!item){item={key:k,name:key,unit:u,qty:n===null?null:0,offers:[],plannedCost:null,offerItem:false};map.set(k,item)}
+   if(n!==null){if(item.qty===null)item.qty=0;item.qty+=n*factor}
+   Object.assign(item,extra);
+ };
+ state.week.forEach(p=>{
+   let factor=p.portions/Number(p.recipe.portions||4);
+   (p.recipe.ingredients||[]).forEach(line=>expandIngredient(line).forEach(x=>add(parseIngredient(x),factor)));
+ });
+ state.quick.forEach(x=>add({name:x,qty:"",unit:""}));
+ state.offerCart.forEach(x=>add({name:x.name,qty:x.dealQty||1,unit:"st"},1,{
+   key:"offer:"+x.id,name:x.name,plannedCost:x.plannedCost,offerItem:true,offers:[x]
+ }));
+ for(const item of map.values()){
+   if(!item.offerItem && state.offerStatus==="live"){
+     item.offers=state.offers.filter(o=>matchOfferToRecipe(o,{name:item.name,ingredients:[item.name]})>0).slice(0,1)
+   }
+ }
+ return [...map.values()].filter(x=>!state.hiddenShop.has(x.key)).map(x=>({...x,purchase:purchasePlan(x)})).sort((a,b)=>Number(b.offerItem)-Number(a.offerItem)||a.name.localeCompare(b.name,"sv"))
+}
 function fmtQty(x){if(x.qty===null)return"";let q=Math.round(x.qty*100)/100;if(x.unit==="g"&&q>=1000)return`${Math.round(q/100)/10} kg`;if(x.unit==="ml"&&q>=1000)return`${Math.round(q/100)/10} l`;return`${String(q).replace(".",",")} ${x.unit}`.trim()}
-function offerCost(o){let p=canon(o.price),m=p.match(/(\d+) för (\d+(?:[.,]\d+)?)/);if(m)return Number(m[2].replace(",","."))/Number(m[1]);m=p.match(/(\d+(?:[.,]\d+)?) kr\/st/);return m?Number(m[1].replace(",",".")):null}
-function estimateShop(){let known=0,count=0,total=shopping().length;shopping().forEach(x=>{if(x.offers[0]){let p=offerCost(x.offers[0]);if(p){known+=p;count++}}});return{known,count,total}}
-function monthSpent(){let d=new Date(),ym=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;return state.expenses.filter(x=>x.date.startsWith(ym)).reduce((n,x)=>n+Number(x.amount||0),0)}
+function offerCost(o){
+ let p=canon(o.price);
+ let m=p.match(/(\d+)\s*för\s*(\d+(?:[.,]\d+)?)/);
+ if(m)return {cost:Number(m[2].replace(",",".")),qty:Number(m[1]),type:"bundle"};
+ m=p.match(/(\d+(?:[.,]\d+)?)\s*kr\s*\/\s*st/);
+ if(m)return {cost:Number(m[1].replace(",",".")),qty:1,type:"st"};
+ m=p.match(/(\d+(?:[.,]\d+)?)\s*:-\s*\/?\s*st/);
+ if(m)return {cost:Number(m[1].replace(",",".")),qty:1,type:"st"};
+ return null
+}
+function estimateShop(){
+ let items=shopping(),planned=0,priced=0,total=0;
+ for(const item of items){
+   if(state.checked.has(item.key))continue; total++;
+   if(item.offerItem&&Number(item.plannedCost)>0){planned+=Number(item.plannedCost);priced++;continue}
+   let p=realProductForItem(item);if(p){planned+=p.cost;priced++}
+ }
+ return {planned,priced,total}
+}
+
+function budgetPeriod(date=new Date()){
+ let y=date.getFullYear(),m=date.getMonth();
+ let start=date.getDate()>=25?new Date(y,m,25,12):new Date(y,m-1,25,12);
+ let end=new Date(start.getFullYear(),start.getMonth()+1,24,23,59,59);
+ return {start,end};
+}
+function budgetPeriodLabel(){
+ let p=budgetPeriod();
+ return `${shortDate(p.start)}–${shortDate(p.end)}`;
+}
+function monthSpent(){
+ let p=budgetPeriod();
+ return state.expenses.filter(x=>{
+   let d=new Date(x.date);
+   return d>=p.start && d<=p.end
+ }).reduce((s,x)=>s+Number(x.amount||0),0)
+}
+
+function offerId(o){return canon((o.name||"")+"|"+(o.price||""))}
+function offerInCart(o){let id=offerId(o);return state.offerCart.some(x=>x.id===id)}
+function addOfferToCart(o){
+ let id=offerId(o);
+ if(state.offerCart.some(x=>x.id===id))return;
+ let parsed=offerCost(o);
+ state.offerCart.push({
+   id,name:o.name,price:o.price,details:o.details||"",
+   dealQty:parsed?.qty||1,plannedCost:parsed?.cost??null
+ });
+ save();render();
+}
+function removeOfferFromCart(id){
+ state.offerCart=state.offerCart.filter(x=>x.id!==id);
+ save();render();
+}
+function plannedOfferTotal(){return estimateShop().planned}
+function offerCoverageText(){
+ if(state.offerStatus!=="live")return "ICA-erbjudanden kunde inte verifieras just nu.";
+ if(state.offerPageCount && state.offers.length < state.offerPageCount)return `${state.offers.length} av ${state.offerPageCount} erbjudanden kunde läsas in.`;
+ return `${state.offers.length} erbjudanden inlästa från ICA Maxi Växjö.`;
+}
+function featuredOffers(){
+ if(state.offerStatus!=="live")return"";
+ let useful=state.offers.filter(o=>state.week.some(p=>matchOfferToRecipe(o,p.recipe)>0)).slice(0,6);
+ if(!useful.length) useful=state.offers.slice(0,6);
+ return `<section class="deal-focus"><div class="deal-focus-head"><div><span class="kicker">ICA Maxi Växjö</span><h2>Veckans fynd</h2></div><button class="deal-link" data-goto="offers">Alla ${state.offers.length} ›</button></div><div class="deal-scroll">${useful.map(o=>`<div class="deal-card"><b>${esc(o.name)}</b><span>${esc(o.price||"Erbjudande")}</span><button data-offer-add="${esc(offerId(o))}" ${offerInCart(o)?"disabled":""}>${offerInCart(o)?"✓ Tillagd":"＋ Lägg till"}</button></div>`).join("")}</div></section>`;
+}
 function budgetSummary(){
- let spent=monthSpent(),left=Math.max(0,state.settings.monthlyBudget-spent),pct=Math.min(100,Math.round(spent/state.settings.monthlyBudget*100)||0),est=estimateShop();
- return `<div class="budget-head"><div><span class="kicker">Månadsbudget</span><strong>${Math.round(spent).toLocaleString('sv-SE')} kr</strong></div><span class="budget-left">${Math.round(left).toLocaleString('sv-SE')} kr kvar</span></div>
- <div class="budget-track" aria-label="${pct}% av månadsbudgeten använd"><span style="width:${pct}%"></span></div>
- <div class="budget-foot"><span>Av ${state.settings.monthlyBudget.toLocaleString('sv-SE')} kr</span><span>Veckomål ${state.settings.weeklyBudget.toLocaleString('sv-SE')} kr</span></div>
- ${est.count?`<div class="budget-note">ICA-pris verifierat för ${est.count} av ${est.total} inköpsvaror.</div>`:""}`;
+ let spent=monthSpent(),est=estimateShop(),planned=est.planned,left=Math.max(0,state.settings.monthlyBudget-spent),projected=Math.max(0,state.settings.monthlyBudget-spent-planned),pct=Math.min(100,Math.round(spent/state.settings.monthlyBudget*100)||0);
+ return `<div class="budget-head"><div><span class="kicker">Budgetperiod ${budgetPeriodLabel()}</span><strong>${Math.round(spent).toLocaleString("sv-SE")} kr</strong></div><span class="budget-left">${Math.round(left).toLocaleString("sv-SE")} kr kvar</span></div><div class="budget-track"><span style="width:${pct}%"></span></div><div class="budget-foot"><span>Av ${state.settings.monthlyBudget.toLocaleString("sv-SE")} kr</span><span>Ny period den 25:e</span></div><div class="budget-plan"><b>Planerat från inköpslistan</b><span>${Math.round(planned).toLocaleString("sv-SE")} kr</span></div><div class="budget-note">${est.priced} av ${est.total} kvarvarande varor matchade mot riktiga onlinepriser hos Maxi ICA Växjö. Inga schablonpriser används.</div>${est.priced?`<div class="budget-projected">Efter registrerade + prissatta planerade köp: <b>${Math.round(projected).toLocaleString("sv-SE")} kr kvar</b></div>`:""}`;
 }
 
 function quickSuggestions(){
@@ -92,16 +323,14 @@ function addQuickItem(value){
 }
 function shopView(){
  let items=shopping(),done=items.filter(x=>state.checked.has(x.key)).length,remaining=Math.max(0,items.length-done),suggestions=quickSuggestions();
- return `<section class="page-head shop-page-head"><span class="kicker">Handla</span><h1>Inköpslista</h1><p>${remaining} kvar att köpa${done?` · ${done} klara`:""}</p></section>
- <section class="add-shop-card">
-   <label for="quickAddInput">Lägg till vara</label>
-   <div class="quick-add-row"><input id="quickAddInput" autocomplete="off" placeholder="T.ex. mjölk eller toalettpapper"><button id="quickAddBtn" aria-label="Lägg till vara">＋</button></div>
-   <div class="smart-label">Snabbval</div>
-   <div class="smart-chips">${suggestions.map(x=>`<button class="smart-chip" data-quick-add="${esc(x)}">${esc(x)}</button>`).join("")}</div>
- </section>
- <div class="budget-card">${budgetSummary()}<div class="budget-actions"><button class="secondary-btn" id="addGroceryExpense">＋ Registrera butik</button><button class="tertiary-btn" id="addTakeaway">🍕 Hämtmat</button></div></div>
- <div class="list-toolbar"><div><b>Att köpa</b><small>Recept + egna tillägg</small></div><span>${items.length} varor</span></div>
- <section class="shopping-list">${items.length?items.map(x=>`<div class="check-row ${state.checked.has(x.key)?'done':''}"><input type="checkbox" data-check="${esc(x.key)}" ${state.checked.has(x.key)?'checked':''} aria-label="Klar"><label><b>${esc(x.name)}</b>${fmtQty(x)?`<span class="quantity">${esc(fmtQty(x))}</span>`:""}${x.offers.length?`<small class="deal-line">ICA-erbjudande · ${esc(x.offers[0].price||"")}</small>`:""}</label><button class="remove-shop" data-remove-shop="${esc(x.key)}" aria-label="Ta bort">×</button></div>`).join(""):`<div class="empty-state"><b>Listan är tom</b><span>Lägg till något ovan eller skapa en veckoplan.</span></div>`}</section>`;
+ return `<section class="page-head shop-page-head"><span class="kicker">Handla</span><h1>Inköpslista</h1><p>${remaining} kvar att köpa${done?` · ${done} klara`:""} · riktiga priser från Maxi ICA Växjö</p></section><section class="add-shop-card"><label for="quickAddInput">Lägg till vara</label><div class="quick-add-row"><input id="quickAddInput" autocomplete="off" placeholder="T.ex. mjölk eller toalettpapper"><button id="quickAddBtn">＋</button></div><div class="smart-label">Snabbval</div><div class="smart-chips">${suggestions.map(x=>`<button class="smart-chip" data-quick-add="${esc(x)}">${esc(x)}</button>`).join("")}</div></section><div class="shop-offer-shortcut"><button data-goto="offers">🔥 Se alla ICA-erbjudanden <span>›</span></button></div><div class="budget-card">${budgetSummary()}<div class="budget-actions"><button class="secondary-btn" id="addGroceryExpense">＋ Registrera butik</button><button class="tertiary-btn" id="addTakeaway">🍕 Hämtmat</button></div></div><div class="list-toolbar"><div><b>Att köpa</b><small>Rätt förpackning väljs från Maxi ICA Växjös onlinesortiment</small></div><span>${items.length} varor</span></div><section class="shopping-list">${items.length?items.map(x=>{let p=realProductForItem(x),plan=x.purchase||purchasePlan(x);let direct=x.offerItem&&x.plannedCost;return `<div class="check-row ${state.checked.has(x.key)?"done":""}"><input type="checkbox" data-check="${esc(x.key)}" ${state.checked.has(x.key)?"checked":""}><label><b>${esc(x.name)}</b>${direct?`<span class="quantity">${esc(plan.label)}</span><small class="buy-plan">🔥 ICA-erbjudande · ${Math.round(x.plannedCost)} kr</small>`:p?`<span class="quantity">${p.packs>1?`${p.packs} × `:""}${esc(p.name)}</span><small class="buy-plan">Maxi ICA Växjö online · ${p.cost.toFixed(2).replace(".",",")} kr${p.promotion?` · 🔥 ${esc(p.promotion)}`:""}</small>`:`<span class="quantity">${esc(plan.label)}</span><small class="buy-plan missing-price">Pris kunde inte matchas ännu</small>`}</label><button class="remove-shop" data-remove-shop="${esc(x.key)}" ${x.offerItem?`data-remove-offer="${esc(x.offers[0].id)}"`:""}>×</button></div>`}).join(""):`<div class="empty-state"><b>Listan är tom</b></div>`}</section>`;
+}
+
+function offersView(){
+ let q=(state.offerSearch||"").toLowerCase(),arr=state.offers.filter(o=>(o.name+" "+(o.details||"")).toLowerCase().includes(q));
+ return `<section class="page-head"><span class="kicker">ICA Maxi Växjö</span><h1>Alla erbjudanden</h1><p>${offerCoverageText()} Lägg till sådant ni vill köpa direkt härifrån.</p></section>
+ <input class="search" id="offerSearch" placeholder="Sök bland erbjudanden, t.ex. chips eller bars" value="${esc(state.offerSearch||"")}">
+ <div class="offer-list">${arr.map(o=>{let added=offerInCart(o);return `<article class="offer-row"><div><b>${esc(o.name)}</b><span>${esc(o.price||"Erbjudande")}</span>${o.details?`<small>${esc(o.details)}</small>`:""}</div><button data-offer-add="${esc(offerId(o))}" ${added?"disabled":""}>${added?"✓":"＋"}</button></article>`}).join("")||`<div class="empty-state"><b>Inga träffar</b><span>Prova ett annat sökord.</span></div>`}</div>`;
 }
 function recipeView(){
  let external=state.recipes.filter(r=>r.external).length;
@@ -117,9 +346,14 @@ function wire(){
  document.querySelectorAll("[data-swap]").forEach(b=>b.onclick=()=>swapMeal(Number(b.dataset.swap)));
  document.querySelectorAll("[data-goto]").forEach(b=>b.onclick=()=>{state.view=b.dataset.goto;document.querySelectorAll(".nav-btn").forEach(x=>x.classList.toggle("active",x.dataset.view===state.view));render();scrollTo(0,0)});
  document.querySelectorAll("[data-check]").forEach(c=>c.onchange=()=>{c.checked?state.checked.add(c.dataset.check):state.checked.delete(c.dataset.check);localStorage.setItem("checked",JSON.stringify([...state.checked]));render()});
- document.querySelectorAll("[data-remove-shop]").forEach(b=>b.onclick=()=>{state.hiddenShop.add(b.dataset.removeShop);save();render()});
+ document.querySelectorAll("[data-remove-shop]").forEach(b=>b.onclick=()=>{
+   if(b.dataset.removeOffer)removeOfferFromCart(b.dataset.removeOffer);
+   else{state.hiddenShop.add(b.dataset.removeShop);save();render()}
+ });
  document.querySelectorAll("[data-quick-add]").forEach(b=>b.onclick=()=>addQuickItem(b.dataset.quickAdd));
- if($("#quickAddBtn"))$("#quickAddBtn").onclick=()=>{addQuickItem($("#quickAddInput").value);};
+ document.querySelectorAll("[data-offer-add]").forEach(b=>b.onclick=()=>{let o=state.offers.find(x=>offerId(x)===b.dataset.offerAdd);if(o)addOfferToCart(o)});
+ if($("#offerSearch"))$("#offerSearch").oninput=e=>{state.offerSearch=e.currentTarget.value;$("#view").innerHTML=offersView();wire()};
+ if($("#quickAddBtn"))$("#quickAddBtn").onclick=()=>addQuickItem($("#quickAddInput").value);
  if($("#quickAddInput"))$("#quickAddInput").onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();addQuickItem(e.currentTarget.value)}};
  if($("#addRecipe"))$("#addRecipe").onclick=addOwnRecipe;
  if($("#search"))$("#search").oninput=filterRecipes;
@@ -138,12 +372,27 @@ function customAdd(){
  setTimeout(()=>{$("#saveCustom").onclick=()=>{addQuickItem($("#customInput").value);closeSheet()}},10)
 }
 function showInfo(){
- showSheet(`<div class="sheet-kicker">Inställningar</div><h3>Matappen v25</h3><p class="sheet-intro">Planeringen tar hänsyn till barn/vuxen-dagar, portionsmål, variation, ICA-erbjudanden och er budget.</p>
- <label class="form-label">Torsdagen är</label><select class="search" id="handover"><option value="arrival" ${state.settings.handover==='arrival'?'selected':''}>ankomstdag varannan vecka</option><option value="departure" ${state.settings.handover==='departure'?'selected':''}>avresedag varannan vecka</option></select>
+ ensureAnchor();
+ showSheet(`<div class="sheet-kicker">Inställningar</div><h3>Matappen v31</h3><p class="sheet-intro">Matveckan går torsdag–onsdag och budgeten den 25:e–24:e.</p>
+ <label class="form-label">Ankare för barnveckan</label><input class="search" type="date" id="anchorThursday" value="${esc(state.settings.anchorThursday)}">
+ <label class="form-label">Den torsdagen</label><select class="search" id="handover"><option value="arrival" ${state.settings.handover==="arrival"?"selected":""}>kommer barnen</option><option value="departure" ${state.settings.handover==="departure"?"selected":""}>lämnas barnen</option></select>
+ <div class="settings-note">Välj en torsdag du vet stämmer. Därefter växlar Matappen automatiskt varannan torsdag.</div>
  <div class="form-grid"><div><label class="form-label">Veckomål</label><input class="search" id="weeklyBudget" inputmode="numeric" value="${state.settings.weeklyBudget}"></div><div><label class="form-label">Månadsbudget</label><input class="search" id="monthlyBudget" inputmode="numeric" value="${state.settings.monthlyBudget}"></div></div>
+ <div class="settings-note">Budgetperioden är alltid den 25:e till den 24:e. Den nya potten börjar automatiskt den 25:e.</div>
  <button class="wide-btn" id="saveSettings">Spara inställningar</button>
- <div class="settings-note">${state.offerStatus==='live'?`ICA: ${state.offers.length} verifierade erbjudanden`:"ICA-erbjudanden är inte verifierade just nu"}</div>`);
- setTimeout(()=>{$("#saveSettings").onclick=()=>{state.settings.handover=$("#handover").value;state.settings.weeklyBudget=Number($("#weeklyBudget").value)||1600;state.settings.monthlyBudget=Number($("#monthlyBudget").value)||12000;save();buildWeek();closeSheet();render()}},10)
+ <div class="settings-note">${offerCoverageText()}</div>`);
+ setTimeout(()=>{$("#saveSettings").onclick=()=>{
+   let anchor=$("#anchorThursday").value;
+   if(anchor){
+     let a=parseLocalDate(anchor),diff=(a.getDay()-4+7)%7;
+     if(diff!==0){a.setDate(a.getDate()-diff);anchor=localDateKey(a)}
+     state.settings.anchorThursday=anchor;
+   }
+   state.settings.handover=$("#handover").value;
+   state.settings.weeklyBudget=Number($("#weeklyBudget").value)||1600;
+   state.settings.monthlyBudget=Number($("#monthlyBudget").value)||12000;
+   save();buildWeek();closeSheet();render()
+ }},10)
 }
 function showSheet(html){$("#sheet").innerHTML=html;$("#sheetBackdrop").classList.remove("hidden");$("#sheet").classList.remove("hidden");$("#sheetBackdrop").onclick=closeSheet}function closeSheet(){$("#sheetBackdrop").classList.add("hidden");$("#sheet").classList.add("hidden")}
 init();
