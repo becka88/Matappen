@@ -1,26 +1,15 @@
-# Matappen v15 – bara GitHub
+# Matappen v17
 
-Ingen Render, ingen Streamlit-server och inget du behöver installera lokalt.
+Mobilversion för GitHub Pages.
 
-## Så fungerar det
-- GitHub Pages visar själva mobilappen.
-- GitHub Actions kör `scripts/update_recipes.py` varje dygn.
-- Scriptet letar efter recept hos ICA, Arla och Köket.
-- Receptmetadata läggs i `recipes.json`.
-- Externa recept länkar till originalkällan för full tillagning.
-- De egna Matappen-recepten ligger kvar som reserv.
+Nytt i v17:
+- mycket högre kontrast på klocka, matlåda och frys i den gröna rutan
+- 👍/👎 finns inne i själva receptet och sparas lokalt på mobilen
+- receptbilder visas där källan tillhandahåller bild
+- veckoplanen prioriterar verifierade aktuella ICA-erbjudanden från Maxi ICA Stormarknad Växjö
+- en rätt visar varför den valts när den matchar ett erbjudande
+- inköpslistan försöker slå ihop mängder från veckans recept
+- ”Lägg till snabbt” lär sig av vilka varor som läggs till oftast
+- receptkatalog + ICA-erbjudanden uppdateras automatiskt via GitHub Actions
 
-## Starta sidan
-I GitHub:
-1. Settings
-2. Pages
-3. Under Build and deployment: välj `Deploy from a branch`
-4. Branch: `main`
-5. Folder: `/ (root)`
-6. Save
-
-OBS: GitHub Pages är en publik webbplats. Lägg inte känsliga uppgifter i appen.
-På GitHub Free kräver Pages normalt ett publikt repo. Privata repo stöds på vissa betalda GitHub-planer.
-
-## Testa receptuppdateringen
-Actions → Uppdatera recept → Run workflow.
+Viktigt: Om ICA inte kan verifieras vid en körning får statusen `unavailable`. Då används inte gamla erbjudanden för att styra veckoplanen.
