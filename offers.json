@@ -1,8 +1,70 @@
 {
   "store_id": "1003571",
   "store": "Maxi ICA Stormarknad Växjö",
-  "updated_at": null,
-  "status": "waiting",
+  "updated_at": "2026-09-14T15:14:43.559705+00:00",
+  "status": "live",
   "source_url": "https://www.ica.se/erbjudanden/maxi-ica-stormarknad-vaxjo-1003571/",
-  "offers": []
+  "page_offer_count": 132,
+  "offers": [
+    {
+      "name": "Falukorv",
+      "price": "2 för 65 kr",
+      "details": "Falukorv Scan. 800 g. Max 1 köp/hushåll. Jmfpris 40:62/kg. Ord.pris 36:90 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Färsk fylld pasta",
+      "price": "3 för 89 kr",
+      "details": "Färsk fylld pasta Rana. 250 g. Jmfpris 1:19-118:67/kg. Ord.pris 45:85 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Färsk oskalad majs",
+      "price": "2 för 15 kr",
+      "details": "Färsk oskalad majs st. Jmfpris 34:09/kg. Ord.pris 14:90 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Herrgård®, Präst®, Grevé®",
+      "price": "79 kr/kg",
+      "details": "Herrgård®, Präst®, Grevé® Arla. Ca 700 g. Ord.pris 111:90-140:76 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Juice",
+      "price": "2 för 40 kr",
+      "details": "Juice God Morgon. 1 liter. Jmfpris 20:00/liter. Ord.pris 23:18-35:86 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Kastanjechampinjoner i ask",
+      "price": "20 kr/st",
+      "details": "Kastanjechampinjoner i ask 250 g. Jmfpris 80:00/kg. Ord.pris 24:51 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Potatis, Rödbetor, Morötter",
+      "price": "10 kr/st",
+      "details": "Potatis, Rödbetor, Morötter ICA. Sverige. 1-1,2 kg. Jmfpris 8:33-10:00/kg. Ord.pris 17:90-19:90 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Smaksatt Yoghurt",
+      "price": "2 för 35 kr",
+      "details": "Smaksatt Yoghurt Valio. 1000 g. Max 1 köp/hushåll. Jmfpris 17:50/kg. Ord.pris 24:51-27:35 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Smörgåsmat",
+      "price": "2 för 35 kr",
+      "details": "Smörgåsmat Pärsons. 90-160 g. Jmfpris 109:38-194:44/kg. Ord.pris 21:90-27:35 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Svenska äpplen",
+      "price": "20 kr/kg",
+      "details": "Svenska äpplen ICA. Ord.pris 0:01-39:90 kr",
+      "source": "ICA erbjudanden"
+    }
+  ]
 }
