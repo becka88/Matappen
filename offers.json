@@ -1,8 +1,209 @@
 {
   "store_id": "1003571",
   "store": "Maxi ICA Stormarknad Växjö",
-  "updated_at": null,
-  "status": "waiting",
+  "updated_at": "2026-09-14T15:35:23.176207+00:00",
+  "status": "live",
   "source_url": "https://www.ica.se/erbjudanden/maxi-ica-stormarknad-vaxjo-1003571/",
-  "offers": []
+  "page_offer_count": 132,
+  "coverage": "partial",
+  "offers": [
+    {
+      "name": "250 g.",
+      "price": "20 kr/st",
+      "details": "Jmfpris 80:00/kg. Ord.pris 24:51 kr.",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Arla. Ca 700 g.",
+      "price": "79 kr/kg",
+      "details": "Ord.pris 111:90-140:76 kr.",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Falukorv",
+      "price": "2 för 65 kr",
+      "details": "Falukorv Scan. 800 g. Max 1 köp/hushåll. Jmfpris 40:62/kg. Ord.pris 36:90 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Färsk fylld pasta",
+      "price": "3 för 89 kr",
+      "details": "Färsk fylld pasta Rana. 250 g. Jmfpris 1:19-118:67/kg. Ord.pris 45:85 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Färsk oskalad majs",
+      "price": "2 för 15 kr",
+      "details": "Färsk oskalad majs st. Jmfpris 34:09/kg. Ord.pris 14:90 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "God Morgon. 1 liter.",
+      "price": "2 för 40 kr",
+      "details": "Jmfpris 20:00/liter. Ord.pris 23:18-35:86 kr.",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Herrgård®, Präst®, Grevé®",
+      "price": "79 kr/kg",
+      "details": "Herrgård®, Präst®, Grevé® Arla. Ca 700 g. Ord.pris 111:90-140:76 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "ICA.",
+      "price": "50 kr/st",
+      "details": "Jmfpris 50:00/st. Ord.pris 99:90 kr. 30dgr.pris 99:90 kr.",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "ICA.",
+      "price": "20 kr/kg",
+      "details": "Ord.pris 0:01-39:90 kr.",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "ICA. Sverige. 1-1,2 kg.",
+      "price": "10 kr/st",
+      "details": "Jmfpris 8:33-10:00/kg. Ord.pris 17:90-19:90 kr.",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Juice",
+      "price": "2 för 40 kr",
+      "details": "Juice God Morgon. 1 liter. Jmfpris 20:00/liter. Ord.pris 23:18-35:86 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Kappa. Stl 35-43.",
+      "price": "50 kr/st",
+      "details": "Ord.pris 129:00 kr. 30dgr.pris 129:00 kr.",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Kastanjechampinjoner i ask",
+      "price": "20 kr/st",
+      "details": "Kastanjechampinjoner i ask 250 g. Jmfpris 80:00/kg. Ord.pris 24:51 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Lego Pokémon Eevee",
+      "price": "499 kr/st",
+      "details": "Lego Pokémon Eevee LEGO Pokémon. Jmfpris 499:00/st. Ord.pris 599:00 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Lego Pokémon Munchlax",
+      "price": "649 kr/st",
+      "details": "Lego Pokémon Munchlax LEGO Pokémon. Ord.pris 749:00 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "LEGO Pokémon Pikachu & Poké Boll",
+      "price": "1699 kr/st",
+      "details": "LEGO Pokémon Pikachu & Poké Boll LEGO Pokémon. Ord.pris 1999:00 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "LEGO Pokémon.",
+      "price": "1699 kr/st",
+      "details": "Ord.pris 1999:00 kr. 30dgr.pris 1999:00 kr.",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "LEGO Pokémon.",
+      "price": "499 kr/st",
+      "details": "Jmfpris 499:00/st. Ord.pris 599:00 kr. 30dgr.pris 599:00 kr.",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "LEGO Pokémon.",
+      "price": "649 kr/st",
+      "details": "Ord.pris 749:00 kr. 30dgr.pris 749:00 kr.",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Pajform",
+      "price": "50 kr/st",
+      "details": "Pajform ICA. Jmfpris 50:00/st. Ord.pris 99:90 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Potatis, Rödbetor, Morötter",
+      "price": "10 kr/st",
+      "details": "Potatis, Rödbetor, Morötter ICA. Sverige. 1-1,2 kg. Jmfpris 8:33-10:00/kg. Ord.pris 17:90-19:90 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Pärsons. 90-160 g.",
+      "price": "2 för 35 kr",
+      "details": "Jmfpris 109:38-194:44/kg. Ord.pris 21:90-27:35 kr.",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Rana. 250 g.",
+      "price": "3 för 89 kr",
+      "details": "Jmfpris 1:19-118:67/kg. Ord.pris 45:85 kr.",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Scan. 800 g.",
+      "price": "2 för 65 kr",
+      "details": "Max 1 köp/hushåll. Jmfpris 40:62/kg. Ord.pris 36:90 kr.",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Smaksatt Yoghurt",
+      "price": "2 för 35 kr",
+      "details": "Smaksatt Yoghurt Valio. 1000 g. Max 1 köp/hushåll. Jmfpris 17:50/kg. Ord.pris 24:51-27:35 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Smörgåsmat",
+      "price": "2 för 35 kr",
+      "details": "Smörgåsmat Pärsons. 90-160 g. Jmfpris 109:38-194:44/kg. Ord.pris 21:90-27:35 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "st.",
+      "price": "2 för 15 kr",
+      "details": "Jmfpris 34:09/kg. Ord.pris 14:90 kr.",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Streetz.",
+      "price": "100 kr/st",
+      "details": "Ord.pris 199:00 kr. 30dgr.pris 199:00 kr.",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Strumpor 5-pack",
+      "price": "50 kr/st",
+      "details": "Strumpor 5-pack Kappa. Stl 35-43. Ord.pris 129:00 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Svenska äpplen",
+      "price": "20 kr/kg",
+      "details": "Svenska äpplen ICA. Ord.pris 0:01-39:90 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Trådlösa hörlurar",
+      "price": "100 kr/st",
+      "details": "Trådlösa hörlurar Streetz. Ord.pris 199:00 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Ugnsform",
+      "price": "50 kr/st",
+      "details": "Ugnsform ICA. Jmfpris 50:00/st. Ord.pris 99:90 kr",
+      "source": "ICA erbjudanden"
+    },
+    {
+      "name": "Valio. 1000 g.",
+      "price": "2 för 35 kr",
+      "details": "Max 1 köp/hushåll. Jmfpris 17:50/kg. Ord.pris 24:51-27:35 kr.",
+      "source": "ICA erbjudanden"
+    }
+  ]
 }
