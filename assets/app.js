@@ -322,6 +322,10 @@ function bestOfferPriceForItem(item){
 function nonPurchaseIngredient(name){
  let n=canon(name).replace(/\([^)]*\)/g," ").replace(/\s+/g," ").trim();
  if(!n)return true;
+ // Mängd/förpackningsinfo utan ett faktiskt varunamn är ingen inköpsvara.
+ // Exempel från källrecept: "à 100 g", "100 g", "ca 2 dl".
+ if(/^(?:(?:à|a\s+la|ca|cirka)\s*)?\d+(?:[.,]\d+)?\s*(?:kg|g|mg|l|dl|cl|ml|st|styck|stycken|förp|förpackning|paket|burk|påse)?\s*$/i.test(n))return true;
+ if(/^(?:à|a\s+la)\s+\d/i.test(n))return true;
  const exact=new Set([
   "vatten","kranvatten","kokvatten","pastavatten","pastakokvatten",
   "vatten från pastakoket","vatten från koket","kokvatten från pastan",
@@ -429,7 +433,7 @@ function shopping(){
  }
 
  return [...map.values()]
-   .filter(x=>!state.hiddenShop.has(x.key))
+   .filter(x=>!state.hiddenShop.has(x.key) && !!shoppingDisplayName(x))
    .map(x=>({...x,purchase:purchasePlan(x)}))
    .sort((a,b)=>Number(b.offerItem)-Number(a.offerItem)||a.name.localeCompare(b.name,"sv"))
 }
@@ -548,11 +552,19 @@ function shopCategory(name){
  return "Övrigt";
 }
 
+function shoppingDisplayName(item){
+ let n=cleanIngredientNameForShopping(item?.name||"");
+ // En rad måste alltid beskriva själva varan. Förpacknings-/mängdtext får aldrig bli rubrik.
+ if(!n||nonPurchaseIngredient(n)||/^(?:(?:à|a\s+la|ca|cirka)\s*)?\d+(?:[.,]\d+)?\s*(?:kg|g|mg|l|dl|cl|ml|st|styck|stycken|förp|förpackning|paket|burk|påse)?$/i.test(n))return "";
+ return n.charAt(0).toUpperCase()+n.slice(1);
+}
 function shopRow(x){
+ let displayName=shoppingDisplayName(x);
+ if(!displayName)return "";
  let p=realProductForItem(x),plan=x.purchase||purchasePlan(x),direct=x.offerItem&&x.plannedCost;
  return `<div class="check-row ${state.checked.has(x.key)?"done":""}">
    <input type="checkbox" data-check="${esc(x.key)}" ${state.checked.has(x.key)?"checked":""} aria-label="Klar">
-   <label><b>${esc(x.name)}</b>${
+   <label><b>${esc(displayName)}</b>${
      direct
        ? `<span class="quantity">${esc(plan.label)}</span><small class="buy-plan">🔥 ${Math.round(x.plannedCost)} kr</small>`
        : p

@@ -115,16 +115,36 @@ def decorated_products(payload):
     seen = set()
 
     def add_rows(rows):
-        if isinstance(rows, dict):
-            rows = rows.get("items") or rows.get("products") or rows.get("results") or []
-        if not isinstance(rows, list):
+        # ICA:s decoratedProducts kan vara antingen en lista eller en dictionary/map
+        # (t.ex. grupperad per viewport/id). Tidigare kastade vi bort dictionary-formen
+        # om den saknade nyckeln items/products/results, vilket gav 0 produkter trots HTTP 200.
+        if isinstance(rows, list):
+            for row in rows:
+                add_rows(row)
             return
-        for row in rows:
-            if isinstance(row, dict):
-                marker = id(row)
-                if marker not in seen:
-                    seen.add(marker)
-                    out.append(row)
+        if not isinstance(rows, dict):
+            return
+
+        # En faktisk produkt har normalt ett namn/id och ett pris någonstans i objektet.
+        # Lägg till den, men fortsätt även nedåt så wrappers/maps fungerar.
+        has_identity = any(k in rows for k in ("name","productName","displayName","title","retailerProductId","productId","sku"))
+        has_price = any(k in rows for k in ("price","currentPrice","salesPrice","displayPrice"))
+        if has_identity and has_price:
+            marker = id(rows)
+            if marker not in seen:
+                seen.add(marker)
+                out.append(rows)
+
+        # Kända wrappers först, därefter alla övriga värden. Detta täcker både
+        # {items:[...]}, {products:[...]} och {<id>:{...produkt...}}.
+        handled = set()
+        for key in ("items","products","results","decoratedProducts","product","decoratedProduct"):
+            if key in rows:
+                handled.add(key)
+                add_rows(rows[key])
+        for key, value in rows.items():
+            if key not in handled and isinstance(value, (dict, list)):
+                add_rows(value)
 
     def walk(node):
         if isinstance(node, dict):
