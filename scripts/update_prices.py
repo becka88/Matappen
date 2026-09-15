@@ -186,15 +186,47 @@ def normalize_product(x, q):
         "available": available,
     }
 
+def diagnostic_product_sample(payload):
+    """Small public-data sample of ICA's real decoratedProducts structure for CI diagnostics."""
+    found = []
+    def walk(node, path="root"):
+        if len(found) >= 1:
+            return
+        if isinstance(node, dict):
+            for k, v in node.items():
+                np = f"{path}.{k}"
+                if k == "decoratedProducts":
+                    found.append((np, v))
+                    return
+                if isinstance(v, (dict, list)):
+                    walk(v, np)
+        elif isinstance(node, list):
+            for i, v in enumerate(node[:5]):
+                if isinstance(v, (dict, list)):
+                    walk(v, f"{path}[{i}]")
+    walk(payload)
+    if not found:
+        groups = product_groups(payload)
+        sample = groups[0] if groups else payload
+        path = "productGroups[0]" if groups else "root"
+    else:
+        path, sample = found[0]
+    try:
+        text = json.dumps(sample, ensure_ascii=False, separators=(",", ":"))
+    except Exception:
+        text = repr(sample)
+    return path, text[:12000]
+
 def fetch_term(q):
     session = requests.Session()
     session.headers.update(HEADERS)
     statuses = []
     last_keys = []
+    diagnostic = None
 
     for attempt in range(MAX_202_RETRIES):
         if time.monotonic() - STARTED > MAX_RUNTIME_SECONDS:
-            return q, [], "runtime", statuses, last_keys
+            return q, [], "runtime", statuses, last_keys, diagnostic
 
         try:
             r = session.get(
@@ -235,25 +267,27 @@ def fetch_term(q):
             # 200 med riktiga grupper men inga tolkade produkter: rapportera parserfel.
             raw_count = len(decorated_products(payload))
             if raw_count and not rows:
-                return q, [], f"parser:{raw_count}", statuses, last_keys
+                diagnostic = diagnostic_product_sample(payload)
+                return q, [], f"parser:{raw_count}", statuses, last_keys, diagnostic
             if not raw_count and product_groups(payload):
                 # 200 + productGroups men noll hittade produkter är också parserfel,
                 # inte en lyckad tom sökning. Då syns det tydligt i Action-loggen.
                 g = product_groups(payload)[0]
                 gkeys = sorted(g.keys())[:20] if isinstance(g, dict) else [type(g).__name__]
-                return q, [], "parser-groups:" + ",".join(gkeys), statuses, last_keys
+                diagnostic = diagnostic_product_sample(payload)
+                return q, [], "parser-groups:" + ",".join(gkeys), statuses, last_keys, diagnostic
 
-            return q, rows, None, statuses, last_keys
+            return q, rows, None, statuses, last_keys, diagnostic
 
         except requests.RequestException as e:
             if attempt < MAX_202_RETRIES - 1:
                 time.sleep(min(1.0 + attempt, 4.0))
                 continue
-            return q, [], type(e).__name__, statuses, last_keys
+            return q, [], type(e).__name__, statuses, last_keys, diagnostic, diagnostic
         except Exception as e:
-            return q, [], type(e).__name__, statuses, last_keys
+            return q, [], type(e).__name__, statuses, last_keys, diagnostic, diagnostic
 
-    return q, [], "202-timeout", statuses, last_keys
+    return q, [], "202-timeout", statuses, last_keys, diagnostic
 
 # Sök först efter ingredienser som faktiskt finns i receptbanken.
 recipe_terms = []
@@ -295,6 +329,7 @@ status_hist = {}
 parser_errors = []
 sample_keys = []
 sample_shape = []
+diagnostic_sample = None
 
 with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as ex:
     futures = {ex.submit(fetch_term, q): q for q in terms}
@@ -302,11 +337,13 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as ex:
         if time.monotonic() - STARTED > MAX_RUNTIME_SECONDS:
             break
 
-        q, items, err, statuses, keys = fut.result()
+        q, items, err, statuses, keys, diagnostic = fut.result()
         for st in statuses:
             status_hist[str(st)] = status_hist.get(str(st), 0) + 1
         if keys and not sample_keys:
             sample_keys = keys
+        if diagnostic and diagnostic_sample is None:
+            diagnostic_sample = diagnostic
 
         if err:
             failed += 1
@@ -358,6 +395,11 @@ if parser_errors:
     print("PARSER_DIAGNOSTIC", "; ".join(parser_errors[:5]))
 if sample_keys:
     print("ICA_RESPONSE_KEYS", ",".join(sample_keys))
+if diagnostic_sample:
+    print("ICA_DIAGNOSTIC_PATH", diagnostic_sample[0])
+    print("ICA_DIAGNOSTIC_SAMPLE_BEGIN")
+    print(diagnostic_sample[1])
+    print("ICA_DIAGNOSTIC_SAMPLE_END")
 
 # Price refresh is a required data step. Do not let GitHub Actions report green when
 # ICA answered but zero usable products were produced.
