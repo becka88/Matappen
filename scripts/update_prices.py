@@ -19,10 +19,10 @@ HEADERS = {
 
 REQUEST_TIMEOUT = 20
 MAX_TERMS = 45
-MAX_WORKERS = 5
-MAX_PRODUCTS_PER_TERM = 30
+MAX_WORKERS = 2
+MAX_PRODUCTS_PER_TERM = 60
 MAX_202_RETRIES = 30
-MAX_RUNTIME_SECONDS = 225
+MAX_RUNTIME_SECONDS = 300
 
 def clean(x):
     return re.sub(r"\s+", " ", str(x or "")).strip()
@@ -220,6 +220,12 @@ def diagnostic_product_sample(payload):
 def fetch_term(q):
     session = requests.Session()
     session.headers.update(HEADERS)
+    # Bootstrap the same store page a browser opens first. This lets Handla set
+    # any anonymous store/session cookies before the product search request.
+    try:
+        session.get(f"https://handlaprivatkund.ica.se/stores/{STORE}", timeout=REQUEST_TIMEOUT)
+    except requests.RequestException:
+        pass
     statuses = []
     last_keys = []
     diagnostic = None
@@ -264,20 +270,25 @@ def fetch_term(q):
                 if p:
                     rows.append(p)
 
-            # 200 med riktiga grupper men inga tolkade produkter: rapportera parserfel.
             raw_count = len(decorated_products(payload))
-            if raw_count and not rows:
-                diagnostic = diagnostic_product_sample(payload)
-                return q, [], f"parser:{raw_count}", statuses, last_keys, diagnostic
-            if not raw_count and product_groups(payload):
-                # 200 + productGroups men noll hittade produkter är också parserfel,
-                # inte en lyckad tom sökning. Då syns det tydligt i Action-loggen.
-                g = product_groups(payload)[0]
-                gkeys = sorted(g.keys())[:20] if isinstance(g, dict) else [type(g).__name__]
-                diagnostic = diagnostic_product_sample(payload)
-                return q, [], "parser-groups:" + ",".join(gkeys), statuses, last_keys, diagnostic
+            if rows:
+                return q, rows, None, statuses, last_keys, diagnostic
 
-            return q, rows, None, statuses, last_keys, diagnostic
+            # ICA can answer HTTP 200 while its asynchronous search result is still
+            # empty. Treat an empty productGroups response like 202 and retry instead
+            # of declaring a parser failure. The public Handla search uses maxPageSize=60.
+            if product_groups(payload) and not raw_count:
+                if diagnostic is None:
+                    diagnostic = diagnostic_product_sample(payload)
+                time.sleep(min(1.0 + attempt * 0.75, 8.0))
+                continue
+
+            if raw_count and not rows:
+                diagnostic = diagnostic or diagnostic_product_sample(payload)
+                return q, [], f"parser:{raw_count}", statuses, last_keys, diagnostic
+
+            # A truly empty search may be valid for an unusual ingredient term.
+            return q, [], None, statuses, last_keys, diagnostic
 
         except requests.RequestException as e:
             if attempt < MAX_202_RETRIES - 1:
@@ -287,7 +298,7 @@ def fetch_term(q):
         except Exception as e:
             return q, [], type(e).__name__, statuses, last_keys, diagnostic, diagnostic
 
-    return q, [], "202-timeout", statuses, last_keys, diagnostic
+    return q, [], "search-timeout", statuses, last_keys, diagnostic
 
 # Sök först efter ingredienser som faktiskt finns i receptbanken.
 recipe_terms = []
