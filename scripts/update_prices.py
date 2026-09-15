@@ -94,20 +94,53 @@ STAPLES = [
 ]
 
 def product_groups(payload):
-    # ICA kan returnera direkt eller inuti "data".
+    # ICA kan returnera direkt eller inuti "data" och har ändrat formen över tid.
     if isinstance(payload, dict) and isinstance(payload.get("data"), dict):
         payload = payload["data"]
     groups = payload.get("productGroups", []) if isinstance(payload, dict) else []
-    return groups if isinstance(groups, list) else []
+    if isinstance(groups, list):
+        return groups
+    if isinstance(groups, dict):
+        # Acceptera både {items:[...]} och grupper uppdelade per nyckel.
+        for key in ("items", "groups", "results", "productGroups"):
+            if isinstance(groups.get(key), list):
+                return groups[key]
+        return [v for v in groups.values() if isinstance(v, dict)]
+    return []
 
 def decorated_products(payload):
+    # Leta rekursivt efter decoratedProducts. Det gör parsern tålig om ICA
+    # lägger ett extra lager runt grupperna utan att prisinhämtningen går sönder.
     out = []
-    for group in product_groups(payload):
-        if not isinstance(group, dict):
-            continue
-        rows = group.get("decoratedProducts") or group.get("products") or []
-        if isinstance(rows, list):
-            out.extend(rows)
+    seen = set()
+
+    def add_rows(rows):
+        if isinstance(rows, dict):
+            rows = rows.get("items") or rows.get("products") or rows.get("results") or []
+        if not isinstance(rows, list):
+            return
+        for row in rows:
+            if isinstance(row, dict):
+                marker = id(row)
+                if marker not in seen:
+                    seen.add(marker)
+                    out.append(row)
+
+    def walk(node):
+        if isinstance(node, dict):
+            if "decoratedProducts" in node:
+                add_rows(node.get("decoratedProducts"))
+            # Äldre/alternativ form där gruppen bara heter products.
+            if "products" in node and any(k in node for k in ("type", "name", "productGroupType")):
+                add_rows(node.get("products"))
+            for v in node.values():
+                if isinstance(v, (dict, list)):
+                    walk(v)
+        elif isinstance(node, list):
+            for v in node:
+                walk(v)
+
+    walk(payload)
     return out
 
 def promo_info(x):
@@ -202,6 +235,12 @@ def fetch_term(q):
             raw_count = len(decorated_products(payload))
             if raw_count and not rows:
                 return q, [], f"parser:{raw_count}", statuses, last_keys
+            if not raw_count and product_groups(payload):
+                # 200 + productGroups men noll hittade produkter är också parserfel,
+                # inte en lyckad tom sökning. Då syns det tydligt i Action-loggen.
+                g = product_groups(payload)[0]
+                gkeys = sorted(g.keys())[:20] if isinstance(g, dict) else [type(g).__name__]
+                return q, [], "parser-groups:" + ",".join(gkeys), statuses, last_keys
 
             return q, rows, None, statuses, last_keys
 
@@ -254,6 +293,7 @@ failed = 0
 status_hist = {}
 parser_errors = []
 sample_keys = []
+sample_shape = []
 
 with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as ex:
     futures = {ex.submit(fetch_term, q): q for q in terms}
@@ -269,7 +309,7 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as ex:
 
         if err:
             failed += 1
-            if str(err).startswith("parser:"):
+            if str(err).startswith("parser"):
                 parser_errors.append(f"{q}:{err}")
             continue
 
