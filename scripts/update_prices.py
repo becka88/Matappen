@@ -109,58 +109,39 @@ def product_groups(payload):
     return []
 
 def decorated_products(payload):
-    # Leta rekursivt efter decoratedProducts. Det gör parsern tålig om ICA
-    # lägger ett extra lager runt grupperna utan att prisinhämtningen går sönder.
+    """Return every plausible product object from ICA's changing search response.
+
+    Important: in current Handla responses product identity and price are not always
+    siblings at the same level. Therefore we must NOT require a direct `price` key
+    before treating a dict as a product candidate. `normalize_product` already knows
+    how to find name/price recursively inside the candidate.
+    """
     out = []
     seen = set()
-
-    def add_rows(rows):
-        # ICA:s decoratedProducts kan vara antingen en lista eller en dictionary/map
-        # (t.ex. grupperad per viewport/id). Tidigare kastade vi bort dictionary-formen
-        # om den saknade nyckeln items/products/results, vilket gav 0 produkter trots HTTP 200.
-        if isinstance(rows, list):
-            for row in rows:
-                add_rows(row)
-            return
-        if not isinstance(rows, dict):
-            return
-
-        # En faktisk produkt har normalt ett namn/id och ett pris någonstans i objektet.
-        # Lägg till den, men fortsätt även nedåt så wrappers/maps fungerar.
-        has_identity = any(k in rows for k in ("name","productName","displayName","title","retailerProductId","productId","sku"))
-        has_price = any(k in rows for k in ("price","currentPrice","salesPrice","displayPrice"))
-        if has_identity and has_price:
-            marker = id(rows)
-            if marker not in seen:
-                seen.add(marker)
-                out.append(rows)
-
-        # Kända wrappers först, därefter alla övriga värden. Detta täcker både
-        # {items:[...]}, {products:[...]} och {<id>:{...produkt...}}.
-        handled = set()
-        for key in ("items","products","results","decoratedProducts","product","decoratedProduct"):
-            if key in rows:
-                handled.add(key)
-                add_rows(rows[key])
-        for key, value in rows.items():
-            if key not in handled and isinstance(value, (dict, list)):
-                add_rows(value)
+    identity_keys = {"name","productName","displayName","title","retailerProductId","productId","sku"}
 
     def walk(node):
         if isinstance(node, dict):
-            if "decoratedProducts" in node:
-                add_rows(node.get("decoratedProducts"))
-            # Äldre/alternativ form där gruppen bara heter products.
-            if "products" in node and any(k in node for k in ("type", "name", "productGroupType")):
-                add_rows(node.get("products"))
-            for v in node.values():
-                if isinstance(v, (dict, list)):
-                    walk(v)
+            # Any dict with a product identity is a candidate. This covers ICA's
+            # decoratedProducts maps where price lives in nested price/comparison data.
+            if any(k in node for k in identity_keys):
+                marker = id(node)
+                if marker not in seen:
+                    seen.add(marker)
+                    out.append(node)
+            for value in node.values():
+                if isinstance(value, (dict, list)):
+                    walk(value)
         elif isinstance(node, list):
-            for v in node:
-                walk(v)
+            for value in node:
+                walk(value)
 
-    walk(payload)
+    # Restrict traversal to productGroups when present to avoid unrelated page metadata.
+    groups = product_groups(payload)
+    if groups:
+        walk(groups)
+    else:
+        walk(payload)
     return out
 
 def promo_info(x):
@@ -377,3 +358,8 @@ if parser_errors:
     print("PARSER_DIAGNOSTIC", "; ".join(parser_errors[:5]))
 if sample_keys:
     print("ICA_RESPONSE_KEYS", ",".join(sample_keys))
+
+# Price refresh is a required data step. Do not let GitHub Actions report green when
+# ICA answered but zero usable products were produced.
+if not fresh_products:
+    raise SystemExit("ICA price refresh failed: zero usable products; prices.json was not refreshed")
