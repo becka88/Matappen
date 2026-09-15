@@ -339,6 +339,29 @@ function nonPurchaseIngredient(name){
 
 function cleanIngredientNameForShopping(name){
  let n=shopName(name);
+ // Inköpslistan visar råvaran, aldrig receptets varumärke eller produktnamn.
+ // Matcha tydliga råvaruord även när källan skriver t.ex. "Arla Köket vispgrädde".
+ const ingredientBases=[
+  [/\b(?:vispgrädde|matlagningsgrädde|mellangrädde|grädde)\b/,"grädde"],
+  [/\b(?:creme fraiche|crème fraiche)\b/,"crème fraiche"],
+  [/\b(?:smör|matfett)\b/,"smör"],
+  [/\b(?:svartpeppar|vitpeppar|peppar)\b/,"peppar"],
+  [/\b(?:flingsalt|havssalt|fint salt|salt)\b/,"salt"],
+  [/\b(?:vitlöksklyftor?|vitlök)\b/,"vitlök"],
+  [/\b(?:gula? lökar?|gul lök|lök)\b/,"gul lök"],
+  [/\b(?:röda? lökar?|rödlök|röd lök)\b/,"röd lök"],
+  [/\b(?:äggulor?|äggvitor?|ägg)\b/,"ägg"],
+  [/\b(?:krossade? tomater?)\b/,"krossade tomater"],
+  [/\b(?:passerade? tomater?)\b/,"passerade tomater"],
+  [/\b(?:gratängost|pizzaost|riven ost)\b/,"ost"],
+  [/\b(?:strösocker|socker)\b/,"socker"],
+  [/\b(?:extra virgin olivolja|olivolja)\b/,"olivolja"],
+  [/\b(?:neutral olja|matolja|rapsolja)\b/,"rapsolja"],
+  [/\b(?:spaghetti|spagetti)\b/,"spaghetti"],
+  [/\b(?:makaroner?|makaron)\b/,"makaroner"],
+  [/\b(?:kycklingfiléer|kycklingfileer|kycklingfilé|kycklingfile)\b/,"kycklingfilé"]
+ ];
+ for(const [re,to] of ingredientBases){if(re.test(n)){n=to;break}}
  n=n
   .replace(/\s+(?:till|för)\s+(?:stekning|stekning och servering|servering|garnering|formen|bakning)\s*$/,"")
   .replace(/\s+(?:efter smak|vid behov|om så önskas|valfritt|valfri)\s*$/,"")
